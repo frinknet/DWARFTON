@@ -4,7 +4,7 @@ var DWARFTON=1.1,
 
 D=document,
 W=window,
-A=function(o,a){var r=[].slice.call(o!==U?a!==U?arguments:I(o,[],{})?o:[o]:[]);P(r,Array);return r},
+A=function(o,a){var r=[].slice.call(o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[]);P(r,Array);return r},
 R=RegExp,
 F=false,
 T=true,
