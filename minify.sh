@@ -3,20 +3,54 @@
 sed -e':a' \
   -e'N' \
   -e'$!ba' \
-  -e's/\s+/\s/g' \
-  -e's/\n\s*/\n/g' \
-  -e's/\n\/\/[^\n]*/\n/g' \
-#  -e's/:\s/:/g' \
-#  -e's/\r/\n/g' \
-#  -e's/\n/;/g' \
-#  -e's/;\+/;/g' \
-#  -e's/,;/,/g' \
-#  -e's/;}/}/g' \
-#  -e's/{;/{/g' \
-#  -e's/\s+{/{/g' \
-#  -e's/\s+(/(/g' \
-#  -e's/\s+=/s=(/g' \
-#  -e's/=\s+/s=(/g' \
-#  -e's/)\s+/)/g' \
-#  -e's/else;/else /g' \
+  -e's/\n/\r/g' \
+  -e's/\s*\r\s*/\r/g' \
+  -e's/\r\+/\r/g' \
+  -e's/\t\+/ /g' \
+  -e's/\r\/\/[^\r]*/\r/g' \
+  -e's/\r \+/\r/g' \
+  -e's/\r?\s?else\s?\r*/\relse /g' \
+  -e's/\r?\s?if\s?\r*/\rif /g' \
+  -e's/\r?\s?for\s?\r*/\rfor /g' \
+  -e's/\r?\s?while\s?\r*/\rwhile /g' \
+  -e's/\r?\s?do\s?\r*/\rdo /g' \
+  -e's/\r?\s?var\s?\r*/\rvar /g' \
+  -e's/\r?\s?break\s?\r*/\rbreak /g' \
+  -e's/\r?\s?function\s?\r*/\rfunction /g' \
+  -e's/\r?\s?continue\s?\r*/\rcontinue /g' \
+  -e's/[ ]\+/ /g' \
+  -e's/\r\+\s*/\r/g' \
+  -e's/\r?\s\+\r?/ /g' \
+  -e's/\r?\s?.\s?\r?/./g' \
+  -e's/\r?\s?,\s?\r?/,/g' \
+  -e's/\r?\s?;\s?\r?/;/g' \
+  -e's/\r?\s?:\s?\r?/:/g' \
+  -e's/\r?\s?{\s?\r?/{/g' \
+  -e's/\r?\s?}\s?\r?/}/g' \
+  -e's/\r?\s?&\s?\r?/&/g' \
+  -e's/\r?\s?|\s?\r?/|/g' \
+  -e's/\r?\s?%\s?\r?/%/g' \
+  -e's/\r?\s?<\s?\r?/</g' \
+  -e's/\r?\s?>\s?\r?/>/g' \
+  -e's/\r?\s?=\s?\r?/=/g' \
+  -e's/\r?\s?+\s?\r?/+/g' \
+  -e's/\r?\s?-\s?\r?/-/g' \
+  -e's/\r?\s?\/\s?\r?/\//g' \
+  -e's/\r?\s?\*\s?\r?/\*/g' \
+  -e's/\r?\s?\?\s?\r?/\?/g' \
+  -e's/\r?\s?)\s?\r?/)/g' \
+  -e's/\r?\s?(\s?\r?/(/g' \
+  -e's/\r?\s?]\s?\r?/]/g' \
+  -e's/\r?\s?[[]\s?\r?/[/g' \
+  -e's/\r?\s?'"'"'\s?\r?/'"'"'/g' \
+  -e's/\r?\s?"\s?\r?/"/g' \
+  -e's/{\r/{/g' \
+  -e's/\r}/}/g' \
+  -e's/;\r/;/g' \
+  -e's/,\r/,/g' \
+  -e's/:\r/:/g' \
+  -e's/)\s\+{/){/g' \
+  -e's/}\s\+else/}else/g' \
+  -e's/\/\r/\//g' \
+  -e's/\r/\n/g' \
   $1
