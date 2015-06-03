@@ -57,7 +57,25 @@ B=function(l,v,s,f,m){
 
   l=L(l)
 
-  if(v.split(" ").length===1)l.forEach(function(n,i){
+  if(v.split(" ").length>1) v.split(" ").forEach(function(v){
+    B(l,v,s,f,m)
+  })
+  else if(f===N)l.forEach(function(n,e){
+    if(D.createEvent){
+      e=D.createEvent('HTMLEvents')
+
+      e.initEvent(v,T,T)
+      e.eventName=v
+      n.dispatchEvent(e)
+    }else{
+      e=D.createEventObject()
+
+      e.eventType=v
+      e.eventName=v
+      n.fireEvent("on"+v,e)
+    }
+  })
+  else l.forEach(function(n,i){
     var x=function(f,i){
       if(n._evt||n._evt[v])for(i in n._evt[v])if(n._evt[v][i][0]===f){
         n.removeEventListener(v,n._evt[v][i][1])
@@ -91,7 +109,8 @@ B=function(l,v,s,f,m){
 
     n.addEventListener(v,z,F)
   })
-  else v.split(" ").forEach(function(v){B(l,v,s,f,m)})
+
+  return l
 },
 S=function(k,v){
   var s=W.localStorage
@@ -138,4 +157,3 @@ U//=undefined
 //X
 //Y
 //Z=JSON
-
