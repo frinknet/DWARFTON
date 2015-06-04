@@ -5,11 +5,22 @@ var DWARFTON=1.2,
 
 D=document,
 W=window,
-A=function(o,a){var r=[].slice.call(o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[]);P(r,Array);return r},
+A=function(o,a){
+  return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])
+},
 R=function(){/*xhr Retrieve*/},
 F=false,
 T=true,
-O=Object,
+O=function(o){
+  var a=arguments,
+  i=a.length,
+  o=Object(o),
+  x
+
+  while(--i)for(x in O(a[i]))o[x]=a[i][x]
+
+  return o
+},
 N=null,
 
 L=function(s,j){
@@ -44,11 +55,13 @@ L=function(s,j){
   return l
 },
 I=function(o){
-  var t,
-  a=arguments,
-  c='constructor'
+  var a=arguments,
+  i=a.length,
+  c='constructor',
+  t=typeof o
 
-  for(t in a)if(t>0)if(o===(t=a[t])||(o||o===F||o===0)&&(t||t===F||t===0)&&O(o)[c]===(t[c]||O(t)[c]))return T
+  if(i==1)return o===N?'null':t=='object'?(c=O(o)[c])!=Object?c.name:t:t
+  else while(--i)if(o===(t=a[i])||(o||o===""||o===F||o===0)&&(t||t===""||t===F||t===0)&&((o=O(o))[c]==O(t)[c]||o[c]==t))return T
 
   return F
 },
@@ -91,7 +104,7 @@ B=function(l,v,s,f,m){
       y=function(t){
         if(p.indexOf(t)>-1){
           if(m===T)x(f)
-          C(t,f,e)
+          f.call(t,e)
         }
 
         if(!t.parentNode)return
@@ -112,48 +125,64 @@ B=function(l,v,s,f,m){
 
   return l
 },
-S=function(k,v){
-  var s=W.localStorage
+S=function(t,k,v){
+  var l=W.localStorage,
+  j=JSON,
+  s=function(s,t){
+    var n=D.createElement(s)
+    n.innerText=t
+    return D.head.appendChild(n)
+  }
 
-  if(s)return C(s,s[I(v,U)?'getItem':'setItem'],arguments)
+  switch(t){
+    case 'local':return l?I(v,U)?l.getItem(k):l.setItem(k,v):U
+    case 'json':return I(k,"")?j.parse(k):j.stringify(k)
+    case 'run':return s('script',k)
+    case 'css':return s('style',k)
+    default:return S('local',t,k)
+  }
 },
 
 C=function(o,f){
   var a=[].slice.call(arguments,2)
 
-  return I(f,Function)?f.apply(o,a.length>1?a:[].concat(a[0])):U
+  return f.apply(o,a.length>1?a:[].slice.call(a[0]))
 },
-P=function(o,p){
-  if(p)o.prototype=P(p)
+P=function(o,a){
+  var p='prototype',
+  o=Object(o)
 
-  return o.prototype
+  return (a)?o[p]=P(a):o[p]||o.constructor[p]
 },
 U//=undefined
 
+//----- Shorteners
+//Call
+//Prototype
+//Undefined
+//
+//----- Essentials
 //Document
 //Window
 //Arrayize
-//Request
+//Remote
 //False
 //True
 //Objectify
 //Null
 //
+//----- Auxilary
 //List
-//Interogate
+//Iterogate
 //Bind
-//Storage
+//Store
 //
-//Call
-//Prototype
-//Undefined
+//
+//
+//Storage(type,key,value,options)
+//  -cookie
+//
+//Remote(method,url,data,function,headers)
 //
 //TODO:
-//- Objectify should work mostly like $.extend
-//- Prototype should allow multirogateple inheritance
 //- XHR needs to be mored from cue
-//- bind needs to be moved from m
-//
-//X
-//Y
-//Z=JSON
