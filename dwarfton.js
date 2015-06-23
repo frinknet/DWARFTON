@@ -1,16 +1,26 @@
 /*2015 FRINKnet - MIT license*/
 "use strict"
 
-var DWARFTON=1.2,
+var DWARFTON=1.3,
 
+//Document
 D=document,
+//Window
 W=window,
+//Arrayize
+// o=object
+// a=array
 A=function(o,a){
   return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])
 },
+//Remote
 R=function(){/*xhr Retrieve*/},
+//False
 F=false,
+//True
 T=true,
+//Objectify
+// o=object
 O=function(o){
   var a=arguments,
   i=a.length,
@@ -21,12 +31,16 @@ O=function(o){
 
   return o
 },
+//Null
 N=null,
 
-L=function(s,j){
+//List
+//s=selector
+//p=parent
+L=function(s,p){
   var l;
 
-  j=j&&j.nodeName?j:D.documentElement
+  p=p&&p.nodeName?p:D.documentElement
 
   switch(T){
     case s===U:
@@ -34,7 +48,7 @@ L=function(s,j){
     case !!s._sel:
       return s
     case I(s,[]):
-      l=$.map(s,sel)
+      l=[].concat.apply([],s.map(L))
       break
     case I(s,W,D):
     case !!s.nodeName:
@@ -45,15 +59,18 @@ L=function(s,j){
       l.innerHTML=s
       l=l.childNodes
       break
-    case !!j.nodeName:
-      l=j.querySelectorAll(s)
+    case !!p.nodeName:
+      l=p.querySelectorAll(s)
   }
 
   l=A(l)
-  l._sel=[s,j]
+  l._sel=[s,p]
+  l.constructor=L
 
   return l
 },
+//Interogate
+//o..=objects
 I=function(o){
   var a=arguments,
   i=a.length,
@@ -65,6 +82,12 @@ I=function(o){
 
   return F
 },
+//Bind
+//l=list of elements
+//v=event names
+//s=selector for children
+//f=function to trigger
+//m=fire once
 B=function(l,v,s,f,m){
   if(I(f,T,U))return B(l,v,N,s,f)
 
@@ -104,14 +127,14 @@ B=function(l,v,s,f,m){
       y=function(t){
         if(p.indexOf(t)>-1){
           if(m===T)x(f)
-          f.call(t,e)
+          return f.call(t,e)
         }
 
         if(!t.parentNode)return
-        y(t.parentNode)
+        return y(t.parentNode)
       }
 
-      y(e.srcElement)
+      return y(e.srcElement)
     }
 
     if(m===F)return x(f)
@@ -127,20 +150,26 @@ B=function(l,v,s,f,m){
 },
 S=function(t,k,v){
   var l=W.localStorage,
+  s=W.sessionStorage,
   j=JSON,
-  s=function(s,t){
+  r,
+  x=function(s,t){
     var n=D.createElement(s)
+
     n.innerText=t
+
     return D.head.appendChild(n)
   }
 
-  switch(t){
-    case 'local':return l?I(v,U)?l.getItem(k):l.setItem(k,v):U
-    case 'json':return I(k,"")?j.parse(k):j.stringify(k)
-    case 'run':return s('script',k)
-    case 'css':return s('style',k)
-    default:return S('local',t,k)
-  }
+  if(t=='session')r=s?v==U?s.getItem(k):s.setItem(k,v):U
+  else if(t=='local')r=l?v==U?l.getItem(k):l.setItem(k,v):U
+  else if(t=='json')r=I(k,"")?j.parse(k):j.stringify(k)
+  else if(t=='run')r=x('script',k)
+  else if(t=='css')r=x('style',k)
+  else if(t=='cookie')r=U
+  else r=S('local',t,k)
+
+  return r
 },
 
 C=function(o,f){
