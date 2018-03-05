@@ -185,11 +185,7 @@ P=function(o,a){
 },
 U//=undefined
 
-//----- Shorteners
-//Call
-//Prototype
-//Undefined
-//
+
 //----- Essentials
 //Document
 //Window
@@ -204,12 +200,14 @@ U//=undefined
 //List
 //Iterogate
 //Bind
-//Store
+//Storage
+//
+//----- Shorteners
+//Call
+//Prototype
+//Undefined
 //
 //
-//
-//Storage(type,key,value,options)
-//  -cookie
 //
 //Remote(method,url,data,function,headers)
 //
