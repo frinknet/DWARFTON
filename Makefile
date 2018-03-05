@@ -31,4 +31,4 @@ submodules:
 	@git submodule update --init --recursive
 
 clean:
-	@rm -f *.js
+	@rm -f *.js dist/*
