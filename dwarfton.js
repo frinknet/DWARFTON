@@ -193,32 +193,3 @@ P=function(o,a){
   return (a)?o[p]=P(a):o[p]||o.constructor[p]
 },
 U//=undefined
-
-
-//----- Essentials
-//Document
-//Window
-//Arrayize
-//Remote
-//False
-//True
-//Objectify
-//Null
-//
-//----- Auxilary
-//List
-//Iterogate
-//Bind
-//Storage
-//
-//----- Shorteners
-//Call
-//Prototype
-//Undefined
-//
-//
-//
-//Remote(method,url,data,function,headers)
-//
-//TODO:
-//- XHR needs to be mored from cue
