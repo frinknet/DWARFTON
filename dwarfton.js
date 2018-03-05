@@ -38,7 +38,7 @@ N=null,
 //s=selector
 //p=parent
 L=function(s,p){
-  var l;
+  var l
 
   p=p&&p.nodeName?p:D.documentElement
 
@@ -148,6 +148,10 @@ B=function(l,v,s,f,m){
 
   return l
 },
+//Storage
+//t=type
+//k=key
+//v=value
 S=function(t,k,v){
   var l=W.localStorage,
   s=W.sessionStorage,
@@ -171,12 +175,17 @@ S=function(t,k,v){
 
   return r
 },
-
+//call
+//o=object
+//f=function
 C=function(o,f){
   var a=[].slice.call(arguments,2)
 
   return f.apply(o,a.length>1?a:[].slice.call(a[0]))
 },
+//Prototype
+//o=object
+//a=alternative
 P=function(o,a){
   var p='prototype',
   o=Object(o)
