@@ -194,8 +194,8 @@ P=function(o,a){
   o=Object(o)
 
   return (a)?o[p]=P(a):o[p]||o.constructor[p]
-}
-var U//=undefined
+},
+U=W.undefined
 
 
 

@@ -56,6 +56,5 @@ else r=S('local',t,k)
 return r}
 /*CPU*/const C=function(o,f){var a=[].slice.call(arguments,2)
 return f.apply(o,a.length>1?a:[].slice.call(a[0]))},P=function(o,a){var p='prototype',o=Object(o)
-return (a)?o[p]=P(a):o[p]||o.constructor[p]}
-var U//=undefined
+return (a)?o[p]=P(a):o[p]||o.constructor[p]},U=W.undefined
 
