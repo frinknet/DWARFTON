@@ -15,5 +15,5 @@ P=function(o,a){
 
   return (a)?o[p]=P(a):o[p]||o.constructor[p]
 },
-U//=undefined
+U=undefined
 
