@@ -1,4 +1,7 @@
-default: clean submodules d.js d-basic.js d-libs.js d-cpu.js
+default: clean submodules dist
+
+dist: d.js d-basic.js d-libs.js d-cpu.js
+	@mv -f *.js dist/
 
 dwarfton.js: src/DWARFTON.js src/LIBS.js src/CPU.js 
 	@./build.sh $@ $+
