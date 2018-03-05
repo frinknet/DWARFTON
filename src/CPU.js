@@ -14,6 +14,7 @@ P=function(o,a){
   o=Object(o)
 
   return (a)?o[p]=P(a):o[p]||o.constructor[p]
-},
-U=undefined
+}
+var U//=undefined
+
 
