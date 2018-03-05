@@ -1,7 +1,5 @@
 #/bin/sh
 
-if [ -f COPYRIGHT ]; then
-  echo "/*©$(cat COPYRIGHT)*/"
-fi
+[ -f COPYRIGHT ] && echo "/*©$(cat COPYRIGHT)*/"
 
-utils/sed-minify/minifyjs dwafton.js > d.js
+utils/sed-minify/minifyjs dwarfton.js > d.js
