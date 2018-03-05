@@ -1,7 +1,6 @@
-/*2015 FRINKnet - MIT license*/
 "use strict"
 
-var DWARFTON=1.3,
+const DWARFTON=1.3,
 
 //Document
 D=document,
