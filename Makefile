@@ -4,16 +4,16 @@ dist: d.js d-basic.js d-libs.js d-cpu.js
 	@mv -f *.js dist/
 
 dwarfton.js: src/DWARFTON.js src/LIBS.js src/CPU.js 
-	@./build.sh $@ $+
+	@utils/build.sh $@ $+
 
 dwarfton-basic.js: src/DWARFTON.js
-	@./build.sh $@ $+
+	@utils/build.sh $@ $+
 
 dwarfton-libs.js: src/DWARFTON.js src/LIBS.js 
-	@./build.sh $@ $+
+	@utils/build.sh $@ $+
 
 dwarfton-cpu.js: src/DWARFTON.js src/CPU.js 
-	@./build.sh $@ $+
+	@utils/build.sh $@ $+
 
 d.js: dwarfton.js
 	@utils/sed-minify/minifyjs $+ > $@
