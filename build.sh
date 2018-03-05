@@ -2,4 +2,8 @@
 
 [ -f COPYRIGHT ] && echo "/*©$(cat COPYRIGHT)*/"
 
-utils/sed-minify/minifyjs dwarfton.js
+for x in $@;do
+  echo "/*$(basename $x .js)*/"
+  cat "$x"
+  echo
+done;
