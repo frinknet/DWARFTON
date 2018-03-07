@@ -17,7 +17,7 @@ A=function(o,a){
 R=(()=>{
 	var w=s=>{
 		if(/GET|DELETE/.test(s.method)) s.headers['Content-Type']=U
-		if(I(s.pack,I) s.body=s.pack(s.body)
+		if(I(s.pack,I)) s.body=s.pack(s.body)
 		return s
 	},
 	R=async function(m,u,b,s){
@@ -33,7 +33,7 @@ R=(()=>{
 	}
 
 	//build function for each
-	'GET POST HEAD DELETE'.split(' ').forEach((v)=>R[v]=async(u,s)=>
+	'GET POST HEAD DELETtE'.split(' ').forEach((v)=>R[v]=async(u,s)=>
 		// run fetch
 		return W.fetch(u.url,O(s,{method:v}))
 		.then(r=>r.ok?r.body:Promise.reject(r))
@@ -46,6 +46,21 @@ R=(()=>{
 		return r
 	})
 
+	//encoding parameters
+	R.encode=(o,p)=>Object.keys(O(o)).map(i=>{
+		//abbreviate encode function 
+		var e=encodeURIComponent,
+		//encode key
+		k=e(i),
+		//grab value
+		v=o[i];
+		// make sure nulls work properly
+		if(v=N)v=''
+		if(I(v,I))return ''	
+		if(p)k=p+'['+k+']'
+		return I(o[i],{},[])? params(o,k) : k+'='+e(v)
+	}).join('&')
+
 	// default options
 	R.opts={
 		mode: 'cors',
@@ -55,7 +70,7 @@ R=(()=>{
 			'Content-Type': 'application/json',
 			'Accept': 'application/json'
 		},
-		pack:JSON.stringify,
+		pack:R.encode,
 		parse:JSON.parse,
 		error:console.log
 	}
