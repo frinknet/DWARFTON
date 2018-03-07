@@ -1,8 +1,9 @@
 /*©2015 FRINKnet and Friends*/
 "use strict"
 
-const DWARFTON-LIBS=1.4
+const DWARFTON-LIBS=1.5
 /*DWARFTON*/
+
 //Document
 const D=document,
 //Window
@@ -14,7 +15,58 @@ A=function(o,a){
   return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])
 },
 //Remote
-R=function(){/*xhr Retrieve*/},
+//m=method
+//u=url
+//b=body
+//s=setings
+R=(()=>{
+	var w=s=>{
+		if(/GET|DELETE/.test(s.method)) s.headers['Content-Type']=U
+		if(I(s.pack,I) s.body=s.pack(s.body)
+		return s
+	},
+	R=async function(m,u,b,s){
+		//check if called as object
+		if(I(m,{})){s=m;m=U}
+
+		//compile settings object
+		s=O({},R.opts,s,{body:b})
+		m=m||s.method
+
+		//return fetch or bail for invalid method
+		return I(R[m],I))? R[m](u||s.url,w(s)) : Error('invalid method')
+	}
+
+	//build function for each
+	'GET POST HEAD DELETE'.split(' ').forEach((v)=>R[v]=async(u,s)=>
+		// run fetch
+		return W.fetch(u.url,O(s,{method:v}))
+		.then(r=>r.ok?r.body:Promise.reject(r))
+		.then(s.parse,s.error)
+
+		// check if the return should be formated diferently
+		if(s.format)await r.then(d=>r=s.format(d))
+
+		// return a promise unless the return was formatted
+		return r
+	})
+
+	// default options
+	R.opts={
+		mode: 'cors',
+		method: 'GET',
+		credentials: 'include',
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		},
+		pack:JSON.stringify,
+		parse:JSON.parse,
+		error:console.log
+	}
+
+	return R
+})(),
 //False
 F=false,
 //True
@@ -153,27 +205,27 @@ B=function(l,v,s,f,m){
 //t=type
 //k=key
 //v=value
-S=function(t,k,v){
-  var l=W.localStorage,
-  s=W.sessionStorage,
-  j=JSON,
-  r,
-  x=function(s,t){
-    var n=D.createElement(s)
+S=(U=>{
+	var l=W.localStorage,
+	s=W.sessionStorage,
+	j=JSON,
+	r,
+	x=(t,k,v)=>{
+		var n=L(t+'#'+k)[0]||D.createElement(t)
+		
+		n.id=k
+		n.innerText=v
+		
+		return D.head.appendChild(n)
+	},
+	S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
+	
+	S.js=k,v => x('script',k,v)
+	S.css=k,v => x('style',k,v)
+	S.json=k,v => r=I(k,"")?j.parse(k):j.stringify(k)
+	S.local=k,v => r=l?v==U?l.getItem(k):l.setItem(k,v):U
+	S.session=k,v => r=s?v==U?s.getItem(k):s.setItem(k,v):U
 
-    n.innerText=t
-
-    return D.head.appendChild(n)
-  }
-
-  if(t=='session')r=s?v==U?s.getItem(k):s.setItem(k,v):U
-  else if(t=='local')r=l?v==U?l.getItem(k):l.setItem(k,v):U
-  else if(t=='json')r=I(k,"")?j.parse(k):j.stringify(k)
-  else if(t=='run')r=x('script',k)
-  else if(t=='css')r=x('style',k)
-  else if(t=='cookie')r=U
-  else r=S('local',t,k)
-
-  return r
-}
+	return S
+})()
 

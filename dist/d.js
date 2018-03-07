@@ -1,6 +1,19 @@
 /*©2015 FRINKnet and Friends*/"use strict"
-const DWARFTON=1.4
-/*DWARFTON*/const D=document,W=window,A=function(o,a){return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])},R=function(){/*xhr Retrieve*/},F=false,T=true,O=function(o){var a=arguments,i=a.length,o=Object(o),x
+const DWARFTON=1.5
+/*DWARFTON*/const D=document,W=window,A=function(o,a){return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])},R=(()=>{var w=s=>{if(/GET|DELETE/.test(s.method)) s.headers['Content-Type']=U
+if(I(s.pack,I) s.body=s.pack(s.body)
+return s},R=async function(m,u,b,s){if(I(m,{})){s=m;m=U}
+s=O({},R.opts,s,{body:b})
+m=m||s.method
+return I(R[m],I))? R[m](u||s.url,w(s)) : Error('invalid method')}
+'GET POST HEAD DELETE'.split(' ').forEach((v)=>R[v]=async(u,s)=>
+return W.fetch(u.url,O(s,{method:v}))
+.then(r=>r.ok?r.body:Promise.reject(r))
+.then(s.parse,s.error)
+if(s.format)await r.then(d=>r=s.format(d))
+return r})
+R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/json','Accept': 'application/json'},pack:JSON.stringify,parse:JSON.parse,error:console.log}
+return R})(),F=false,T=true,O=function(o){var a=arguments,i=a.length,o=Object(o),x
 while(--i)for(x in O(a[i]))o[x]=a[i][x]
 return o},N=null
 /*LIBS*/const L=function(s,p){var l
@@ -43,17 +56,16 @@ n._evt=n._evt||{}
 n._evt[v]=n._evt[v]||[]
 n._evt[v].push([f,z])
 n.addEventListener(v,z,F)})
-return l},S=function(t,k,v){var l=W.localStorage,s=W.sessionStorage,j=JSON,r,x=function(s,t){var n=D.createElement(s)
-n.innerText=t
-return D.head.appendChild(n)}
-if(t=='session')r=s?v==U?s.getItem(k):s.setItem(k,v):U
-else if(t=='local')r=l?v==U?l.getItem(k):l.setItem(k,v):U
-else if(t=='json')r=I(k,"")?j.parse(k):j.stringify(k)
-else if(t=='run')r=x('script',k)
-else if(t=='css')r=x('style',k)
-else if(t=='cookie')r=U
-else r=S('local',t,k)
-return r}
+return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,r,x=(t,k,v)=>{var n=L(t+'#'+k)[0]||D.createElement(t)
+n.id=k
+n.innerText=v
+return D.head.appendChild(n)},S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
+S.js=k,v => x('script',k,v)
+S.css=k,v => x('style',k,v)
+S.json=k,v => r=I(k,"")?j.parse(k):j.stringify(k)
+S.local=k,v => r=l?v==U?l.getItem(k):l.setItem(k,v):U
+S.session=k,v => r=s?v==U?s.getItem(k):s.setItem(k,v):U
+return S})()
 /*CPU*/const C=function(o,f){var a=[].slice.call(arguments,2)
 return f.apply(o,a.length>1?a:[].slice.call(a[0]))},P=function(o,a){var p='prototype',o=Object(o)
 return (a)?o[p]=P(a):o[p]||o.constructor[p]},U=W.U
