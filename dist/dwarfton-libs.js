@@ -52,17 +52,13 @@ R=(()=>{
 		// run fetch
 		var r=W.fetch(u,O(s,{method:v}))
 		.then(d=>d.ok?d:Promise.reject(d))
+		.catch(this.error)
 
-		// check whether you want the resorce streaming
-		if(!I(s.streaming,T))
-			r.then(d=>d.text())
-
-		// now we can run the parser
-		r.then(s.parse,s.error)
-
-		// check if the return should be formated diferently
-		if(I(s.format,I))
-			await r.then(d=>r=s.format(d))
+		//streaming will return the formating
+		if(!s.streaming) await r.then(
+			d=>d.text().then(s.parse)
+			.then(d=>r=(s.format||v=>v)(d))
+		)
 
 		// return a promise unless the return was formatted
 		return r
@@ -92,7 +88,6 @@ R=(()=>{
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
 		pack:R.encode,
-		format:v=>v,
 		error:console.log
 	}
 

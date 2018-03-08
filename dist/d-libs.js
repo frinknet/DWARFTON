@@ -11,17 +11,17 @@ return I(R[m],R)? R[m](u||s.url,w(s)) : Error('invalid method')}
 'GET POST PUT HEAD DELETE'.split(' ').forEach((v)=>R[v]=async(u,s={})=>{if(I(u,{})){s=u;u=s.url}
 var r=W.fetch(u,O(s,{method:v}))
 .then(d=>d.ok?d:Promise.reject(d))
-if(!I(s.streaming,T))
-r.then(d=>d.text())
-r.then(s.parse,s.error)
-if(I(s.format,I))
-await r.then(d=>r=s.format(d))
+.catch(this.error)
+if(!s.streaming) await r.then(
+d=>d.text().then(s.parse)
+.then(d=>r=(s.format||v=>v)(d))
+)
 return r})
 R.encode=(o,p)=>Object.keys(O(o)).map(i=>{var e=encodeURIComponent,k=e(i),v=o[i];if(v=N)v=''
 if(I(v,I))return ''
 if(p)k=p+'['+k+']'
 return I(o[i],{},[])? params(o,k) : k+'='+e(v)}).join('&')
-R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,format:v=>v,error:console.log}
+R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
 return R})(),F=false,T=true,O=function(o){var a=arguments,i=a.length,o=Object(o),x
 while(--i)for(x in O(a[i]))o[x]=a[i][x]
 return o},N=null
