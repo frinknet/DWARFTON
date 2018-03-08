@@ -46,8 +46,14 @@ R=(()=>{
 
 		// run fetch
 		var r=W.fetch(u,O(s,{method:v}))
-		.then(d=>d.ok?d.body:Promise.reject(d))
-		.then(s.parse,s.error)
+		.then(d=>d.ok?d:Promise.reject(d))
+
+		// check whether you want the resorce streaming
+		if(I(s.streaming,F,U))
+			r.then(d=>d.text().then(d=>d))
+
+		// now we can run the parser
+		r.then(s.parse,s.error)
 
 		// check if the return should be formated diferently
 		if(I(s.format,R))
