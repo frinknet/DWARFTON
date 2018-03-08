@@ -41,22 +41,16 @@ else
 o[x]=a[i][x]
 return o},N=null
 /*LIBS*/const L=function(s,p){var l
-p=p&&p.nodeName?p:D.documentElement
-switch(T){case s===U:break
-case !!s._sel:return s
-case I(s,[]):l=[].concat.apply([],s.map(L))
-break
-case I(s,W,D):case !!s.nodeName:l=[s]
-break
-case /<\w+[^>]*>/.test(s):l=D.createElement('p')
+else p=p?p.nodeName?p:L(p):D.documentElement
+if(s==U)l
+else if(s._sel)return s
+else if(I(s,[])l=[].concat.apply([],s.map(L))
+else if(I(s,W,D)||s.nodeName)l=[s]
+else if(/<\w+[^>]*>/.test(s)){l=D.createElement('p')
 l.innerHTML=s
-l=l.childNodes
-break
-case !!p.nodeName:l=p.querySelectorAll(s)}
-l=A(l)
-l._sel=[s,p]
-l.constructor=L
-return l},I=function(o){var a=arguments,i=a.length,c='constructor',t=typeof o
+l=l.childNodes}else if(p._sel)l=[].concat.apply([],p.map(p=>L(s,p)))
+else if(p.nodeName)l=p.querySelectorAll(s)
+return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,i=a.length,c='constructor',t=typeof o
 if(i==1)return o===N?'null':t=='object'?(c=O(o)[c])!=Object?c.name:t:t
 else while(--i)if(o===(t=a[i])||(o||o===""||o===F||o===0)&&(t||t===""||t===F||t===0)&&((o=O(o))[c]==O(t)[c]||o[c]==t))return T
 return F},B=function(l,v,s,f,m){if(I(f,T,U))return B(l,v,N,s,f)
@@ -80,14 +74,12 @@ n._evt=n._evt||{}
 n._evt[v]=n._evt[v]||[]
 n._evt[v].push([f,z])
 n.addEventListener(v,z,F)})
-return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,r,x=(t,k,v)=>{var n=L(t+'#'+k)[0]||D.createElement(t)
-n.id=k
-n.innerText=v
-return D.head.appendChild(n)},S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
-S.js=(k,v)=> x('script',k,v)
-S.css=(k,v)=> x('style',k,v)
-S.json=(k,v)=> r=I(k,"")?j.parse(k):j.stringify(k)
-S.local=(k,v)=> r=l?v==U?l.getItem(k):l.setItem(k,v):U
-S.session=(k,v)=> r=s?v==U?s.getItem(k):s.setItem(k,v):U
+return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,r,x=(t,k,v)=>{var l=L(t+'#'+k)[0],m=l&&l.innerText,n=O(D.createElement(t),{id:k,innerText:v||m})
+return v?l?D.head.appendChild(n):l.replaceWith(n):m},S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
+S.js=(k,v)=>x('script',k,v)
+S.css=(k,v)=>x('style',k,v)
+S.json=(k,v)=>r=I(k,"")?j.parse(k):j.stringify(k)
+S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
+S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
 return S})()
 
