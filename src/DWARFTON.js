@@ -16,7 +16,9 @@ A=function(o,a){
 //s=setings
 R=(()=>{
 	var w=s=>{
-		if(/GET|DELETE/.test(s.method)) s.headers['Content-Type']=U
+		// remove content type for posts that shouldn't have it
+		if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
+		// otherwise pack body
 		else if(I(s.pack,I)) s.body=s.pack(s.body)
 
 		return s
@@ -38,7 +40,7 @@ R=(()=>{
 	}
 
 	//build function for each
-	'GET POST HEAD DELETtE'.split(' ').forEach((v)=>R[v]=async(u,s={})=>{
+	'GET POST PUT HEAD DELETE'.split(' ').forEach((v)=>R[v]=async(u,s={})=>{
 		//allow running as R.GET(settings)
 		if(I(u,{})){s=u;u=s.url}
 
@@ -75,7 +77,7 @@ R=(()=>{
 		method: 'GET',
 		credentials: 'include',
 		headers: {
-			'Content-Type': 'application/json',
+			'Content-Type': 'application/x-www-form-urlencoded',
 			'Accept': 'application/json'
 		},
 		pack:R.encode,
