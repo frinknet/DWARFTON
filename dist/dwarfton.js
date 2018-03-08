@@ -19,7 +19,7 @@ A=function(o,a){
 //u=url
 //b=body
 //s=setings
-R=(()=>{
+R=(U=>{
 	var w=s=>{
 		if(/GET|DELETE/.test(s.method)) s.headers['Content-Type']=U
 		if(I(s.pack,I)) s.body=s.pack(s.body)
