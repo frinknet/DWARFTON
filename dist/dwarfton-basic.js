@@ -72,14 +72,14 @@ R=(U=>{
 		//grab value
 		v=o[i];
 		// make sure nulls work properly
-		if(v=N)v=''
+		if(v==N)v=''
 		if(I(v,I))return ''	
 		if(p)k=p+'['+k+']'
-		return I(o[i],{},[])? R.encode(o,k) : k+'='+e(v)
+		return I(o[i],{},[])? R.encode(o[i],k) : k+'='+e(v)
 	}).join('&')
 
 	//decore parameters
-	R.decode=(q)=>{
+	R.decode=q=>{
 		//shortening decoder
 		var d=decodeURIComponent,
 		//intialize output object
@@ -98,7 +98,7 @@ R=(U=>{
 		z
 		
 		// loop pairs
-		do {
+		do{
 			//split pair to key and value
 		    	p=a[i].split('=')
 			//split key to it's pieces
@@ -110,7 +110,7 @@ R=(U=>{
 		    	//set key
 		    	k==''?N:d(p[1])
 		    //keep looping until all keys are mapped
-		} while(++i<a.length)
+		}while(++i<a.length)
 		
 		return o;
 	}

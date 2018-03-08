@@ -16,17 +16,17 @@ d=>d.text().then(s.parse)
 )
 else r.then(s.parse)
 return r})
-R.encode=(o,p)=>Object.keys(O(o)).map(i=>{var e=encodeURIComponent,k=e(i),v=o[i];if(v=N)v=''
+R.encode=(o,p)=>Object.keys(O(o)).map(i=>{var e=encodeURIComponent,k=e(i),v=o[i];if(v==N)v=''
 if(I(v,I))return ''
 if(p)k=p+'['+k+']'
-return I(o[i],{},[])? R.encode(o,k) : k+'='+e(v)}).join('&')
-R.decode=(q)=>{var d=decodeURIComponent,o={},a=(q[0]==='?'? q.slice(1) : q).split('&'),i=0
+return I(o[i],{},[])? R.encode(o[i],k) : k+'='+e(v)}).join('&')
+R.decode=q=>{var d=decodeURIComponent,o={},a=(q[0]==='?'? q.slice(1) : q).split('&'),i=0
 p,k,v,z
-do {p=a[i].split('=')
+do{p=a[i].split('=')
 z=p[0].replace(/]/g,'').split('[')
 k=o
 while(v=z.shift(),v=d(v))k=k[v]=k[v]||isFinite(v)?[]:{}
-k==''?N:d(p[1])} while(++i<a.length)
+k==''?N:d(p[1])}while(++i<a.length)
 return o;}
 R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
 return R})(),F=false,T=true,O=function(o){var a=arguments,i=a.length,o=Object(o),x
