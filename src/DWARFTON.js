@@ -14,7 +14,7 @@ A=function(o,a){
 //u=url
 //b=body
 //s=setings
-R=(()=>{
+R=(U=>{
 	var w=s=>{
 		// remove content type for posts that shouldn't have it
 		if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
@@ -73,7 +73,8 @@ R=(()=>{
 		return I(o[i],{},[])? R.encode(o,k) : k+'='+e(v)
 	}).join('&')
 
-	decode=(q)=>{
+	//decore parameters
+	R.decode=(q)=>{
 		//shortening decoder
 		var d=decodeURIComponent,
 		//intialize output object

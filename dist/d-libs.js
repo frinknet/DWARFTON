@@ -1,6 +1,6 @@
 /*©2015 FRINKnet and Friends*/"use strict"
 const DWARFTON-LIBS=1.3
-/*DWARFTON*/const D=document,W=window,A=function(o,a){return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])},R=(()=>{var w=s=>{if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
+/*DWARFTON*/const D=document,W=window,A=function(o,a){return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])},R=(U=>{var w=s=>{if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
 else if(I(s.pack,I)) s.body=s.pack(s.body)
 return s},R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
@@ -20,7 +20,7 @@ R.encode=(o,p)=>Object.keys(O(o)).map(i=>{var e=encodeURIComponent,k=e(i),v=o[i]
 if(I(v,I))return ''
 if(p)k=p+'['+k+']'
 return I(o[i],{},[])? R.encode(o,k) : k+'='+e(v)}).join('&')
-decode=(q)=>{var d=decodeURIComponent,o={},a=(q[0]==='?'? q.slice(1) : q).split('&'),i=0
+R.decode=(q)=>{var d=decodeURIComponent,o={},a=(q[0]==='?'? q.slice(1) : q).split('&'),i=0
 p,k,v,z
 do {p=a[i].split('=')
 z=p[0].replace(/]/g,'').split('[')
