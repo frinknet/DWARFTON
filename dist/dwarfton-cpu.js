@@ -50,7 +50,7 @@ R=(()=>{
 		if(I(u,{})){s=u;u=s.url}
 
 		// run fetch
-		return W.fetch(u,O(s,{method:v}))
+		var r=W.fetch(u,O(s,{method:v}))
 		.then(r=>r.ok?r.body:Promise.reject(r))
 		.then(s.parse,s.error)
 
