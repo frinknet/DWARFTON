@@ -49,17 +49,15 @@ R=(()=>{
 		.then(d=>d.ok?d:Promise.reject(d))
 
 		// check whether you want the resorce streaming
-		if(I(s.streaming,F,U))
-			r.then(d=>d.text().then(d=>d))
+		if(I(s.streaming,T))
+			r.then(async(d)=>d.text().then(t=>t))
 
 		// now we can run the parser
 		r.then(s.parse,s.error)
 
 		// check if the return should be formated diferently
 		if(I(s.format,I))
-			await r.then(
-				d=>r=s.format(d)
-			)
+			await r.then(d=>r=s.format(d))
 
 		// return a promise unless the return was formatted
 		return r
