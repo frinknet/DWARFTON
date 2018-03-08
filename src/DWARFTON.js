@@ -49,7 +49,7 @@ R=(()=>{
 		.then(d=>d.ok?d:Promise.reject(d))
 
 		// check whether you want the resorce streaming
-		if(I(s.streaming,T))
+		if(!I(s.streaming,T))
 			r.then(d=>d.text())
 
 		// now we can run the parser
