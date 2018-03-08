@@ -10,7 +10,7 @@ u=u||s.url
 return I(R[m],R)? R[m](u||s.url,w(s)) : Error('invalid method')}
 'GET POST PUT HEAD DELETE'.split(' ').forEach((v)=>R[v]=async(u,s={})=>{if(I(u,{})){s=u;u=s.url}
 var r=W.fetch(u,O(s,{method:v}))
-.then(r=>r.ok?r.body:Promise.reject(r))
+.then(d=>d.ok?d.body:Promise.reject(d))
 .then(s.parse,s.error)
 if(I(s.format,R))
 await r.then(

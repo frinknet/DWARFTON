@@ -51,7 +51,7 @@ R=(()=>{
 
 		// run fetch
 		var r=W.fetch(u,O(s,{method:v}))
-		.then(r=>r.ok?r.body:Promise.reject(r))
+		.then(d=>d.ok?d.body:Promise.reject(d))
 		.then(s.parse,s.error)
 
 		// check if the return should be formated diferently
