@@ -89,6 +89,10 @@ R=(U=>{
 		k,
 		//value variable
 		v,
+		//juggle variable
+		j,
+		//object initialization
+		q,
 		//array of keys
 		z
 		
@@ -99,12 +103,16 @@ R=(U=>{
 			//split key to it's pieces
 			z=p[0].replace(/]/g,'').split('[')
 			//reset key to output object
-			k=o
+			q=o
 			//loop through key parts to initialize opjects
-			while((v=z.shift())&&(v=d(v)))
-				k=k[v]=k[v]||isFinite(v)? [] : {}
+			while(j=z.shift()){
+				v=d(j))
+				k=q
+				q=q[v]=q[v]||isFinite(v)? [] : {}
+			}
+
 		    	//set key
-		    	k=p[1]==''?N:d(p[1])
+		    	k[v]=p[1]==''?N:d(p[1])
 		    //keep looping until all keys are mapped
 		}while(++i<a.length)
 		
