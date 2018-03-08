@@ -12,7 +12,7 @@ return I(R[m],R)? R[m](u||s.url,w(s)) : Error('invalid method')}
 var r=W.fetch(u,O(s,{method:v}))
 .then(d=>d.ok?d:Promise.reject(d))
 if(I(s.streaming,T))
-r.then(async(d)=>d.text().then(t=>t))
+r.then(d=>await d.text().then(t=>t))
 r.then(s.parse,s.error)
 if(I(s.format,I))
 await r.then(d=>r=s.format(d))

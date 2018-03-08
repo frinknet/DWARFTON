@@ -55,7 +55,7 @@ R=(()=>{
 
 		// check whether you want the resorce streaming
 		if(I(s.streaming,T))
-			r.then(async(d)=>d.text().then(t=>t))
+			r.then(d=>await d.text().then(t=>t))
 
 		// now we can run the parser
 		r.then(s.parse,s.error)
