@@ -17,7 +17,8 @@ A=function(o,a){
 R=(()=>{
 	var w=s=>{
 		if(/GET|DELETE/.test(s.method)) s.headers['Content-Type']=U
-		if(I(s.pack,I)) s.body=s.pack(s.body)||U
+		else if(I(s.pack,I)) s.body=s.pack(s.body)
+
 		return s
 	},
 	R=async function(m,u,b,s){
