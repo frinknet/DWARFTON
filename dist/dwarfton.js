@@ -107,17 +107,18 @@ R=(U=>{
 		    	p=a[i].split('=')
 			//split key to it's pieces
 			z=p[0].replace(/]/g,'').split('[')
-			//reset key to output object
-			q=o
+			//set value
+		    	v=p[1]==''?N:d(p[1])
 			//loop through key parts to initialize opjects
-			while(j=z.shift()){
-				v=d(j)
-				k=q
-				q=q[v]=q[v]||isFinite(v)? [] : {}
+			while(j=z.pop()){
+				k=d(j)
+				q=isFinite(j)? [] : {}
+				q[k]=v
+				v=q
 			}
 
 		    	//set key
-		    	k[v]=p[1]==''?N:d(p[1])
+			O(o,q)
 		    //keep looping until all keys are mapped
 		}while(++i<a.length)
 		
