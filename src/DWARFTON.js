@@ -106,7 +106,7 @@ R=(U=>{
 			q=o
 			//loop through key parts to initialize opjects
 			while(j=z.shift()){
-				v=d(j))
+				v=d(j)
 				k=q
 				q=q[v]=q[v]||isFinite(v)? [] : {}
 			}

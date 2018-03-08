@@ -24,7 +24,7 @@ R.decode=s=>{var d=decodeURIComponent,o={},a=(s[0]=='?'? s.slice(1) : s).split('
 do{p=a[i].split('=')
 z=p[0].replace(/]/g,'').split('[')
 q=o
-while(j=z.shift()){v=d(j))
+while(j=z.shift()){v=d(j)
 k=q
 q=q[v]=q[v]||isFinite(v)? [] : {}}
 k[v]=p[1]==''?N:d(p[1])}while(++i<a.length)
