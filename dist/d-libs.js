@@ -6,7 +6,7 @@ return s},R=async function(m,u,b,s){if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
 s=O({},R.opts,s,{body:b})
 m=m||s.method
-return I(R[m],I)? R[m](u||s.url,w(s)) : Error('invalid method')}
+return I(R[m],R)? R[m](u||s.url,w(s)) : Error('invalid method')}
 'GET POST HEAD DELETtE'.split(' ').forEach((v)=>R[v]=async(u,s)=>{return W.fetch(u.url,O(s,{method:v}))
 .then(r=>r.ok?r.body:Promise.reject(r))
 .then(s.parse,s.error)

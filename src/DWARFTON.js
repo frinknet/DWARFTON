@@ -32,7 +32,7 @@ R=(()=>{
 		m=m||s.method
 
 		//return fetch or bail for invalid method
-		return I(R[m],I)? R[m](u||s.url,w(s)) : Error('invalid method')
+		return I(R[m],R)? R[m](u||s.url,w(s)) : Error('invalid method')
 	}
 
 	//build function for each
