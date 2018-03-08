@@ -50,7 +50,8 @@ R=(()=>{
 		.then(s.parse,s.error)
 
 		// check if the return should be formated diferently
-		if(s.format)await r.then(d=>r=s.format(d))
+		if(s.format)
+			await r.then(d=>r=s.format(d))
 
 		// return a promise unless the return was formatted
 		return r
@@ -77,11 +78,10 @@ R=(()=>{
 		method: 'GET',
 		credentials: 'include',
 		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
-			'Accept': 'application/json'
+			'Content-Type': 'application/x-www-form-urlencoded'
 		},
 		pack:R.encode,
-		parse:JSON.parse,
+		format:v=>v,
 		error:console.log
 	}
 

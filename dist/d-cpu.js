@@ -12,13 +12,14 @@ return I(R[m],R)? R[m](u||s.url,w(s)) : Error('invalid method')}
 return W.fetch(u,O(s,{method:v}))
 .then(r=>r.ok?r.body:Promise.reject(r))
 .then(s.parse,s.error)
-if(s.format)await r.then(d=>r=s.format(d))
+if(s.format)
+await r.then(d=>r=s.format(d))
 return r})
 R.encode=(o,p)=>Object.keys(O(o)).map(i=>{var e=encodeURIComponent,k=e(i),v=o[i];if(v=N)v=''
 if(I(v,I))return ''
 if(p)k=p+'['+k+']'
 return I(o[i],{},[])? params(o,k) : k+'='+e(v)}).join('&')
-R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded','Accept': 'application/json'},pack:R.encode,parse:JSON.parse,error:console.log}
+R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,format:v=>v,error:console.log}
 return R})(),F=false,T=true,O=function(o){var a=arguments,i=a.length,o=Object(o),x
 while(--i)for(x in O(a[i]))o[x]=a[i][x]
 return o},N=null
