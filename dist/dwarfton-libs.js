@@ -58,7 +58,8 @@ R=(()=>{
 		if(!s.streaming) await r.then(
 			d=>d.text().then(s.parse)
 			.then(d=>r=(I(s.format,I,R)?s.format:v=>v)(d))
-		)else r.then(s.parse)
+		)
+		else r.then(s.parse)
 
 		// return a promise unless the return was formatted
 		return r

@@ -15,7 +15,8 @@ var r=W.fetch(u,O(s,{method:v}))
 if(!s.streaming) await r.then(
 d=>d.text().then(s.parse)
 .then(d=>r=(I(s.format,I,R)?s.format:v=>v)(d))
-)else r.then(s.parse)
+)
+else r.then(s.parse)
 return r})
 R.encode=(o,p)=>Object.keys(O(o)).map(i=>{var e=encodeURIComponent,k=e(i),v=o[i];if(v=N)v=''
 if(I(v,I))return ''
