@@ -38,7 +38,7 @@ R=(()=>{
 	}
 
 	//build function for each
-	'GET POST HEAD DELETtE'.split(' ').forEach((v)=>R[v]=async(u,s)=>
+	'GET POST HEAD DELETtE'.split(' ').forEach((v)=>R[v]=async(u,s)=>{
 		// run fetch
 		return W.fetch(u.url,O(s,{method:v}))
 		.then(r=>r.ok?r.body:Promise.reject(r))
