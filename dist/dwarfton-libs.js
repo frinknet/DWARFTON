@@ -55,8 +55,10 @@ R=(()=>{
 		.then(s.parse,s.error)
 
 		// check if the return should be formated diferently
-		if(s.format)
-			await r.then(d=>r=s.format(d))
+		if(I(s.format,R))
+			await r.then(
+				d=>r=s.format(d)
+			)
 
 		// return a promise unless the return was formatted
 		return r

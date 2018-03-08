@@ -12,8 +12,10 @@ return I(R[m],R)? R[m](u||s.url,w(s)) : Error('invalid method')}
 var r=W.fetch(u,O(s,{method:v}))
 .then(r=>r.ok?r.body:Promise.reject(r))
 .then(s.parse,s.error)
-if(s.format)
-await r.then(d=>r=s.format(d))
+if(I(s.format,R))
+await r.then(
+d=>r=s.format(d)
+)
 return r})
 R.encode=(o,p)=>Object.keys(O(o)).map(i=>{var e=encodeURIComponent,k=e(i),v=o[i];if(v=N)v=''
 if(I(v,I))return ''
