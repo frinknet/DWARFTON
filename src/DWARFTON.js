@@ -24,6 +24,9 @@ R=(()=>{
 		//check if called as object
 		if(I(m,{})){s=m;m=U}
 
+		//allow us to call gets without anything
+		if(u==U){u=m;m=U}
+
 		//compile settings object
 		s=O({},R.opts,s,{body:b})
 		m=m||s.method

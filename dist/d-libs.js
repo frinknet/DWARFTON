@@ -3,6 +3,7 @@ const DWARFTON-LIBS=1.3
 /*DWARFTON*/const D=document,W=window,A=function(o,a){return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])},R=(()=>{var w=s=>{if(/GET|DELETE/.test(s.method)) s.headers['Content-Type']=U
 if(I(s.pack,I)) s.body=s.pack(s.body)
 return s},R=async function(m,u,b,s){if(I(m,{})){s=m;m=U}
+if(u==U){u=m;m=U}
 s=O({},R.opts,s,{body:b})
 m=m||s.method
 return I(R[m],I)? R[m](u||s.url,w(s)) : Error('invalid method')}
