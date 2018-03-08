@@ -21,7 +21,7 @@ R=(()=>{
 
 		return s
 	},
-	R=async function(m,u,b,s){
+	R=async function(m,u,b={},s={}){
 		//check if called as object
 		if(I(m,{})){s=m;m=U}
 
@@ -31,15 +31,19 @@ R=(()=>{
 		//compile settings object
 		s=O({},R.opts,s,{body:b})
 		m=m||s.method
+		u=u||s.url
 
 		//return fetch or bail for invalid method
 		return I(R[m],R)? R[m](u||s.url,w(s)) : Error('invalid method')
 	}
 
 	//build function for each
-	'GET POST HEAD DELETtE'.split(' ').forEach((v)=>R[v]=async(u,s)=>{
+	'GET POST HEAD DELETtE'.split(' ').forEach((v)=>R[v]=async(u,s={})=>{
+		//allow running as R.GET(settings)
+		if(I(u,{})){s=u;u=s.url}
+
 		// run fetch
-		return W.fetch(u.url,O(s,{method:v}))
+		return W.fetch(u,O(s,{method:v}))
 		.then(r=>r.ok?r.body:Promise.reject(r))
 		.then(s.parse,s.error)
 
