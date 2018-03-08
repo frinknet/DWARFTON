@@ -19,7 +19,7 @@ A=function(o,a){
 //u=url
 //b=body
 //s=setings
-R=(U=>{
+R=(()=>{
 	var w=s=>{
 		if(/GET|DELETE/.test(s.method)) s.headers['Content-Type']=U
 		if(I(s.pack,I)) s.body=s.pack(s.body)
@@ -235,11 +235,11 @@ S=(U=>{
 	},
 	S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
 	
-	S.js=k,v => x('script',k,v)
-	S.css=k,v => x('style',k,v)
-	S.json=k,v => r=I(k,"")?j.parse(k):j.stringify(k)
-	S.local=k,v => r=l?v==U?l.getItem(k):l.setItem(k,v):U
-	S.session=k,v => r=s?v==U?s.getItem(k):s.setItem(k,v):U
+	S.js=(k,v)=> x('script',k,v)
+	S.css=(k,v)=> x('style',k,v)
+	S.json=(k,v)=> r=I(k,"")?j.parse(k):j.stringify(k)
+	S.local=(k,v)=> r=l?v==U?l.getItem(k):l.setItem(k,v):U
+	S.session=(k,v)=> r=s?v==U?s.getItem(k):s.setItem(k,v):U
 
 	return S
 })()

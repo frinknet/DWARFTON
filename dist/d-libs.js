@@ -63,10 +63,10 @@ return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,r,x=(t,k,v)=>{va
 n.id=k
 n.innerText=v
 return D.head.appendChild(n)},S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
-S.js=k,v => x('script',k,v)
-S.css=k,v => x('style',k,v)
-S.json=k,v => r=I(k,"")?j.parse(k):j.stringify(k)
-S.local=k,v => r=l?v==U?l.getItem(k):l.setItem(k,v):U
-S.session=k,v => r=s?v==U?s.getItem(k):s.setItem(k,v):U
+S.js=(k,v)=> x('script',k,v)
+S.css=(k,v)=> x('style',k,v)
+S.json=(k,v)=> r=I(k,"")?j.parse(k):j.stringify(k)
+S.local=(k,v)=> r=l?v==U?l.getItem(k):l.setItem(k,v):U
+S.session=(k,v)=> r=s?v==U?s.getItem(k):s.setItem(k,v):U
 return S})()
 
