@@ -147,8 +147,10 @@ O=function(o){
   x
 
   while(--i)for(x in O(a[i]))
-  if(I(a[i][x],{},[]))
-	O(o[x],a[i][x])
+  if(I(a[i][x],{}))
+	O(o[x]||{},a[i][x])
+  else if(I(a[i][x],[]))
+	O(o[x]||[],a[i][x])
   else
 	o[x]=a[i][x]
 

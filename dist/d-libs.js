@@ -33,8 +33,10 @@ return o;}
 R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
 return R})(),F=false,T=true,O=function(o){var a=arguments,i=a.length,o=Object(o),x
 while(--i)for(x in O(a[i]))
-if(I(a[i][x],{},[]))
-O(o[x],a[i][x])
+if(I(a[i][x],{}))
+O(o[x]||{},a[i][x])
+else if(I(a[i][x],[]))
+O(o[x]||[],a[i][x])
 else
 o[x]=a[i][x]
 return o},N=null
