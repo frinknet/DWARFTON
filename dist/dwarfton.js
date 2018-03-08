@@ -28,7 +28,7 @@ R=(()=>{
 
 		return s
 	},
-	R=async function(m,u,b={},s={}){
+	R=function(m,u,b={},s={}){
 		//check if called as object
 		if(I(m,{})){s=m;m=U}
 
@@ -61,7 +61,7 @@ R=(()=>{
 		r.then(s.parse,s.error)
 
 		// check if the return should be formated diferently
-		if(I(s.format,R))
+		if(I(s.format,I))
 			await r.then(
 				d=>r=s.format(d)
 			)
