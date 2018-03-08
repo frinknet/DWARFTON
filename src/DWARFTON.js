@@ -23,7 +23,7 @@ R=(()=>{
 
 		return s
 	},
-	R=function(m,u,b={},s={}){
+	R=async function(m,u,b={},s={}){
 		//check if called as object
 		if(I(m,{})){s=m;m=U}
 
