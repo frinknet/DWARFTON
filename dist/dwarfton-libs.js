@@ -106,7 +106,7 @@ R=(U=>{
 			//reset key to output object
 			k=o
 			//loop through key parts to initialize opjects
-			while(v=z.shift()&&v=d(v))
+			while((v=z.shift())&&(v=d(v)))
 				k=k[v]=k[v]||isFinite(v)? [] : {}
 		    	//set key
 		    	k==''?N:d(p[1])
