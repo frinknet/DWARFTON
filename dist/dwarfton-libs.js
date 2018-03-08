@@ -79,15 +79,15 @@ R=(U=>{
 	}).join('&')
 
 	//decore parameters
-	R.decode=q=>{
+	R.decode=s=>{
 		//shortening decoder
 		var d=decodeURIComponent,
 		//intialize output object
 		o={},
 		//split query to array
-		a=(q[0]==='?'? q.slice(1) : q).split('&'),
+		a=(s[0]=='?'? s.slice(1) : s).split('&'),
 		//initialize iterator
-		i=0
+		i=0,
 		//pairs variable
 		p,
 		//key variable
