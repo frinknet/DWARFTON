@@ -109,7 +109,7 @@ R=(U=>{
 			while((v=z.shift())&&(v=d(v)))
 				k=k[v]=k[v]||isFinite(v)? [] : {}
 		    	//set key
-		    	k==''?N:d(p[1])
+		    	k=p[1]==''?N:d(p[1])
 		    //keep looping until all keys are mapped
 		}while(++i<a.length)
 		

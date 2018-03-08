@@ -26,7 +26,7 @@ z=p[0].replace(/]/g,'').split('[')
 k=o
 while((v=z.shift())&&(v=d(v)))
 k=k[v]=k[v]||isFinite(v)? [] : {}
-k==''?N:d(p[1])}while(++i<a.length)
+k=p[1]==''?N:d(p[1])}while(++i<a.length)
 return o;}
 R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
 return R})(),F=false,T=true,O=function(o){var a=arguments,i=a.length,o=Object(o),x
