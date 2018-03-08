@@ -11,11 +11,11 @@ return I(R[m],R)? R[m](u||s.url,w(s)) : Error('invalid method')}
 'GET POST PUT HEAD DELETE'.split(' ').forEach((v)=>R[v]=async(u,s={})=>{if(I(u,{})){s=u;u=s.url}
 var r=W.fetch(u,O(s,{method:v}))
 .then(d=>d.ok?d:Promise.reject(d))
-.catch(this.error)
+.catch(s.error)
 if(!s.streaming) await r.then(
 d=>d.text().then(s.parse)
-.then(d=>r=(s.format||v=>v)(d))
-)
+.then(d=>r=(I(s.format,I,R)?s.format:v=>v)(d))
+)else r.then(s.parse)
 return r})
 R.encode=(o,p)=>Object.keys(O(o)).map(i=>{var e=encodeURIComponent,k=e(i),v=o[i];if(v=N)v=''
 if(I(v,I))return ''

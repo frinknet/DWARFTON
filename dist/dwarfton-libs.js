@@ -52,13 +52,13 @@ R=(()=>{
 		// run fetch
 		var r=W.fetch(u,O(s,{method:v}))
 		.then(d=>d.ok?d:Promise.reject(d))
-		.catch(this.error)
+		.catch(s.error)
 
 		//streaming will return the formating
 		if(!s.streaming) await r.then(
 			d=>d.text().then(s.parse)
-			.then(d=>r=(s.format||v=>v)(d))
-		)
+			.then(d=>r=(I(s.format,I,R)?s.format:v=>v)(d))
+		)else r.then(s.parse)
 
 		// return a promise unless the return was formatted
 		return r
