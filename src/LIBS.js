@@ -2,34 +2,54 @@
 //s=selector
 //p=parent
 const L=function(s,p){
-	var l
+	//iinstance list variable
+	var l,
+	a=[].concat.apply
 
-	else p=p?p.nodeName?p:L(p):D.documentElement
+	//make sure we have a parent node or list
+	p=p?p:D.documentElement
 
+	//a null selector should present a blank list
 	if(s==U)l
+	//passing a selection again should cause passthrough
 	else if(s._sel)return s
-	else if(I(s,[])l=[].concat.apply([],s.map(L))
+	//an array selector should apply the elector 
+	else if(I(s,[])l=a([],s.map(L))
+	//if youre passing a window, document or node it should pass through
 	else if(I(s,W,D)||s.nodeName)l=[s]
+	//if you pass in html it should be turned into a node list
 	else if(/<\w+[^>]*>/.test(s)){
+		// create a placeholder paragraph
 		l=D.createElement('p')
+		//load in string as html
 		l.innerHTML=s
+		//rescope to child nodes that were created
 		l=l.childNodes
 	}
-	else if(p._sel)l=[].concat.apply([],p.map(p=>L(s,p)))
+	//if parent is a node run internal selector
 	else if(p.nodeName)l=p.querySelectorAll(s)
+	//if all else failes assume parent need selected and map/reduced
+	else l=a([],L(p).map(p=>L(s,p)))
 
+	// turn list into list object
 	return O(A(l),{_sel:[s,p],constructor:L})
 },
 //Interogate
 //o..=objects
 I=function(o){
+	//shortne arguments variable
 	var a=arguments,
-	i=a.length,
+	//shorten constructor property
 	c='constructor',
-	t=typeof o
+	//store type of passed in object
+	t=typeof o,
+	//get argume count
+	i=a.length
 
+	//if one arg get object type or constructor name for objects
 	if(i==1)return o===N?'null':t=='object'?(c=O(o)[c])!=Object?c.name:t:t
-	else while(--i)if(o===(t=a[i])||(o||o===""||o===F||o===0)&&(t||t===""||t===F||t===0)&&((o=O(o))[c]==O(t)[c]||o[c]==t))return T
+	//loop through check for equality then check constructors
+	else while(--i)if(o===(t=a[i])||o!=N&&o!=U&&(!=N&&t!=U&&(o=O(o))[c]==O(t)[c]||o[c]==t)return T
 
 	return F
 },
@@ -40,13 +60,16 @@ I=function(o){
 //f=function to trigger
 //m=fire once
 B=function(l,v,s,f,m){
-	if(I(f,T,U))return B(l,v,N,s,f)
+	//allow no child selectors
+	if(I(f,T,U))m=f;f=s;s=N
 
 	l=L(l)
 
-	if(v.split(" ").length>1) v.split(" ").forEach(function(v){
-		B(l,v,s,f,m)
-	})
+	//split event list
+	var w=v.split(' ')
+
+	//work for event list as multiple
+	if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
 	else if(f===N)l.forEach(function(n,e){
 		if(D.createEvent){
 			e=D.createEvent('HTMLEvents')
