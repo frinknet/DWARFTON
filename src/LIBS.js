@@ -14,7 +14,7 @@ const L=function(s,p){
 	//passing a selection again should cause passthrough
 	else if(s._sel)return s
 	//an array selector should apply the elector 
-	else if(I(s,[])l=a([],s.map(L))
+	else if(I(s,[]))l=a([],s.map(L))
 	//if youre passing a window, document or node it should pass through
 	else if(I(s,W,D)||s.nodeName)l=[s]
 	//if you pass in html it should be turned into a node list

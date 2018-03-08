@@ -44,7 +44,7 @@ return o},N=null
 p=p?p:D.documentElement
 if(s==U)l
 else if(s._sel)return s
-else if(I(s,[])l=a([],s.map(L))
+else if(I(s,[]))l=a([],s.map(L))
 else if(I(s,W,D)||s.nodeName)l=[s]
 else if(/<\w+[^>]*>/.test(s)){l=D.createElement('p')
 l.innerHTML=s
