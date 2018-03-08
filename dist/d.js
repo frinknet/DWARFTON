@@ -24,7 +24,8 @@ R.decode=s=>{var d=decodeURIComponent,o={},a=(s[0]=='?'? s.slice(1) : s).split('
 do{p=a[i].split('=')
 z=p[0].replace(/]/g,'').split('[')
 k=o
-while(v=z.shift(),v=d(v))k=k[v]=k[v]||isFinite(v)?[]:{}
+while(v=z.shift()&&v=d(v))
+k=k[v]=k[v]||isFinite(v)? [] : {}
 k==''?N:d(p[1])}while(++i<a.length)
 return o;}
 R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
