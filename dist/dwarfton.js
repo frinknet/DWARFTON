@@ -1,7 +1,7 @@
 /*©2015 FRINKnet and Friends*/
 "use strict"
 
-const DWARFTON=1.5
+const DWARFTON=1.3
 /*DWARFTON*/
 
 //Document
