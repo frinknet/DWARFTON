@@ -15,7 +15,7 @@ A=function(o,a){
 //b=body
 //s=setings
 R=(()=>{
-	var w=(s)=>{
+	var w=s=>{
 		// remove content type for posts that shouldn't have it
 		if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
 		// otherwise pack body
@@ -23,7 +23,7 @@ R=(()=>{
 
 		return s
 	},
-	R=function(m,u,b={},s={}){
+	R=function(m,u,b,s){
 		//check if called as object
 		if(I(m,{})){s=m;m=U}
 
@@ -31,32 +31,30 @@ R=(()=>{
 		if(u==U){u=m;m=U}
 
 		//compile settings object
-		s=O({},R.opts,s,{body:b})
+		s=O({},R.opts,s,{body:b,url:u})
 		m=m||s.method
-		u=u||s.url
 
 		//return fetch or bail for invalid method
-		return I(R[m],R.GET)? R[m](u||s.url,w(s)) : Error('invalid method')
+		return I(R[m],R.GET)? R[m](w(s)) : Error('invalid method')
 	}
 
 	//build function for each
-	'GET POST PUT HEAD DELETE'.split(' ').forEach((v)=>R[v]=async(u,s={})=>{
+	'GET POST PUT HEAD DELETE'.split(' ').forEach(v=>R[v]=async(u,s)=>{
 		//allow running as R.GET(settings)
-		if(I(u,{})){s=u;u=s.url}
+		if(I(u,{})){s=u}
 
 		// run fetch
-		var r=W.fetch(u,O(s,{method:v}))
-		.then(d=>d.ok?d:Promise.reject(d))
-		.catch(s.error)
+		var r=W.fetch(s.url,O(s,{method:v}))
+		.then(d=>d.ok?d:Promise.reject(d)).catch(s.error)
 
 		//streaming will return the formating
 		if(!s.streaming) await r.then(
 			d=>d.text().then(s.parse)
-			.then(d=>r=(I(s.format,I)?s.format:v=>v)(d))
+			.then(d=>r=I(s.format,I)?s.format(d):d)
 		)
 		else r.then(s.parse)
 
-		// return a promise unless the return was formatted
+		// return content unless streaming is on
 		return r
 	})
 
@@ -72,8 +70,44 @@ R=(()=>{
 		if(v=N)v=''
 		if(I(v,I))return ''	
 		if(p)k=p+'['+k+']'
-		return I(o[i],{},[])? params(o,k) : k+'='+e(v)
+		return I(o[i],{},[])? R.encode(o,k) : k+'='+e(v)
 	}).join('&')
+
+	decode=(q)=>{
+		//shortening decoder
+		var d=decodeURIComponent,
+		//intialize output object
+		o={},
+		//split query to array
+		a=(q[0]==='?'? q.slice(1) : q).split('&'),
+		//initialize iterator
+		i=0
+		//pairs variable
+		p,
+		//key variable
+		k,
+		//value variable
+		v,
+		//array of keys
+		z
+		
+		// loop pairs
+		do {
+			//split pair to key and value
+		    	p=a[i].split('=')
+			//split key to it's pieces
+			z=p[0].replace(/]/g,'').split('[')
+			//reset key to output object
+			k=o
+			//loop through key parts to initialize opjects
+			while(v=z.shift(),v=d(v))k=k[v]=k[v]||isFinite(v)?[]:{}
+		    	//set key
+		    	k==''?N:d(p[1])
+		    //keep looping until all keys are mapped
+		} while(++i<a.length)
+		
+		return o;
+	}
 
 	// default options
 	R.opts={
