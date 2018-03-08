@@ -15,7 +15,7 @@ A=function(o,a){
 //b=body
 //s=setings
 R=(()=>{
-	var w=s=>{
+	var w=(s)=>{
 		// remove content type for posts that shouldn't have it
 		if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
 		// otherwise pack body
@@ -23,7 +23,7 @@ R=(()=>{
 
 		return s
 	},
-	R=async function(m,u,b={},s={}){
+	R=function(m,u,b={},s={}){
 		//check if called as object
 		if(I(m,{})){s=m;m=U}
 
@@ -36,7 +36,7 @@ R=(()=>{
 		u=u||s.url
 
 		//return fetch or bail for invalid method
-		return I(R[m],R)? R[m](u||s.url,w(s)) : Error('invalid method')
+		return I(R[m],R.GET)? R[m](u||s.url,w(s)) : Error('invalid method')
 	}
 
 	//build function for each
@@ -52,7 +52,7 @@ R=(()=>{
 		//streaming will return the formating
 		if(!s.streaming) await r.then(
 			d=>d.text().then(s.parse)
-			.then(d=>r=(I(s.format,I,R)?s.format:v=>v)(d))
+			.then(d=>r=(I(s.format,I)?s.format:v=>v)(d))
 		)
 		else r.then(s.parse)
 

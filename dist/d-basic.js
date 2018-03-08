@@ -1,20 +1,20 @@
 /*©2015 FRINKnet and Friends*/"use strict"
 const DWARFTON-BASIC=1.3
-/*DWARFTON*/const D=document,W=window,A=function(o,a){return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])},R=(()=>{var w=s=>{if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
+/*DWARFTON*/const D=document,W=window,A=function(o,a){return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])},R=(()=>{var w=(s)=>{if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
 else if(I(s.pack,I)) s.body=s.pack(s.body)
-return s},R=async function(m,u,b={},s={}){if(I(m,{})){s=m;m=U}
+return s},R=function(m,u,b={},s={}){if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
 s=O({},R.opts,s,{body:b})
 m=m||s.method
 u=u||s.url
-return I(R[m],R)? R[m](u||s.url,w(s)) : Error('invalid method')}
+return I(R[m],R.GET)? R[m](u||s.url,w(s)) : Error('invalid method')}
 'GET POST PUT HEAD DELETE'.split(' ').forEach((v)=>R[v]=async(u,s={})=>{if(I(u,{})){s=u;u=s.url}
 var r=W.fetch(u,O(s,{method:v}))
 .then(d=>d.ok?d:Promise.reject(d))
 .catch(s.error)
 if(!s.streaming) await r.then(
 d=>d.text().then(s.parse)
-.then(d=>r=(I(s.format,I,R)?s.format:v=>v)(d))
+.then(d=>r=(I(s.format,I)?s.format:v=>v)(d))
 )
 else r.then(s.parse)
 return r})
