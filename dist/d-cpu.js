@@ -32,7 +32,11 @@ O(o,q)}while(++i<a.length)
 return o;}
 R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
 return R})(),F=false,T=true,O=function(o){var a=arguments,i=a.length,o=Object(o),x
-while(--i)for(x in O(a[i]))o[x]=a[i][x]
+while(--i)for(x in O(a[i]))
+if(I(a[i][x],{},[]))
+O(o[x],a[i][x])
+else
+o[x]=a[i][x]
 return o},N=null
 /*CPU*/const C=function(o,f){var a=[].slice.call(arguments,2)
 return f.apply(o,a.length>1?a:[].slice.call(a[0]))},P=function(o,a){var p='prototype',o=Object(o)

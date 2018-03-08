@@ -151,7 +151,11 @@ O=function(o){
   o=Object(o),
   x
 
-  while(--i)for(x in O(a[i]))o[x]=a[i][x]
+  while(--i)for(x in O(a[i]))
+  if(I(a[i][x],{},[]))
+	O(o[x],a[i][x])
+  else
+	o[x]=a[i][x]
 
   return o
 },
