@@ -169,35 +169,56 @@ N=null
 //s=selector
 //p=parent
 const L=function(s,p){
-	var l
+	//iinstance list variable
+	var l,
+	a=[].concat.apply
 
-	else p=p?p.nodeName?p:L(p):D.documentElement
+	//make sure we have a parent node or list
+	p=p?p:D.documentElement
 
+	//a null selector should present a blank list
 	if(s==U)l
+	//passing a selection again should cause passthrough
 	else if(s._sel)return s
-	else if(I(s,[])l=[].concat.apply([],s.map(L))
+	//an array selector should apply the elector 
+	else if(I(s,[])l=a([],s.map(L))
+	//if youre passing a window, document or node it should pass through
 	else if(I(s,W,D)||s.nodeName)l=[s]
+	//if you pass in html it should be turned into a node list
 	else if(/<\w+[^>]*>/.test(s)){
+		// create a placeholder paragraph
 		l=D.createElement('p')
+		//load in string as html
 		l.innerHTML=s
+		//rescope to child nodes that were created
 		l=l.childNodes
 	}
-	else if(p._sel)l=[].concat.apply([],p.map(p=>L(s,p)))
+	//if parent is a node run internal selector
 	else if(p.nodeName)l=p.querySelectorAll(s)
+	//if all else failes assume parent need selected and map/reduced
+	else l=a([],L(p).map(p=>L(s,p)))
 
+	// turn list into list object
 	return O(A(l),{_sel:[s,p],constructor:L})
 },
 //Interogate
 //o..=objects
 I=function(o){
+	//shortne arguments variable
 	var a=arguments,
-	i=a.length,
+	//shorten constructor property
 	c='constructor',
-	t=typeof o
+	//store type of passed in object
+	t=typeof o,
+	//get argume count
+	i=a.length
 
+	//if one arg get object type or constructor name for objects
 	if(i==1)return o===N?'null':t=='object'?(c=O(o)[c])!=Object?c.name:t:t
-	else while(--i)if(o===(t=a[i])||(o||o===""||o===F||o===0)&&(t||t===""||t===F||t===0)&&((o=O(o))[c]==O(t)[c]||o[c]==t))return T
+	//loop through check for equality then check constructors
+	else while(--i)if(o===(t=a[i])||o!=N&&o!=U&&(!=N&&t!=U&&(o=O(o))[c]==O(t)[c]||o[c]==t)return T
 
+	//return false if we don't find anything
 	return F
 },
 //Bind
@@ -207,63 +228,71 @@ I=function(o){
 //f=function to trigger
 //m=fire once
 B=function(l,v,s,f,m){
-	if(I(f,T,U))return B(l,v,N,s,f)
+	//allow no child selectors
+	if(I(f,T,U))m=f;f=s;s=N
 
+	//split event list
+	var w=v.split(' ')
+	//setup list
 	l=L(l)
 
-	if(v.split(" ").length>1) v.split(" ").forEach(function(v){
-		B(l,v,s,f,m)
-	})
-	else if(f===N)l.forEach(function(n,e){
-		if(D.createEvent){
-			e=D.createEvent('HTMLEvents')
-
-			e.initEvent(v,T,T)
-			e.eventName=v
-			n.dispatchEvent(e)
-		}else{
-			e=D.createEventObject()
-
-			e.eventType=v
-			e.eventName=v
-			n.fireEvent("on"+v,e)
-		}
-	})
-	else l.forEach(function(n,i){
-		var x=function(f,i){
-			if(n._evt||n._evt[v])for(i in n._evt[v])if(n._evt[v][i][0]===f){
+	//work for event list as multiple
+	if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
+	//dispatch events when no function is provided
+	else if(f===N)l.forEach((n,e)=>n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T})))
+	else l.forEach((n,i)=>{
+		//removal of the event
+		var x=(f,i)=>{
+			//check if the event extender exists
+			if(n._evt&&n._evt[v])for(i in n._evt[v])
+			//check if the event extender has the function
+			if(n._evt[v][i][0]===f){
+				//remove the listener
 				n.removeEventListener(v,n._evt[v][i][1])
 
+				//remove the record from the event extender
 				delete n._evt[v][i]
 			}
 		},
-
+		//adding event listener
 		z=function(e){
+			//abreviate this
 			var t=this,
-			p=L(s?s:t,t===W?D:s?t:t),
+			//define patern list
+			p=L(s?s:t,t===W?D:t),
 			//fire parent
-			y=function(t){
-				if(p.indexOf(t)>-1){
+			y=n=>{
+				if(p.indexOf(n)>-1){
+					//stop one shot events
 					if(m===T)x(f)
-					return f.call(t,e)
+
+					//call event
+					return f.call(n,e)
 				}
 
-				if(!t.parentNode)return
-				return y(t.parentNode)
+				//bubble to parents
+				return n.parentNode?y(n.parentNode):U
 			}
 
+			//fires event
 			return y(e.srcElement)
 		}
 
+		// remove event listener
 		if(m===F)return x(f)
 
+		//add event extension
 		n._evt=n._evt||{}
+		//setup event extention for event name
 		n._evt[v]=n._evt[v]||[]
+		//add the actual function and then encasulated function
 		n._evt[v].push([f,z])
 
+		//add the event listener
 		n.addEventListener(v,z,F)
 	})
 
+	//return the list selected
 	return l
 },
 //Storage
@@ -271,10 +300,13 @@ B=function(l,v,s,f,m){
 //k=key
 //v=value
 S=(U=>{
+	//abbreviate local storage
 	var l=W.localStorage,
+	//abbreviate session storage
 	s=W.sessionStorage,
+	//abbreviate JSON
 	j=JSON,
-	r,
+	//flip function for script and style
 	x=(t,k,v)=>{
 		var l=L(t+'#'+k)[0],
 		m=l&&l.innerText,
@@ -282,13 +314,20 @@ S=(U=>{
 
 		return v?l?D.head.appendChild(n):l.replaceWith(n):m
 	},
+	//parent Storage function
 	S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
+	//javascript storage function
 	S.js=(k,v)=>x('script',k,v)
+	//css storage function
 	S.css=(k,v)=>x('style',k,v)
+	//json storage function
 	S.json=(k,v)=>r=I(k,"")?j.parse(k):j.stringify(k)
+	//local storage function
 	S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
+	//local storage function
 	S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
 
+	//expose the storage function
 	return S
 })()
 
