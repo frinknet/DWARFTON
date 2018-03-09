@@ -93,7 +93,7 @@ B=function(l,v,s,f,m){
 			//abreviate this
 			var t=this,
 			//define patern list
-			p=L(s?s:t,t===W?D:t),
+			p=L(s?s:t,s?t:d),
 			//fire parent
 			y=n=>{
 				if(p.indexOf(n)>-1){
