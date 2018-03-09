@@ -4,19 +4,18 @@
 const L=function(s,p){
 	//iinstance list variable
 	var l,
-	q='querySelectorAll',
-	//aggregate the arrays together
-	a=a=>A.apply(A.a)
+	q='querySelectorAll'
 
 	//make sure we have a parent node or list
 	p=p?p==W?D:p:D
 
-	//a null selector should present a blank list
-	if(s==U)l
+	//if parent is a string simplify selector
+	if(I(p,""))s=p+' '+s,p=D
+
 	//passing a selection again should cause passthrough
-	else if(s._sel)return s
-	//an array selector should apply the elector 
-	else if(I(s,[]))l=(s.map(L))
+	if(s._sel)return s
+	//an array selector should pass through 
+	else if(I(s,[]))l=s
 	//if youre passing a window, document or node it should pass through
 	else if(I(s,W,D)||s.nodeName)l=[s]
 	//if you pass in html it should be turned into a node list
@@ -30,8 +29,8 @@ const L=function(s,p){
 	}
 	//if parent has a query selector use it
 	else if(p[q])l=p[q](s)
-	//if all else failes assume parent need selected and map/reduced
-	else l=(L(p).map(p=>L(s,p)))
+	//else setup parent with query
+	else l=L(p).map(p=>L(s,p)),l=A.apply(A,l)
 
 	// turn list into list object
 	return O(A(l),{_sel:[s,p],constructor:L})
