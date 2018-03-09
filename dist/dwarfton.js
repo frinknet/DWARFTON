@@ -321,7 +321,7 @@ S=(U=>{
 		//seek if the tag exists in the DOM
 		var l=L(t+'#'+k)[0],
 		//setup method to activate node
-		m=l?l.replaceWith:D.head.appendChild
+		m=l?l.replaceWith:D.head.appendChild,
 		//setup node for insert
 		n=v?O(D.createElement(t),{id:k,innerText:v}):U
 
