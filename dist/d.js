@@ -46,12 +46,12 @@ return o},N=null
 p=p?p:D.documentElement
 if(s==U)l
 else if(s._sel)return s
-else if(I(s,[]))l=a(s.map(L))
+else if(I(s,[]))l=A.apply(s.map(L))
 else if(I(s,W,D)||s.nodeName)l=[s]
 else if(/<\w+[^>]*>/.test(s)){l=D.createElement('p')
 l.innerHTML=s
 l=l.childNodes}else if(p.nodeName)l=p.querySelectorAll(s)
-else l=L(p).map(p=>L(s,p))
+else l=A.apply(L(p).map(p=>L(s,p)))
 return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,c='constructor',t=typeof o,i=a.length
 if(i==1)return o===N?'null':t=='object'?(c=O(o)[c])!=Object?c.name:t:t
 else while(--i)if(o===(t=a[i])||o!=N&&o!=U&&t!=N&&t!=U&&(o=O(o))[c]==O(t)[c]||o[c]==t)return T
@@ -72,12 +72,14 @@ n._evt[v]=n._evt[v]||[]
 n._evt[v].push([f,z])
 n.addEventListener(v,z,F)})
 return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
-return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
+return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},S=function(t,k,v){return I(S[t],I)?S[t](k,v):F}
 S.js=(k,v)=>x('script',k,v)
 S.css=(k,v)=>x('style',k,v)
 S.json=(k,v)=>r=I(k,"")?j.parse(k):j.stringify(k)
 S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
+S.cookie=(k,v)
+S.opts={}
 return S})()
 /*CPU*/const C=function(o,f){var a=[].slice.call(arguments,2)
 return f.apply(o,a.length>1?a:[].slice.call(a[0]))},P=function(o,a){var p='prototype',o=Object(o)

@@ -15,7 +15,7 @@ const L=function(s,p){
 	//passing a selection again should cause passthrough
 	else if(s._sel)return s
 	//an array selector should apply the elector 
-	else if(I(s,[]))l=a(s.map(L))
+	else if(I(s,[]))l=A.apply(s.map(L))
 	//if youre passing a window, document or node it should pass through
 	else if(I(s,W,D)||s.nodeName)l=[s]
 	//if you pass in html it should be turned into a node list
@@ -30,7 +30,7 @@ const L=function(s,p){
 	//if parent is a node run internal selector
 	else if(p.nodeName)l=p.querySelectorAll(s)
 	//if all else failes assume parent need selected and map/reduced
-	else l=L(p).map(p=>L(s,p))
+	else l=A.apply(L(p).map(p=>L(s,p)))
 
 	// turn list into list object
 	return O(A(l),{_sel:[s,p],constructor:L})
@@ -151,7 +151,9 @@ S=(U=>{
 		return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText
 	},
 	//parent Storage function
-	S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
+	S=function(t,k,v){
+		return I(S[t],I)?S[t](k,v):F
+	}
 	//javascript storage function
 	S.js=(k,v)=>x('script',k,v)
 	//css storage function
@@ -162,6 +164,10 @@ S=(U=>{
 	S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 	//local storage function
 	S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
+	S.cookie=(k,v)
+
+	S.opts={
+	}
 
 	//expose the storage function
 	return S
