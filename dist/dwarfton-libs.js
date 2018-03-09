@@ -113,11 +113,11 @@ R=(U=>{
 		// loop pairs
 		do{
 			//split pair to key and value
-		    	p=a[i].split('=')
+					p=a[i].split('=')
 			//split key to it's pieces
 			z=p[0].replace(/]/g,'').split('[')
 			//set value
-		    	v=p[1]==''?N:d(p[1])
+					v=p[1]==''?N:d(p[1])
 			//loop through key parts to initialize opjects
 			while(j=z.pop()){
 				k=d(j)
@@ -126,9 +126,9 @@ R=(U=>{
 				v=q
 			}
 
-		    	//set key
+					//set key
 			O(o,q)
-		    //keep looping until all keys are mapped
+				//keep looping until all keys are mapped
 		}while(++i<a.length)
 		
 		return o;
@@ -155,20 +155,24 @@ T=true,
 //Overload
 // o=object
 O=function(o){
-  var a=arguments,
-  i=a.length,
-  o=Object(o),
-  x
+	//abbreviate argumens variable
+	var a=arguments,
+	//itterator is length of arguments
+	i=a.length,
+	//make sure that o is an Object ready to overload
+	o=Object(o),
+	//property extension
+	x
 
-  while(--i)for(x in O(a[i]))
-  if(I(a[i][x],{}))
-	o[x]=O({},o[x],a[i][x])
-  else if(I(a[i][x],[]))
-	o[x]=O([],o[x],a[i][x])
-  else
-	o[x]=a[i][x]
+	//loop through arguments except first one
+	while(--i)for(x in O(a[i]))
+	//do deep copy for arrays and objects
+	if(I(a[i][x],{},[]))o[x]=O({},o[x],a[i][x])
+	// do regular copy for everything else
+	else o[x]=a[i][x]
 
-  return o
+	//return output
+	return o
 },
 //Null
 N=null
@@ -226,7 +230,7 @@ I=function(o){
 	//if one arg get object type or constructor name for objects
 	if(i==1)return o===N?'null':t=='object'?(c=O(o)[c])!=Object?c.name:t:t
 	//loop through check for equality then check constructors
-	else while(--i)if(o===(t=a[i])||o!=N&&o!=U&&t!=N&&t!=U&&(o=O(o))[c]==O(t)[c]||o[c]==t)return T
+	else while(i--)if(o===(t=a[i])||o!=N&&o!=U&&t!=N&&t!=U&&(o=O(o))[c]==O(t)[c]||o[c]==t)return T
 
 	//return false if we don't find anything
 	return F

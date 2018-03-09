@@ -35,12 +35,8 @@ return o;}
 R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
 return R})(),F=false,T=true,O=function(o){var a=arguments,i=a.length,o=Object(o),x
 while(--i)for(x in O(a[i]))
-if(I(a[i][x],{}))
-o[x]=O({},o[x],a[i][x])
-else if(I(a[i][x],[]))
-o[x]=O([],o[x],a[i][x])
-else
-o[x]=a[i][x]
+if(I(a[i][x],{},[]))o[x]=O({},o[x],a[i][x])
+else o[x]=a[i][x]
 return o},N=null
 /*LIBS*/const L=function(s,p){var l,a=a=>A.apply(A.a)
 p=p?p:D.documentElement
@@ -54,7 +50,7 @@ l=l.childNodes}else if(p.nodeName)l=p.querySelectorAll(s)
 else l=(L(p).map(p=>L(s,p)))
 return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,c='constructor',t=typeof o,i=a.length
 if(i==1)return o===N?'null':t=='object'?(c=O(o)[c])!=Object?c.name:t:t
-else while(--i)if(o===(t=a[i])||o!=N&&o!=U&&t!=N&&t!=U&&(o=O(o))[c]==O(t)[c]||o[c]==t)return T
+else while(i--)if(o===(t=a[i])||o!=N&&o!=U&&t!=N&&t!=U&&(o=O(o))[c]==O(t)[c]||o[c]==t)return T
 return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
 var w=v.split(' ')
 l=L(l)
