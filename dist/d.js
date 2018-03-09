@@ -1,6 +1,8 @@
 /*©2015 FRINKnet and Friends*/"use strict"
 const DWARFTON=1.3
-/*DWARFTON*/const D=document,W=window,A=function(o,a){return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])},R=(U=>{var w=s=>{if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
+/*DWARFTON*/const D=document,W=window,A=function(){var o=[],a=arguments,x
+for(x in a)o=o.concat(I(a[x],W,0,U,L,D,N,'',T,[])?a[x]:[].slice.apply(a[x]))
+return o},R=(U=>{var w=s=>{if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
 else if(I(s.pack,I)) s.body=s.pack(s.body)
 return s},R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
@@ -40,7 +42,7 @@ o[x]=O([],o[x],a[i][x])
 else
 o[x]=a[i][x]
 return o},N=null
-/*LIBS*/const L=function(s,p){var l,a=[].concat.apply
+/*LIBS*/const L=function(s,p){var l,a=a=>A.apply(.a)
 p=p?p:D.documentElement
 if(s==U)l
 else if(s._sel)return s

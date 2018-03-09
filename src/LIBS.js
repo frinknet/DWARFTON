@@ -4,7 +4,8 @@
 const L=function(s,p){
 	//iinstance list variable
 	var l,
-	a=[].concat.apply
+	//aggregate the arrays together
+	a=a=>A.apply(.a)
 
 	//make sure we have a parent node or list
 	p=p?p:D.documentElement

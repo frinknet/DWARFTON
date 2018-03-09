@@ -8,13 +8,22 @@ const DWARFTON=1.3
 const D=document,
 //Window
 W=window,
-//Arrayize
-// o=object
-// a=array
-A=function(o,a){
-  return [].slice.call(a=o!==U?a!==U?arguments:I(o,'',N,T,1)?[o]:o:[])
+//Aggregate
+A=function(){
+	//instanciate output variabe
+	var o=[],
+	//shorten arguments varible
+	a=arguments,
+	//instance iterator
+	x
+
+	//loop args filtering those I wouldn't convert otherwise use [].slice
+	for(x in a)o=o.concat(I(a[x],W,0,U,L,D,N,'',T,[])?a[x]:[].slice.apply(a[x]))
+
+	//return output
+	return o
 },
-//Remote
+//Request
 //m=method
 //u=url
 //b=body
@@ -143,7 +152,7 @@ R=(U=>{
 F=false,
 //True
 T=true,
-//Objectify
+//Obtain
 // o=object
 O=function(o){
   var a=arguments,
@@ -171,7 +180,8 @@ N=null
 const L=function(s,p){
 	//iinstance list variable
 	var l,
-	a=[].concat.apply
+	//aggregate the arrays together
+	a=a=>A.apply(.a)
 
 	//make sure we have a parent node or list
 	p=p?p:D.documentElement

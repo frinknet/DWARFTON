@@ -9,11 +9,11 @@ DWARTON LIBS CPU is itself an acronym for the abbreviation of helpers provided t
 ## DWARFTON = Essentials
 - D = Document - This references the `document` object of the DOM
 - W = Window - This references the `window` object of the DOM
-- A = Arrayize() - This turns anything into an `array` whether by concatenating entries or merging Arrays.
+- A = Aggregate() - This aggregates anything into an `array` whether by concatenating entries or merging Arrays.
 - R = Retrieve() - This does an XHR request for any resorce and returns its contents for processing by a provided callback. 
 - F = False - This abreviates `false` to a single letter constant
 - T = True - This abbreviates `true` to a single letter constant
-- O = Objectify() - This turns anything into an `object`
+- O = Oobtain() - This obtains properties from other objects
 - N = Null - This abbreviates `null` to a single letter constant
 
 ## LIBS = Auxilary
