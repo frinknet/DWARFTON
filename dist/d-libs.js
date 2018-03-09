@@ -55,18 +55,18 @@ return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
 var w=v.split(' ')
 l=L(l)
 if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
-else if(f===N)l.forEach((n,e)=>n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T})))
-else l.forEach((n,i)=>{var x=(f,i)=>{if(n._evt&&n._evt[v])for(i in n._evt[v])
-if(n._evt[v][i][0]===f){n.removeEventListener(v,n._evt[v][i][1])
-delete n._evt[v][i]}},z=function(e){var t=this,p=L(s?s:t,s?t:D),y=n=>{if(p.indexOf(n)>-1){if(m===T)x(f)
+else if(f===N)l.forEach(n=>n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T})))
+else l.forEach((n,i)=>{var w=function(e){var t=this,p=L(s?s:t,s?t:D),b=n=>{if(p.indexOf(n)>-1){if(m===T)x(f)
 return f.call(n,e)}
-return n.parentNode?y(n.parentNode):U}
-return y(e.srcElement)}
-if(m===F)return x(f)
+return n.parentNode?b(n.parentNode):U}
+return b(e.srcElement)},x=(f,i)=>{if(n._evt&&n._evt[v])for(i in n._evt[v])
+if(n._evt[v][i][0].toString()==f.toString()){n.removeEventListener(v,n._evt[v][i][1])
+delete n._evt[v][i]}},if(m===F)return x(f)
 n._evt=n._evt||{}
 n._evt[v]=n._evt[v]||[]
-n._evt[v].push([f,z])
-n.addEventListener(v,z,F)})
+for(i in n._evt[v])if(n._evt[v][i].toString()==f.toString())return
+n._evt[v].push([f,l])
+n.addEventListener(v,l)})
 return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
 return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},S=function(t,k,v){return I(S[t],I)?S[t](k,v):F}
 S.js=(k,v)=>x('script',k,v)
