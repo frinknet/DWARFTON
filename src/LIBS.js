@@ -9,8 +9,8 @@ const L=function(s,p){
 	//make sure we have a parent node or list
 	p=p?p==W?D:p:D
 
-	//if parent is a string simplify selector
-	if(I(p,""))s=p+' '+s,p=D
+	//simplify selector when both parent and selector are strings
+	if(I(p,"")&&I(s,''))s=p+' '+s,p=D
 
 	//passing a selection again should cause passthrough
 	if(s._sel)return s
