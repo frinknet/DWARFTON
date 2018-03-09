@@ -110,7 +110,7 @@ B=function(l,v,s,f,m){
 				//remove the record from the event extender
 				delete n._evt[v][i]
 			}
-		},
+		}
 
 		// remove event listener
 		if(m===F)return x(f)

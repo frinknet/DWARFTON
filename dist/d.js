@@ -61,7 +61,8 @@ return f.call(n,e)}
 return n.parentNode?b(n.parentNode):U}
 return b(e.srcElement)},x=(f,i)=>{if(n._evt&&n._evt[v])for(i in n._evt[v])
 if(n._evt[v][i][0].toString()==f.toString()){n.removeEventListener(v,n._evt[v][i][1])
-delete n._evt[v][i]}},if(m===F)return x(f)
+delete n._evt[v][i]}}
+if(m===F)return x(f)
 n._evt=n._evt||{}
 n._evt[v]=n._evt[v]||[]
 for(i in n._evt[v])if(n._evt[v][i].toString()==f.toString())return
