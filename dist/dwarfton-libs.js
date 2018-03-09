@@ -273,7 +273,7 @@ B=function(l,v,s,f,m){
 			//abreviate this
 			var t=this,
 			//define patern list
-			p=L(s?s:t,s?t:d),
+			p=L(s?s:t,s?t:D),
 			//fire parent
 			y=n=>{
 				if(p.indexOf(n)>-1){
