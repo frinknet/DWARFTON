@@ -184,11 +184,12 @@ N=null
 const L=function(s,p){
 	//iinstance list variable
 	var l,
+	q='querySelectorAll',
 	//aggregate the arrays together
 	a=a=>A.apply(A.a)
 
 	//make sure we have a parent node or list
-	p=p?p:D.documentElement
+	p=p?p==W?D:p:D
 
 	//a null selector should present a blank list
 	if(s==U)l
@@ -207,8 +208,8 @@ const L=function(s,p){
 		//rescope to child nodes that were created
 		l=l.childNodes
 	}
-	//if parent is a node run internal selector
-	else if(p.nodeName)l=p.querySelectorAll(s)
+	//if parent has a query selector use it
+	else if(p[q])l=p[q](s)
 	//if all else failes assume parent need selected and map/reduced
 	else l=(L(p).map(p=>L(s,p)))
 

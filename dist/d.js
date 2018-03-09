@@ -38,15 +38,15 @@ while(--i)for(x in O(a[i]))
 if(I(a[i][x],{},[]))o[x]=O({},o[x],a[i][x])
 else o[x]=a[i][x]
 return o},N=null
-/*LIBS*/const L=function(s,p){var l,a=a=>A.apply(A.a)
-p=p?p:D.documentElement
+/*LIBS*/const L=function(s,p){var l,q='querySelectorAll',a=a=>A.apply(A.a)
+p=p?p==W?D:p:D
 if(s==U)l
 else if(s._sel)return s
 else if(I(s,[]))l=(s.map(L))
 else if(I(s,W,D)||s.nodeName)l=[s]
 else if(/<\w+[^>]*>/.test(s)){l=D.createElement('p')
 l.innerHTML=s
-l=l.childNodes}else if(p.nodeName)l=p.querySelectorAll(s)
+l=l.childNodes}else if(p[q])l=p[q](s)
 else l=(L(p).map(p=>L(s,p)))
 return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,c='constructor',t=typeof o,i=a.length
 if(i==1)return o===N?'null':t=='object'?(c=O(o)[c])!=Object?c.name:t:t
