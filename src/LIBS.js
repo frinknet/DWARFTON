@@ -30,7 +30,7 @@ const L=function(s,p){
 	//if parent is a node run internal selector
 	else if(p.nodeName)l=p.querySelectorAll(s)
 	//if all else failes assume parent need selected and map/reduced
-	else l=a(L(p).map(p=>L(s,p)))
+	else l=L(p).map(p=>L(s,p))
 
 	// turn list into list object
 	return O(A(l),{_sel:[s,p],constructor:L})
