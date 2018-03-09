@@ -5,7 +5,7 @@ const L=function(s,p){
 	//iinstance list variable
 	var l,
 	//aggregate the arrays together
-	a=a=>A.apply(.a)
+	a=a=>A.apply(A.a)
 
 	//make sure we have a parent node or list
 	p=p?p:D.documentElement

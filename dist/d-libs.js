@@ -42,7 +42,7 @@ o[x]=O([],o[x],a[i][x])
 else
 o[x]=a[i][x]
 return o},N=null
-/*LIBS*/const L=function(s,p){var l,a=a=>A.apply(.a)
+/*LIBS*/const L=function(s,p){var l,a=a=>A.apply(A.a)
 p=p?p:D.documentElement
 if(s==U)l
 else if(s._sel)return s
