@@ -73,29 +73,16 @@ B=function(l,v,s,f,m){
 	//work for event list as multiple
 	if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
 	//dispatch events when no function is provided
-	else if(f===N)l.forEach((n,e)=>n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T})))
+	else if(f===N)l.forEach(n=>n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T})))
 	else l.forEach((n,i)=>{
-		//removal of the event
-		var x=(f,i)=>{
-			//check if the event extender exists
-			if(n._evt&&n._evt[v])for(i in n._evt[v])
-			//check if the event extender has the function
-			if(n._evt[v][i][0]===f){
-				//remove the listener
-				n.removeEventListener(v,n._evt[v][i][1])
-
-				//remove the record from the event extender
-				delete n._evt[v][i]
-			}
-		},
-		//adding event listener
-		z=function(e){
+		//event watcher
+		var w=function(e){
 			//abreviate this
 			var t=this,
 			//define patern list
 			p=L(s?s:t,s?t:D),
-			//fire parent
-			y=n=>{
+			//bubble function
+			b=n=>{
 				if(p.indexOf(n)>-1){
 					//stop one shot events
 					if(m===T)x(f)
@@ -105,25 +92,41 @@ B=function(l,v,s,f,m){
 				}
 
 				//bubble to parents
-				return n.parentNode?y(n.parentNode):U
+				return n.parentNode?b(n.parentNode):U
 			}
 
 			//fires event
-			return y(e.srcElement)
-		}
+			return b(e.srcElement)
+		},
+		//event remover
+		x=(f,i)=>{
+			//check if the event extender exists
+			if(n._evt&&n._evt[v])for(i in n._evt[v])
+			//check if the event extender has the function
+			if(n._evt[v][i][0].toString()==f.toString()){
+				//remove the listener
+				n.removeEventListener(v,n._evt[v][i][1])
+
+				//remove the record from the event extender
+				delete n._evt[v][i]
+			}
+		},
 
 		// remove event listener
 		if(m===F)return x(f)
-
 		//add event extension
 		n._evt=n._evt||{}
 		//setup event extention for event name
 		n._evt[v]=n._evt[v]||[]
-		//add the actual function and then encasulated function
-		n._evt[v].push([f,z])
+
+		//don't list the same listener twice
+		for(i in n._evt[v])if(n._evt[v][i].toString()==f.toString())return
+
+		//add function and listener
+		n._evt[v].push([f,l])
 
 		//add the event listener
-		n.addEventListener(v,z,F)
+		n.addEventListener(v,l)
 	})
 
 	//return the list selected
