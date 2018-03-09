@@ -147,7 +147,7 @@ R=(U=>{
 F=false,
 //True
 T=true,
-//Obtain
+//Overload
 // o=object
 O=function(o){
   var a=arguments,

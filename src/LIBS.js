@@ -142,11 +142,13 @@ S=(U=>{
 	j=JSON,
 	//flip function for script and style
 	x=(t,k,v)=>{
+		//seek if the tag exists in the DOM
 		var l=L(t+'#'+k)[0],
-		m=l&&l.innerText,
-		n=O(D.createElement(t),{id:k,innerText:v||m})
+		//setup method to activate node
+		m=l?l.replaceWith:D.head.appendChild
 
-		return v?l?D.head.appendChild(n):l.replaceWith(n):m
+		//return node if value was provided otherwise return the text
+		return v?m(O(D.createElement(t),{id:k,innerText:v})):l&&l.innerText
 	},
 	//parent Storage function
 	S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
