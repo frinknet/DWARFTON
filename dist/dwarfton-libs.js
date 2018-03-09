@@ -322,9 +322,11 @@ S=(U=>{
 		var l=L(t+'#'+k)[0],
 		//setup method to activate node
 		m=l?l.replaceWith:D.head.appendChild
+		//setup node for insert
+		n=v?O(D.createElement(t),{id:k,innerText:v}):U
 
-		//return node if value was provided otherwise return the text
-		return v?m(O(D.createElement(t),{id:k,innerText:v})):l&&l.innerText
+		//if value return node else text
+		return v?m(n):l&&l.innerText
 	},
 	//parent Storage function
 	S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}

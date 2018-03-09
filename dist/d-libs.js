@@ -72,7 +72,8 @@ n._evt[v]=n._evt[v]||[]
 n._evt[v].push([f,z])
 n.addEventListener(v,z,F)})
 return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,x=(t,k,v)=>{var l=L(t+'#'+k)[0],m=l?l.replaceWith:D.head.appendChild
-return v?m(O(D.createElement(t),{id:k,innerText:v})):l&&l.innerText},S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
+n=v?O(D.createElement(t),{id:k,innerText:v}):U
+return v?m(n):l&&l.innerText},S=function(t,k,v){return I(S[t],I)?S[t](k,v):S.local(t,k)}
 S.js=(k,v)=>x('script',k,v)
 S.css=(k,v)=>x('style',k,v)
 S.json=(k,v)=>r=I(k,"")?j.parse(k):j.stringify(k)
