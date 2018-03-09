@@ -126,7 +126,7 @@ B=function(l,v,s,f,m){
 		n._evt[v].push([f,l])
 
 		//add the event listener
-		n.addEventListener(v,l)
+		n.addEventListener(v,w)
 	})
 
 	//return the list selected

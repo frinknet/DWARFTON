@@ -67,7 +67,7 @@ n._evt=n._evt||{}
 n._evt[v]=n._evt[v]||[]
 for(i in n._evt[v])if(n._evt[v][i].toString()==f.toString())return
 n._evt[v].push([f,l])
-n.addEventListener(v,l)})
+n.addEventListener(v,w)})
 return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
 return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},S=function(t,k,v){return I(S[t],I)?S[t](k,v):F}
 S.js=(k,v)=>x('script',k,v)
