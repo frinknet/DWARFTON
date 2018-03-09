@@ -300,7 +300,7 @@ B=function(l,v,s,f,m){
 		n._evt[v]=n._evt[v]||[]
 
 		//don't list the same listener twice
-		for(i in n._evt[v])if(n._evt[v][i].toString()==f.toString())return
+		for(i in n._evt[v])if(n._evt[v][i][0].toString()==f.toString())return
 
 		//add function and listener
 		n._evt[v].push([f,l])

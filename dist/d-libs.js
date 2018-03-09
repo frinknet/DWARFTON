@@ -65,7 +65,7 @@ delete n._evt[v][i]}}
 if(m===F)return x(f)
 n._evt=n._evt||{}
 n._evt[v]=n._evt[v]||[]
-for(i in n._evt[v])if(n._evt[v][i].toString()==f.toString())return
+for(i in n._evt[v])if(n._evt[v][i][0].toString()==f.toString())return
 n._evt[v].push([f,l])
 n.addEventListener(v,w)})
 return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
