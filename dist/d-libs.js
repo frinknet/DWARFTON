@@ -78,7 +78,8 @@ S.css=(k,v)=>x('style',k,v)
 S.json=(k,v)=>r=I(k,"")?j.parse(k):j.stringify(k)
 S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-S.cookie=(k,v)
+S.cookie=(k,v)=>U//TODO
+S.cache=(k,v)=>U//TODO
 S.opts={}
 return S})()
 

@@ -340,7 +340,8 @@ S=(U=>{
 	S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 	//local storage function
 	S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-	S.cookie=(k,v)
+	S.cookie=(k,v)=>U//TODO
+	S.cache=(k,v)=>U//TODO
 
 	S.opts={
 	}
