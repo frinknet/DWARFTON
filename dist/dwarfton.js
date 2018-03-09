@@ -189,8 +189,8 @@ const L=function(s,p){
 	//make sure we have a parent node or list
 	p=p?p==W?D:p:D
 
-	//if parent is a string simplify selector
-	if(I(p,""))s=p+' '+s,p=D
+	//simplify selector when both parent and selector are strings
+	if(I(p,"")&&I(s,''))s=p+' '+s,p=D
 
 	//passing a selection again should cause passthrough
 	if(s._sel)return s
@@ -273,7 +273,7 @@ B=function(l,v,s,f,m){
 			//abreviate this
 			var t=this,
 			//define patern list
-			p=L(s?s:t,t===W?D:t),
+			p=L(s?s:t,s?t:d),
 			//fire parent
 			y=n=>{
 				if(p.indexOf(n)>-1){
