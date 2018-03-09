@@ -50,7 +50,7 @@ l=l.childNodes}else if(p.nodeName)l=p.querySelectorAll(s)
 else l=(L(p).map(p=>L(s,p)))
 return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,c='constructor',t=typeof o,i=a.length
 if(i==1)return o===N?'null':t=='object'?(c=O(o)[c])!=Object?c.name:t:t
-else while(i--)if(o===(t=a[i])||o!=N&&o!=U&&t!=N&&t!=U&&(o=O(o))[c]==O(t)[c]||o[c]==t)return T
+else while(--i)if(o===(t=a[i])||o!=N&&o!=U&&t!=N&&t!=U&&(o=O(o))[c]==O(t)[c]||o[c]==t)return T
 return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
 var w=v.split(' ')
 l=L(l)
