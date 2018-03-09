@@ -103,14 +103,15 @@ B=function(l,v,s,f,m){
 			//check if the event extender exists
 			if(n._evt&&n._evt[v])for(i in n._evt[v])
 			//check if the event extender has the function
-			if(n._evt[v][i][0].toString()==f.toString()){
+			if((!y&&(s==n.evt[v][i][2]||!s))||n._evt[v][i][0].toString()==y){
 				//remove the listener
 				n.removeEventListener(v,n._evt[v][i][1])
 
 				//remove the record from the event extender
 				delete n._evt[v][i]
 			}
-		}
+		},
+		y=f&&f.toString()
 
 		// remove event listener
 		if(m===F)return x(f)
@@ -120,10 +121,10 @@ B=function(l,v,s,f,m){
 		n._evt[v]=n._evt[v]||[]
 
 		//don't list the same listener twice
-		for(i in n._evt[v])if(n._evt[v][i][0].toString()==f.toString())return
+		for(i in n._evt[v])if(n._evt[v][i][0].toString()==y)return
 
 		//add function and listener
-		n._evt[v].push([f,l])
+		n._evt[v].push([f,l,s])
 
 		//add the event listener
 		n.addEventListener(v,w)

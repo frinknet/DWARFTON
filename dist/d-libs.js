@@ -60,13 +60,13 @@ else l.forEach((n,i)=>{var w=function(e){var t=this,p=L(s?s:t,s?t:D),b=n=>{if(p.
 return f.call(n,e)}
 return n.parentNode?b(n.parentNode):U}
 return b(e.srcElement)},x=(f,i)=>{if(n._evt&&n._evt[v])for(i in n._evt[v])
-if(n._evt[v][i][0].toString()==f.toString()){n.removeEventListener(v,n._evt[v][i][1])
-delete n._evt[v][i]}}
+if((!y&&(s==n.evt[v][i][2]||!s))||n._evt[v][i][0].toString()==y){n.removeEventListener(v,n._evt[v][i][1])
+delete n._evt[v][i]}},y=f&&f.toString()
 if(m===F)return x(f)
 n._evt=n._evt||{}
 n._evt[v]=n._evt[v]||[]
-for(i in n._evt[v])if(n._evt[v][i][0].toString()==f.toString())return
-n._evt[v].push([f,l])
+for(i in n._evt[v])if(n._evt[v][i][0].toString()==y)return
+n._evt[v].push([f,l,s])
 n.addEventListener(v,w)})
 return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
 return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},S=function(t,k,v){return I(S[t],I)?S[t](k,v):F}
