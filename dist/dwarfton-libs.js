@@ -1,7 +1,7 @@
 /*©2015 FRINKnet and Friends*/
 "use strict"
 
-const DWARFTON-LIBS=1.3
+const DWARFTON-LIBS=1.07
 /*DWARFTON*/
 
 //Document

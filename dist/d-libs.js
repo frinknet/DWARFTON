@@ -1,5 +1,5 @@
 /*©2015 FRINKnet and Friends*/"use strict"
-const DWARFTON-LIBS=1.3
+const DWARFTON-LIBS=1.07
 /*DWARFTON*/const D=document,W=window,A=function(){var o=[],a=arguments,i,x
 for(i in a)o=o.concat((x=[].slice.apply(a[i])).length?x:a[i])
 return o},R=(U=>{var w=s=>{if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
