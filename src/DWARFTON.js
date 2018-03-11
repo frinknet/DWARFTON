@@ -1,8 +1,8 @@
 
 //Document
 const D=document,
-//Window
-W=window,
+//Window or web worker
+W=self,
 //Aggregate
 //a=array
 //o=objects
@@ -17,7 +17,7 @@ A=function(){
 	x
 
 	//loop args and convert to array were possible
-	for(i in a)o=o.concat((x=[].slice.apply(a[i])).length?x:a[i])
+	for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
 
 	//return output
 	return o

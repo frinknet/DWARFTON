@@ -6,8 +6,8 @@ const DWARFTON=1.07
 
 //Document
 const D=document,
-//Window
-W=window,
+//Window or web worker
+W=self,
 //Aggregate
 //a=array
 //o=objects
@@ -22,7 +22,7 @@ A=function(){
 	x
 
 	//loop args and convert to array were possible
-	for(i in a)o=o.concat((x=[].slice.apply(a[i])).length?x:a[i])
+	for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
 
 	//return output
 	return o
@@ -313,6 +313,7 @@ S=(U=>{
 	s=W.sessionStorage,
 	//abbreviate JSON
 	j=JSON,
+	w=navigator.serviceWorker,
 	//flip function for script and style
 	x=(t,k,v)=>{
 		//seek if the tag exists in the DOM
@@ -323,32 +324,47 @@ S=(U=>{
 		//if value return node else return innerText
 		return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText
 	},
+	y=D&&D.getElementsByTagName('script')
+	z=z.y[s.length-1].src,
 	//parent Storage function
 	S=function(t,k,v){
 		return I(S[t],I)?S[t](k,v):F
 	}
-	//javascript storage function
-	S.js=(k,v)=>x('script',k,v)
 	//css storage function
 	S.css=(k,v)=>x('style',k,v)
+	//javascript storage function
+	S.script=(k,v)=>x('script',k,v)
 	//cookie storage function
 	S.cookie=(k,v)=>U//TODO
 	//local storage function
 	S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
-	//local storage function
+	//session storage function
 	S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
 	//offline cache function
-	S.offline=(k,v)=>{
-		k=A(k)
-		caches.open(S.opts.cache).then(c=>v==F?k.map(k=>c.delete(new Request(k))):c.addAll(k))
-	}
-
+	//S('offline','url',T) = add
+	//S('offline','url',F) = remove
+	//S('offline',fn()) = message
+	S.offline=(k,v)=>v!=U?k?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k).map(k=>c.delete(new Request(k)))):caches.delete(S.opt.cache):S.worker(w.constroller,k)
+	//web worker function
+	S.worker=(k,v)=>I(k,Worker)?k.postMessage(v):new Worker(URL.createObjectURL(new Blob([('('+k+')()').replace('"use strict"','')]),{type:'application/javascript;charset=utf-8'}))
+	//default options
 	S.opts={
+		//cache name
 		cache:'v'+DWARFTON,
+		//work offline
 		offline:F
 	}	
 
-	W.addEventListener('fetch',(e)=>{console.log(e)})
+	//register self as service worker but allow 10s for settings to be set
+	if(y)setTimeout(U=>{
+		w.register(z)
+		
+	},10000)
+	//if in worker
+	else if(I(W,WebWorkerGlobalScope)){
+		B(W,'message',e=>console.log(e))
+		B(W,'fetch',e=>e.request.method!='GET'?U:e.respondWith(caches.match(event.request)then(c=>)))
+	}
 
 	//expose the storage function
 	return S
