@@ -32,7 +32,7 @@ q[k]=v
 v=q}
 O(o,q)}while(++i<a.length)
 return o;}
-R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,parse:N,format:N,error:console.log,streaming:F}
+R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
 return R})(),F=false,T=true,O=Object.assign
 N=null
 
