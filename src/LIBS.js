@@ -124,10 +124,10 @@ B=function(l,v,s,f,m){
 		for(i in n._evt[v])if(n._evt[v][i][0].toString()==y)return
 
 		//add function and listener
-		n._evt[v].push([f,l,s])
+		n._evt[v].push([f,w,s])
 
 		//add the event listener
-		n.addEventListener(v,w)
+		n.addEventListener(v,w,!!s)
 	})
 
 	//return the list selected
