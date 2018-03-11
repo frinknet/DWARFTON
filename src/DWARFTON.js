@@ -15,7 +15,7 @@ A=function(){
 	x
 
 	//loop args and convert to array were possible
-	for(i in a)o=o.concat(x=[].slice.apply(a[i])).length?x:a[i])
+	for(i in a)o=o.concat((x=[].slice.apply(a[i])).length?x:a[i])
 
 	//return output
 	return o
