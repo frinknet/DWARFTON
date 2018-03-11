@@ -162,17 +162,21 @@ S=(U=>{
 	S.js=(k,v)=>x('script',k,v)
 	//css storage function
 	S.css=(k,v)=>x('style',k,v)
-	//cache storage function
-	S.cache=(k,v)=>U//TODO
 	//cookie storage function
 	S.cookie=(k,v)=>U//TODO
 	//local storage function
 	S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 	//local storage function
 	S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
+	//offline cache function
+	S.offline=(k,v)=>caches.open(S.opts.cache).then(c=>v==F?c.delete(new Request(k):c.addAll(I(k,[])?k:[k]))
 
 	S.opts={
-	}
+		cache:'v'+DWARFTON,
+		offline:T
+	}	
+
+	W.addEventListener('fetch',(e)=>{console.log(e)})
 
 	//expose the storage function
 	return S

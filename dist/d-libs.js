@@ -68,10 +68,11 @@ return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,x=(t,k,v)=>{var 
 return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},S=function(t,k,v){return I(S[t],I)?S[t](k,v):F}
 S.js=(k,v)=>x('script',k,v)
 S.css=(k,v)=>x('style',k,v)
-S.cache=(k,v)=>U//TODO
 S.cookie=(k,v)=>U//TODO
 S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-S.opts={}
+S.offline=(k,v)=>caches.open(S.opts.cache).then(c=>v==F?c.delete(new Request(k):c.addAll(I(k,[])?k:[k]))
+S.opts={cache:'v'+DWARFTON,offline:T}
+W.addEventListener('fetch',(e)=>{console.log(e)})
 return S})()
 
