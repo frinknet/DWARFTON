@@ -140,10 +140,10 @@ R=(U=>{
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
 		pack:R.encode,
-		parse:N,
-		format:N,
-		error:console.log,
-		streaming:F
+		//parse:N,
+		//format:N,
+		error:console.log
+		//streaming:F
 	}
 
 	return R
