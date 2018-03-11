@@ -33,8 +33,7 @@ v=q}
 O(o,q)}while(++i<a.length)
 return o;}
 R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
-return R})(),F=false,T=true,O=Object.assign
-N=null
+return R})(),F=false,T=true,O=Object.assign,N=null
 /*LIBS*/const L=function(s,p){var l,q='querySelectorAll'
 p=p?p==W?D:p:D
 if(I(p,"")&&I(s,''))s=p+' '+s,p=D

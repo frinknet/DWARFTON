@@ -159,7 +159,7 @@ F=false,
 T=true,
 //Overload
 // o=object
-O=Object.assign
+O=Object.assign,
 //O=function(o){
 //	//abbreviate argumens variable
 //	var a=arguments,
