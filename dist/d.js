@@ -13,7 +13,7 @@ return I(R[m],R.GET)? R[m](w(s)) : Error('invalid method')}
 var r=W.fetch(s.url,O(s,{method:v}))
 .then(d=>d.ok?d:Promise.reject(d)).catch(s.error)
 if(!s.streaming) await r.then(
-d=>d.text().then(s.parse)
+d=>d&&d.text().then(s.parse)
 .then(d=>r=I(s.format,I)?s.format(d):d)
 )
 else r.then(s.parse)

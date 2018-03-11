@@ -62,7 +62,7 @@ R=(U=>{
 
 		//streaming will return the formating
 		if(!s.streaming) await r.then(
-			d=>d.text().then(s.parse)
+			d=>d&&d.text().then(s.parse)
 			.then(d=>r=I(s.format,I)?s.format(d):d)
 		)
 		else r.then(s.parse)
