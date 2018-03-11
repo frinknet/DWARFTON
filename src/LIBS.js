@@ -73,7 +73,7 @@ B=function(l,v,s,f,m){
 	//work for event list as multiple
 	if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
 	//dispatch events when no function is provided
-	else if(f===N)l.forEach(n=>n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T})))
+	else if(f===U)l.forEach(n=>n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T})))
 	else l.forEach((n,i)=>{
 		//event watcher
 		var w=function(e){

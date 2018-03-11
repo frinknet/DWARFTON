@@ -55,7 +55,7 @@ return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
 var w=v.split(' ')
 l=L(l)
 if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
-else if(f===N)l.forEach(n=>n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T})))
+else if(f===U)l.forEach(n=>n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T})))
 else l.forEach((n,i)=>{var w=function(e){var t=this,p=L(s?s:t,s?t:D),b=n=>{if(p.indexOf(n)>-1){if(m===T)x(f)
 return f.call(n,e)}
 return n.parentNode?b(n.parentNode):U}
