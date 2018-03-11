@@ -4,6 +4,8 @@ const D=document,
 //Window
 W=window,
 //Aggregate
+//a=array
+//o=objects
 A=function(){
 	//instanciate output variabe
 	var o=[],
@@ -154,26 +156,7 @@ F=false,
 T=true,
 //Overload
 // o=object
+// a=assignments
 O=Object.assign,
-//O=function(o){
-//	//abbreviate argumens variable
-//	var a=arguments,
-//	//itterator is length of arguments
-//	i=a.length,
-//	//make sure that o is an Object ready to overload
-//	o=Object(o),
-//	//property extension
-//	x
-//
-//	//loop through arguments except first one
-//	while(--i)for(x in O(a[i]))
-//	//do deep copy for arrays and objects
-//	if(I(a[i][x],{},[]))o[x]=O({},o[x],a[i][x])
-//	// do regular copy for everything else
-//	else o[x]=a[i][x]
-//
-//	//return output
-//	return o
-//},
 //Null
 N=null
