@@ -71,8 +71,9 @@ S.css=(k,v)=>x('style',k,v)
 S.cookie=(k,v)=>U//TODO
 S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-S.offline=(k,v)=>caches.open(S.opts.cache).then(c=>v==F?c.delete(new Request(k):c.addAll(I(k,[])?k:[k]))
-S.opts={cache:'v'+DWARFTON,offline:T}
+S.offline=(k,v)=>{k=A(k)
+caches.open(S.opts.cache).then(c=>v==F?k.map(k=>c.delete(new Request(k))):c.addAll(k))}
+S.opts={cache:'v'+DWARFTON,offline:F}
 W.addEventListener('fetch',(e)=>{console.log(e)})
 return S})()
 
