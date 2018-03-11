@@ -162,14 +162,14 @@ S=(U=>{
 	S.js=(k,v)=>x('script',k,v)
 	//css storage function
 	S.css=(k,v)=>x('style',k,v)
-	//json storage function
-	S.json=(k,v)=>r=I(k,"")?j.parse(k):j.stringify(k)
+	//cache storage function
+	S.cache=(k,v)=>U//TODO
+	//cookie storage function
+	S.cookie=(k,v)=>U//TODO
 	//local storage function
 	S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 	//local storage function
 	S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-	S.cookie=(k,v)=>U//TODO
-	S.cache=(k,v)=>U//TODO
 
 	S.opts={
 	}

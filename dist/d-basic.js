@@ -1,7 +1,7 @@
 /*©2015 FRINKnet and Friends*/"use strict"
 const DWARFTON-BASIC=1.3
-/*DWARFTON*/const D=document,W=window,A=function(){var o=[],a=arguments,x
-for(x in a)o=o.concat(I(a[x],W,0,U,L,D,N,'',T,[])?a[x]:[].slice.apply(a[x]))
+/*DWARFTON*/const D=document,W=window,A=function(){var o=[],a=arguments,i,x
+for(i in a)o=o.concat(x=[].slice.apply(a[i])).length?x:a[i])
 return o},R=(U=>{var w=s=>{if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
 else if(I(s.pack,I)) s.body=s.pack(s.body)
 return s},R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
@@ -32,10 +32,7 @@ q[k]=v
 v=q}
 O(o,q)}while(++i<a.length)
 return o;}
-R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
-return R})(),F=false,T=true,O=function(o){var a=arguments,i=a.length,o=Object(o),x
-while(--i)for(x in O(a[i]))
-if(I(a[i][x],{},[]))o[x]=O({},o[x],a[i][x])
-else o[x]=a[i][x]
-return o},N=null
+R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,parse:N,format:N,error:console.log,streaming:F}
+return R})(),F=false,T=true,O=Object.assign
+N=null
 

@@ -15,10 +15,12 @@ A=function(){
 	//shorten arguments varible
 	a=arguments,
 	//instance iterator
+	i,
+	//converted variable
 	x
 
-	//loop args filtering those I wouldn't convert otherwise use [].slice
-	for(x in a)o=o.concat(I(a[x],W,0,U,L,D,N,'',T,[])?a[x]:[].slice.apply(a[x]))
+	//loop args and convert to array were possible
+	for(i in a)o=o.concat(x=[].slice.apply(a[i])).length?x:a[i])
 
 	//return output
 	return o
@@ -143,7 +145,10 @@ R=(U=>{
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
 		pack:R.encode,
-		error:console.log
+		parse:N,
+		format:N,
+		error:console.log,
+		streaming:F
 	}
 
 	return R
@@ -154,26 +159,27 @@ F=false,
 T=true,
 //Overload
 // o=object
-O=function(o){
-	//abbreviate argumens variable
-	var a=arguments,
-	//itterator is length of arguments
-	i=a.length,
-	//make sure that o is an Object ready to overload
-	o=Object(o),
-	//property extension
-	x
-
-	//loop through arguments except first one
-	while(--i)for(x in O(a[i]))
-	//do deep copy for arrays and objects
-	if(I(a[i][x],{},[]))o[x]=O({},o[x],a[i][x])
-	// do regular copy for everything else
-	else o[x]=a[i][x]
-
-	//return output
-	return o
-},
+O=Object.assign
+//O=function(o){
+//	//abbreviate argumens variable
+//	var a=arguments,
+//	//itterator is length of arguments
+//	i=a.length,
+//	//make sure that o is an Object ready to overload
+//	o=Object(o),
+//	//property extension
+//	x
+//
+//	//loop through arguments except first one
+//	while(--i)for(x in O(a[i]))
+//	//do deep copy for arrays and objects
+//	if(I(a[i][x],{},[]))o[x]=O({},o[x],a[i][x])
+//	// do regular copy for everything else
+//	else o[x]=a[i][x]
+//
+//	//return output
+//	return o
+//},
 //Null
 N=null
 
@@ -342,14 +348,14 @@ S=(U=>{
 	S.js=(k,v)=>x('script',k,v)
 	//css storage function
 	S.css=(k,v)=>x('style',k,v)
-	//json storage function
-	S.json=(k,v)=>r=I(k,"")?j.parse(k):j.stringify(k)
+	//cache storage function
+	S.cache=(k,v)=>U//TODO
+	//cookie storage function
+	S.cookie=(k,v)=>U//TODO
 	//local storage function
 	S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 	//local storage function
 	S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-	S.cookie=(k,v)=>U//TODO
-	S.cache=(k,v)=>U//TODO
 
 	S.opts={
 	}
