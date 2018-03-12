@@ -156,7 +156,7 @@ S=(U=>{
 		//if value return node else return innerText
 		return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText
 	},
-	y=D&&D.getElementsByTagName('script')
+	y=D&&D.getElementsByTagName('script'),
 	z=y&&y[y.length-1].src,
 	//parent Storage function
 	S=function(t,k,v){

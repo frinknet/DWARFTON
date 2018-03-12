@@ -65,8 +65,7 @@ for(i in n._evt[v])if(n._evt[v][i][0].toString()==y)return
 n._evt[v].push([f,w,s])
 n.addEventListener(v,w,!!s)})
 return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,w=navigator.serviceWorker,c=w.controller,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
-return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},y=D&&D.getElementsByTagName('script')
-z=y&&y[y.length-1].src,S=function(t,k,v){return I(S[t],I)?S[t](k,v):F}
+return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},y=D&&D.getElementsByTagName('script'),z=y&&y[y.length-1].src,S=function(t,k,v){return I(S[t],I)?S[t](k,v):F}
 S.css=(k,v)=>x('style',k,v)
 S.script=(k,v)=>x('script',k,v)
 S.cookie=(k,v)=>U//TODO
