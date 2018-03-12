@@ -84,7 +84,7 @@ B=function(l,v,s,f,m){
 		//event remover
 		x=f=>z.forEach((a,i)=>{
 			//check if it's worthy to remove a listener
-			return ((!y&&(s==a.sel||!s))||y==a.fn.toString()==y){
+			if ((!y&&(s==a.sel||!s))||y==a.fn.toString()==y){
 				//remove the listener
 				n.removeEventListener(v,a.ltn)
 
