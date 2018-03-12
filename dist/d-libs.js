@@ -44,8 +44,7 @@ else if(/<\w+[^>]*>/.test(s)){l=D.createElement('p')
 l.innerHTML=s
 l=l.childNodes}else if(p[q])l=p[q](s)
 else l=L(p).map(p=>L(s,p)),l=A.apply(A,l)
-return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,t=o=>o===N?'null':(t=typeof o)=='object'?Object(o).constructor.name:t
-i=a.length
+return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,t=o=>o===N?'null':(t=typeof o)=='object'?Object(o).constructor.name:t,i=a.length
 if(i==1)return t(o)
 else while(--i)if(t(o)==t(a[i]))return T
 return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
