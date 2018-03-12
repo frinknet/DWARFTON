@@ -74,8 +74,7 @@ S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
 S.offline=(k,v)=>v!=U?k!=F?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k).map(k=>c.delete(new Request(k)))):caches.delete(S.opt.cache):S.worker(c,k)
 S.worker=(k,v)=>I(k,Worker)?k.postMessage(v):new Worker(URL.createObjectURL(new Blob([('('+k+')()').replace('"use strict"','')]),{type:'application/javascript;charset=utf-8'}))
 S.opts={cache:'v'+DWARFTON,offline:F}
-if(y)setTimeout(o=>{w.register(z)
-S.worker(w.controller,e=>S.opts=o)},10000,S.opts)
+if(y)setTimeout(o=>{w.register(z)},10000,S.opts)
 else if(I(W,WebWorkerGlobalScope)){B(W,'fetch',(e,r)=>(r=e.request).method=='GET'?e.respondWith(
 caches.match(r).then((o,n)=>(
 n=fetch(r).then(

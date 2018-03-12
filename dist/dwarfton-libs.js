@@ -362,7 +362,7 @@ S=(U=>{
 	if(y)setTimeout(o=>{
 		//set self as service worker
 		w.register(z)
-		S.worker(w.controller,e=>S.opts=o)
+		//S.worker(w.controller,e=>S.opts=o)
 	},10000,S.opts)
 	//if in worker
 	else if(I(W,WebWorkerGlobalScope)){
