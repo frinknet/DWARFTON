@@ -77,7 +77,20 @@ S.worker=(k,v)=>I(k,Worker)?k.postMessage(v):new Worker(URL.createObjectURL(new 
 S.opts={cache:'v'+DWARFTON,offline:F}
 if(y)setTimeout(o=>{w.register(z)
 S.worker(c,e=>S.opts=o)},10000,S.opts)
-else if(I(W,WebWorkerGlobalScope)){B(W,'message',e=>console.log('message',e))
-B(W,'fetch',(e,r)=>S.opt.offline&&(r=e.request).method=='GET'?e.respondWith(caches.match(r).then((o,n)=>(n=fetch(r).then(o=>caches.open(S.opts.cache).then(c=>c.put(r,o.clone()))))?o||n:U)):U)}
+else if(I(W,WebWorkerGlobalScope)){B(W,'fetch',(e,r)=>(r=e.request).method=='GET'?e.respondWith(
+caches.match(r).then(
+(o,n)=>(
+n=fetch(r).then(
+o=>caches.open(S.opts.cache).then(
+c=>c.put(r,o.clone())
+).catch(
+c=>new Response('<h1>503:Unavailable</h1>',{status:503})
+)
+)
+)?o||n:U
+)
+)
+)
+B(W,'message',e=>console.log('message',e))}
 return S})()
 
