@@ -198,23 +198,16 @@ S=(U=>{
 	},10000,S.opts)
 	//if in worker
 	else if(I(W,WebWorkerGlobalScope)){
-B(W,'fetch',(e,r)=>{
-	return (
-		r=e.request.method=='GET'?e.respondWith(
-			caches.match(r).then((o,n)=>{
-				return (
-					n=fetch(r).then(
-						o=>caches.open(S.opts.cache).then(
-							c=>c.put(r,o.clone())
-						).catch(
-							c=>new Response('<h1>503:Unavailable</h1>',{status:503})
-						)
-					)
-				)?o||n:U
-			})
-		)
-	)
-})
+B(W,'fetch',(e,r)=>(r=e.request).method=='GET'?e.respondWith(
+	caches.match(r).then((o,n)=>(
+		n=fetch(r).then(
+		o=>caches.open(S.opts.cache).then(
+			c=>c.put(r,o.clone())
+		).catch(
+			c=>new Response('<h1>503:Unavailable</h1>',{status:503})
+		))
+	)?o||n:U)
+):U)
 		B(W,'message',e=>console.log('message',e))
 	}
 
