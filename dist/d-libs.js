@@ -53,7 +53,8 @@ var w=v.split(' ')
 l=L(l)
 if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
 else l.forEach(n=>{if(f==U)return n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T}))
-var w=function(e){var b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?x(f):n,e):n.parentNode?b(e,n.parentNode,p):U,return b(e,e.srcElement,L(s?s:this,s?this:D))},x=f=>z.forEach((a,i)=>{if((!y&&(s==a.sel||!s))||y==a.fn.toString()==y){n.removeEventListener(v,a.ltn)
+var w=function(e){var b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?x(f):n,e):n.parentNode?b(e,n.parentNode,p):U
+return b(e,e.srcElement,L(s?s:this,s?this:D))},x=f=>z.forEach((a,i)=>{if((!y&&(s==a.sel||!s))||y==a.fn.toString()==y){n.removeEventListener(v,a.ltn)
 delete z[i]}
 return n},y=f&&f.toString(),z=(n._evt=n._evt||{})[v]=n._evt[v]||[],i
 if(m===F)return x(f)

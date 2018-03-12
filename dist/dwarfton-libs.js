@@ -246,7 +246,7 @@ B=(U=>{
 			//event watcher
 			var w=function(e){
 				//bubble function: call event, stop one shots and bubble to parents
-				var b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?x(f):n,e):n.parentNode?b(e,n.parentNode,p):U,
+				var b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?x(f):n,e):n.parentNode?b(e,n.parentNode,p):U
 				//bubble event from srcElement
 				return b(e,e.srcElement,L(s?s:this,s?this:D))
 			},
