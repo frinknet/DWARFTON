@@ -44,38 +44,37 @@ else if(/<\w+[^>]*>/.test(s)){l=D.createElement('p')
 l.innerHTML=s
 l=l.childNodes}else if(p[q])l=p[q](s)
 else l=L(p).map(p=>L(s,p)),l=A.apply(A,l)
-return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,c='constructor',t=typeof o,i=a.length
-if(i==1)return o===N?'null':t=='object'?(c=O(o)[c])!=Object?c.name:t:t
-else while(--i)if(o===(t=a[i])||o!=N&&o!=U&&t!=N&&t!=U&&(o=O(o))[c]==O(t)[c]||o[c]==t)return T
-return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
+return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,t=o=>o===N?'null':(t=typeof o)=='object'?Object(o).constructor.name:t
+i=a.length
+if(i==1)return t(o)
+else while(--i)if(t(o)==t(a[i]))return T
+return F},B=(U=>{var b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?n._evt.rm(f):n,e):n.parentNode?b(e,n.parentNode,p):U},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
 var w=v.split(' ')
 l=L(l)
 if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
-else if(f===U)l.forEach(n=>n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T})))
-else l.forEach((n,i)=>{var w=function(e){var t=this,p=L(s?s:t,s?t:D),b=n=>{if(p.indexOf(n)>-1){if(m===T)x(f)
-return f.call(n,e)}
-return n.parentNode?b(n.parentNode):U}
-return b(e.srcElement)},x=(f,i)=>{if(n._evt&&n._evt[v])for(i in n._evt[v])
-if((!y&&(s==n.evt[v][i][2]||!s))||n._evt[v][i][0].toString()==y){n.removeEventListener(v,n._evt[v][i][1])
-delete n._evt[v][i]}},y=f&&f.toString()
+else l.forEach(n=>{if(f==U)return n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T}))
+var w=function(e){return b(e,e.srcElement,L(s?s:this,s?this:D))},x=f=>z.forEach((a,i)=>if((!y&&(s==a.sel||!s))||y==a.fn.toString()==y)delete z[n.removeEventListener(v,a.ltn)||i])||n},y=f&&f.toString(),z=(n._evt=n._evt||{})[v]=n._evt[v]||[],i
 if(m===F)return x(f)
-n._evt=n._evt||{}
-n._evt[v]=n._evt[v]||[]
-for(i in n._evt[v])if(n._evt[v][i][0].toString()==y)return
-n._evt[v].push([f,w,s])
+for(i in z)if(z[i].fn.toString()==y)return
+z.push({fn:f,ltn:w,sel:s,rm:x])
 n.addEventListener(v,w,!!s)})
-return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,w=navigator.serviceWorker,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
+return l}
+return B},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,w=navigator.serviceWorker,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
 return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},y=D&&D.getElementsByTagName('script'),z=y&&y[y.length-1].src,S=function(t,k,v){return I(S[t],I)?S[t](k,v):F}
 S.css=(k,v)=>x('style',k,v)
 S.script=(k,v)=>x('script',k,v)
 S.cookie=(k,v)=>U//TODO
 S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-S.offline=(k,v)=>v!=U?k!=F?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k).map(k=>c.delete(new Request(k)))):caches.delete(S.opt.cache):S.worker(c,k)
-S.worker=(k,v)=>I(k,Worker)?k.postMessage(v):new Worker(URL.createObjectURL(new Blob([('('+k+')()').replace('"use strict"','')]),{type:'application/javascript;charset=utf-8'}))
-S.opts={cache:'v'+DWARFTON,offline:F}
-if(y)setTimeout(o=>{w.register(z)},10000,S.opts)
-else if(I(W,WebWorkerGlobalScope)){B(W,'fetch',(e,r)=>(r=e.request).method=='GET'?e.respondWith(
+S.offline=(k,v)=>v!=U?k!=F?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k).map(k=>c.delete(new Request(k)))):caches.delete(S.opt.cache):w.controller.postMessage(k.toString())
+S.worker=(k,v)=>k&&I(k,Worker)?k.postMessage(v):new Worker(URL.createObjectURL(new Blob([('('+k+')()').replace('"use strict"','')]),{type:'application/javascript;charset=utf-8'}))
+S.opts={cache:'v'+DWARFTON,offline:F,background:!!W.location.href.match(/^https/)}
+if(y)setTimeout(o=>{if(S.opts.background)w.register(z)
+if(w.controller)w.controller.postMessage(e=>S.opts=o)},10000,S.opts)
+else if(I(W,WebWorkerGlobalScope)){B(W,'install',e=>console.log('install',e))
+B(W,'activate',e=>console.log('activate',e))
+B(W,'message',e=>console.log('message',e))
+B(W,'fetch',(e,r)=>(r=e.request).method=='GET'?e.respondWith(
 caches.match(r).then((o,n)=>(
 n=fetch(r).then(
 o=>caches.open(S.opts.cache).then(
@@ -83,9 +82,8 @@ c=>c.put(r,o.clone())
 ).catch(
 c=>new Response('<h1>503:Unavailable</h1>',{status:503})
 ))
-)?o||n:U)
-):U)
-B(W,'message',e=>console.log('message',e))}
+)?o||n:e)
+):e)}
 return S})()
 /*CPU*/const C=function(o,f){var a=[].slice.call(arguments,2)
 return f.apply(o,a.length>1?a:[].slice.call(a[0]))},P=function(o,a){var p='prototype',o=Object(o)

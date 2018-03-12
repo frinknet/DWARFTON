@@ -40,18 +40,15 @@ const L=function(s,p){
 I=function(o){
 	//shortne arguments variable
 	var a=arguments,
-	//shorten constructor property
-	c='constructor',
-	//store type of passed in object
-	t=typeof o,
+	//store type function
+	t=o=>o===N?'null':(t=typeof o)=='object'?Object(o).constructor.name:t 
 	//get argume count
 	i=a.length
 
 	//if one arg get object type or constructor name for objects
-	if(i==1)return o===N?'null':t=='object'?(c=O(o)[c])!=Object?c.name:t:t
+	if(i==1)return t(o)
 	//loop through check for equality then check constructors
-	else while(--i)if(o===(t=a[i])||o!=N&&o!=U&&t!=N&&t!=U&&(o=O(o))[c]==O(t)[c]||o[c]==t)return T
-
+	else while(--i)if(t(o)==t(a[i]))return T
 	//return false if we don't find anything
 	return F
 },
@@ -61,77 +58,56 @@ I=function(o){
 //s=selector for children
 //f=function to trigger
 //m=fire once
-B=function(l,v,s,f,m){
-	//allow no child selectors
-	if(I(f,T,U))m=f;f=s;s=N
+B=(U=>{
+	//bubble function: call event, stop one shots and bubble to parents
+	var b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?n._evt.rm(f):n,e):n.parentNode?b(e,n.parentNode,p):U
+	},
+	B=function(l,v,s,f,m){
+		//polymorph adjust for no selectors
+		if(I(f,T,U))m=f;f=s;s=N
 
-	//split event list
-	var w=v.split(' ')
-	//setup list
-	l=L(l)
+		//split event list
+		var w=v.split(' ')
+		//setup list
+		l=L(l)
+	
+		//work for event list as multiple
+		if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
+		//loop through list
+		else l.forEach(n=>{
+			//dispatch events when no function is provided
+			if(f==U)return n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T}))
+			//event watcher
+			var w=function(e){return b(e,e.srcElement,L(s?s:this,s?this:D))},
+			//event remover
+			x=f=>z.forEach((a,i)=>if((!y&&(s==a.sel||!s))||y==a.fn.toString()==y)delete z[n.removeEventListener(v,a.ltn)||i])||n
+			},
+			//text representation of function
+			y=f&&f.toString(),
+			//setup event extention for event name
+			z=(n._evt=n._evt||{})[v]=n._evt[v]||[],
+			//iterator
+			i
 
-	//work for event list as multiple
-	if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
-	//dispatch events when no function is provided
-	else if(f===U)l.forEach(n=>n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T})))
-	else l.forEach((n,i)=>{
-		//event watcher
-		var w=function(e){
-			//abreviate this
-			var t=this,
-			//define patern list
-			p=L(s?s:t,s?t:D),
-			//bubble function
-			b=n=>{
-				if(p.indexOf(n)>-1){
-					//stop one shot events
-					if(m===T)x(f)
+			// remove event listener
+			if(m===F)return x(f)
 
-					//call event
-					return f.call(n,e)
-				}
+			//don't list the same listener twice
+			for(i in z)if(z[i].fn.toString()==y)return
 
-				//bubble to parents
-				return n.parentNode?b(n.parentNode):U
-			}
+			//add function and listener
+			z.push({fn:f,ltn:w,sel:s,rm:x])
 
-			//fires event
-			return b(e.srcElement)
-		},
-		//event remover
-		x=(f,i)=>{
-			//check if the event extender exists
-			if(n._evt&&n._evt[v])for(i in n._evt[v])
-			//check if the event extender has the function
-			if((!y&&(s==n.evt[v][i][2]||!s))||n._evt[v][i][0].toString()==y){
-				//remove the listener
-				n.removeEventListener(v,n._evt[v][i][1])
+			//add the event listener and bubble if no selector
+			n.addEventListener(v,w,!!s)
+		})
 
-				//remove the record from the event extender
-				delete n._evt[v][i]
-			}
-		},
-		y=f&&f.toString()
+		//return the list selected
+		return l
+	}
 
-		// remove event listener
-		if(m===F)return x(f)
-		//add event extension
-		n._evt=n._evt||{}
-		//setup event extention for event name
-		n._evt[v]=n._evt[v]||[]
-
-		//don't list the same listener twice
-		for(i in n._evt[v])if(n._evt[v][i][0].toString()==y)return
-
-		//add function and listener
-		n._evt[v].push([f,w,s])
-
-		//add the event listener
-		n.addEventListener(v,w,!!s)
-	})
-
-	//return the list selected
-	return l
+	//breack encapsulation
+	return B
 },
 //Storage
 //t=type
@@ -175,28 +151,36 @@ S=(U=>{
 	//S('offline','url',T) = add
 	//S('offline','url',F) = remove
 	//S('offline',fn()) = message
-	S.offline=(k,v)=>v!=U?k!=F?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k).map(k=>c.delete(new Request(k)))):caches.delete(S.opt.cache):S.worker(c,k)
+	S.offline=(k,v)=>v!=U?k!=F?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k).map(k=>c.delete(new Request(k)))):caches.delete(S.opt.cache):w.controller.postMessage(k.toString())
 	//web worker function
 	//S.worker(fn) = create
 	//S.worker(w,m) = message
-	S.worker=(k,v)=>I(k,Worker)?k.postMessage(v):new Worker(URL.createObjectURL(new Blob([('('+k+')()').replace('"use strict"','')]),{type:'application/javascript;charset=utf-8'}))
+	S.worker=(k,v)=>k&&I(k,Worker)?k.postMessage(v):new Worker(URL.createObjectURL(new Blob([('('+k+')()').replace('"use strict"','')]),{type:'application/javascript;charset=utf-8'}))
 
 	//default options
 	S.opts={
 		//cache name
 		cache:'v'+DWARFTON,
-		//work offline
-		offline:F
+		//allow application to work offline
+		offline:F,
+		//only start service worker if we can
+		background:!!W.location.href.match(/^https/)
 	}	
 
 	//register self as service worker but allow 10s for settings to be set
 	if(y)setTimeout(o=>{
 		//set self as service worker
-		w.register(z)
-		//S.worker(w.controller,e=>S.opts=o)
+		if(S.opts.background)w.register(z)
+		//only post message if we have a service worker 
+		if(w.controller)w.controller.postMessage(e=>S.opts=o)
 	},10000,S.opts)
-	//if in worker
+	//setup worker if we are in workerscope
 	else if(I(W,WebWorkerGlobalScope)){
+		B(W,'install',e=>console.log('install',e))
+		B(W,'activate',e=>console.log('activate',e))
+		B(W,'message',e=>console.log('message',e))
+
+//bind to fetch
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'?e.respondWith(
 	caches.match(r).then((o,n)=>(
 		n=fetch(r).then(
@@ -205,9 +189,8 @@ B(W,'fetch',(e,r)=>(r=e.request).method=='GET'?e.respondWith(
 		).catch(
 			c=>new Response('<h1>503:Unavailable</h1>',{status:503})
 		))
-	)?o||n:U)
-):U)
-		B(W,'message',e=>console.log('message',e))
+	)?o||n:e)
+):e)
 	}
 
 	//expose the storage function
