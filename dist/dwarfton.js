@@ -314,7 +314,6 @@ S=(U=>{
 	//abbreviate JSON
 	j=JSON,
 	w=navigator.serviceWorker,
-	c=w.controller,
 	//flip function for script and style
 	x=(t,k,v)=>{
 		//seek if the tag exists in the DOM
@@ -363,7 +362,7 @@ S=(U=>{
 	if(y)setTimeout(o=>{
 		//set self as service worker
 		w.register(z)
-		S.worker(c,e=>S.opts=o)
+		S.worker(w.controller,e=>S.opts=o)
 	},10000,S.opts)
 	//if in worker
 	else if(I(W,WebWorkerGlobalScope)){

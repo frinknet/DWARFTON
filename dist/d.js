@@ -64,7 +64,7 @@ n._evt[v]=n._evt[v]||[]
 for(i in n._evt[v])if(n._evt[v][i][0].toString()==y)return
 n._evt[v].push([f,w,s])
 n.addEventListener(v,w,!!s)})
-return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,w=navigator.serviceWorker,c=w.controller,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
+return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,w=navigator.serviceWorker,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
 return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},y=D&&D.getElementsByTagName('script'),z=y&&y[y.length-1].src,S=function(t,k,v){return I(S[t],I)?S[t](k,v):F}
 S.css=(k,v)=>x('style',k,v)
 S.script=(k,v)=>x('script',k,v)
@@ -75,7 +75,7 @@ S.offline=(k,v)=>v!=U?k!=F?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k
 S.worker=(k,v)=>I(k,Worker)?k.postMessage(v):new Worker(URL.createObjectURL(new Blob([('('+k+')()').replace('"use strict"','')]),{type:'application/javascript;charset=utf-8'}))
 S.opts={cache:'v'+DWARFTON,offline:F}
 if(y)setTimeout(o=>{w.register(z)
-S.worker(c,e=>S.opts=o)},10000,S.opts)
+S.worker(w.controller,e=>S.opts=o)},10000,S.opts)
 else if(I(W,WebWorkerGlobalScope)){B(W,'fetch',(e,r)=>(r=e.request).method=='GET'?e.respondWith(
 caches.match(r).then((o,n)=>(
 n=fetch(r).then(
