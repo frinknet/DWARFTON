@@ -64,7 +64,7 @@ n._evt[v]=n._evt[v]||[]
 for(i in n._evt[v])if(n._evt[v][i][0].toString()==y)return
 n._evt[v].push([f,w,s])
 n.addEventListener(v,w,!!s)})
-return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,w=navigator.serviceWorker,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
+return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,w=navigator.serviceWorker,c=w.controller,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
 return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},y=D&&D.getElementsByTagName('script')
 z=z.y[s.length-1].src,S=function(t,k,v){return I(S[t],I)?S[t](k,v):F}
 S.css=(k,v)=>x('style',k,v)
@@ -72,11 +72,12 @@ S.script=(k,v)=>x('script',k,v)
 S.cookie=(k,v)=>U//TODO
 S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-S.offline=(k,v)=>v!=U?k?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k).map(k=>c.delete(new Request(k)))):caches.delete(S.opt.cache):S.worker(w.constroller,k)
+S.offline=(k,v)=>v!=U?k!=F?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k).map(k=>c.delete(new Request(k)))):caches.delete(S.opt.cache):S.worker(c,k)
 S.worker=(k,v)=>I(k,Worker)?k.postMessage(v):new Worker(URL.createObjectURL(new Blob([('('+k+')()').replace('"use strict"','')]),{type:'application/javascript;charset=utf-8'}))
 S.opts={cache:'v'+DWARFTON,offline:F}
-if(y)setTimeout(U=>{w.register(z)},10000)
-else if(I(W,WebWorkerGlobalScope)){B(W,'message',e=>console.log(e))
-B(W,'fetch',e=>e.request.method!='GET'?U:e.respondWith(caches.match(event.request)then(c=>)))}
+if(y)setTimeout(o=>{w.register(z)
+S.worker(c,e=>S.opts=o)},10000,S.opts)
+else if(I(W,WebWorkerGlobalScope)){B(W,'message',e=>console.log('message',e))
+B(W,'fetch',(e,r)=>S.opt.offline&&(r=e.request).method=='GET'?e.respondWith(caches.match(r).then((o,n)=>(n=fetch(r).then(o=>caches.open(S.opts.cache).then(c=>c.put(r,o.clone()))))?o||n:U)):U)}
 return S})()
 

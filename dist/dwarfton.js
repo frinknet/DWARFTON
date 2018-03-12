@@ -314,6 +314,7 @@ S=(U=>{
 	//abbreviate JSON
 	j=JSON,
 	w=navigator.serviceWorker,
+	c=w.controller,
 	//flip function for script and style
 	x=(t,k,v)=>{
 		//seek if the tag exists in the DOM
@@ -344,9 +345,12 @@ S=(U=>{
 	//S('offline','url',T) = add
 	//S('offline','url',F) = remove
 	//S('offline',fn()) = message
-	S.offline=(k,v)=>v!=U?k?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k).map(k=>c.delete(new Request(k)))):caches.delete(S.opt.cache):S.worker(w.constroller,k)
+	S.offline=(k,v)=>v!=U?k!=F?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k).map(k=>c.delete(new Request(k)))):caches.delete(S.opt.cache):S.worker(c,k)
 	//web worker function
+	//S.worker(fn) = create
+	//S.worker(w,m) = message
 	S.worker=(k,v)=>I(k,Worker)?k.postMessage(v):new Worker(URL.createObjectURL(new Blob([('('+k+')()').replace('"use strict"','')]),{type:'application/javascript;charset=utf-8'}))
+
 	//default options
 	S.opts={
 		//cache name
@@ -356,14 +360,15 @@ S=(U=>{
 	}	
 
 	//register self as service worker but allow 10s for settings to be set
-	if(y)setTimeout(U=>{
+	if(y)setTimeout(o=>{
+		//set self as service worker
 		w.register(z)
-		
-	},10000)
+		S.worker(c,e=>S.opts=o)
+	},10000,S.opts)
 	//if in worker
 	else if(I(W,WebWorkerGlobalScope)){
-		B(W,'message',e=>console.log(e))
-		B(W,'fetch',e=>e.request.method!='GET'?U:e.respondWith(caches.match(event.request)then(c=>)))
+		B(W,'message',e=>console.log('message',e))
+		B(W,'fetch',(e,r)=>S.opt.offline&&(r=e.request).method=='GET'?e.respondWith(caches.match(r).then((o,n)=>(n=fetch(r).then(o=>caches.open(S.opts.cache).then(c=>c.put(r,o.clone()))))?o||n:U)):U)
 	}
 
 	//expose the storage function
