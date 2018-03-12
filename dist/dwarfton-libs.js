@@ -228,10 +228,7 @@ I=function(o){
 //f=function to trigger
 //m=fire once
 B=(U=>{
-	//bubble function: call event, stop one shots and bubble to parents
-	var b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?n._evt.rm(f):n,e):n.parentNode?b(e,n.parentNode,p):U
-	},
-	B=function(l,v,s,f,m){
+	var B=function(l,v,s,f,m){
 		//polymorph adjust for no selectors
 		if(I(f,T,U))m=f;f=s;s=N
 
@@ -247,9 +244,23 @@ B=(U=>{
 			//dispatch events when no function is provided
 			if(f==U)return n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T}))
 			//event watcher
-			var w=function(e){return b(e,e.srcElement,L(s?s:this,s?this:D))},
+			var w=function(e){
+				//bubble function: call event, stop one shots and bubble to parents
+				var b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?x(f):n,e):n.parentNode?b(e,n.parentNode,p):U,
+				//bubble event from srcElement
+				return b(e,e.srcElement,L(s?s:this,s?this:D))
+			},
 			//event remover
-			x=f=>z.forEach((a,i)=>if((!y&&(s==a.sel||!s))||y==a.fn.toString()==y)delete z[n.removeEventListener(v,a.ltn)||i])||n
+			x=f=>z.forEach((a,i)=>{
+				//check if it's worthy to remove a listener
+				if((!y&&(s==a.sel||!s))||y==a.fn.toString()==y){
+					//remove the listener
+					n.removeEventListener(v,a.ltn)
+					//remove the record
+					delete z[i]
+				}
+				//return the node for chaining
+				return n
 			},
 			//text representation of function
 			y=f&&f.toString(),
