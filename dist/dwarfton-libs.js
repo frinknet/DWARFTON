@@ -326,7 +326,7 @@ S=(U=>{
 		return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText
 	},
 	y=D&&D.getElementsByTagName('script')
-	z=y&&y[s.length-1].src,
+	z=y&&y[y.length-1].src,
 	//parent Storage function
 	S=function(t,k,v){
 		return I(S[t],I)?S[t](k,v):F
