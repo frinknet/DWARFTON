@@ -59,7 +59,7 @@ delete z[i]}
 return n}),y=f&&f.toString(),z=(n._evt=n._evt||{})[v]=n._evt[v]||[],i
 if(m===F)return x(f)
 for(i in z)if(z[i].fn.toString()==y)return
-z.push({fn:f,ltn:w,sel:s,rm:x])
+z.push({fn:f,ltn:w,sel:s,rm:x})
 n.addEventListener(v,w,!!s)})
 return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,w=navigator.serviceWorker,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
 return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},y=D&&D.getElementsByTagName('script'),z=y&&y[y.length-1].src,S=function(t,k,v){return I(S[t],I)?S[t](k,v):F}

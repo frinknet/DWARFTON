@@ -278,7 +278,7 @@ B=function(l,v,s,f,m){
 		for(i in z)if(z[i].fn.toString()==y)return
 
 		//add function and listener
-		z.push({fn:f,ltn:w,sel:s,rm:x])
+		z.push({fn:f,ltn:w,sel:s,rm:x})
 
 		//add the event listener and bubble if no selector
 		n.addEventListener(v,w,!!s)
