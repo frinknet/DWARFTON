@@ -55,7 +55,7 @@ I=function(o){
 			//user defined functions return their type
 			:t
 		//simple types return their type
-		:t
+		:t,
 	//get argume count
 	i=a.length
 

@@ -50,8 +50,7 @@ return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,f=O.toS
 :t=='function'?f.test(o.toString())
 ?o.name
 :t
-:t
-i=a.length
+:t,i=a.length
 if(i==1)return t(o)
 else while(--i)if(t(o)==t(a[i]))return T
 return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
