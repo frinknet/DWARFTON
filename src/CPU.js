@@ -6,6 +6,25 @@ const C=(U=>{
 	var p=new Response('<h1>Server Unavailable</h1>',{status:503}),
 	//abbreviate serviceWorker
 	w=navigator.serviceWorker,
+	x=U=>{
+		B(W,'install',e=>console.log('install',e))
+		B(W,'activate',e=>console.log('activate',e))
+		B(W,'message',e=>console.log('message',e))
+
+		//bind to fetch
+		B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
+			?e.respondWith(caches.match(r)
+				.then((o,n)=>(n=fetch(r)
+					.then(o=>C.opts.offline?
+						caches.open(S.opts.cache)
+						.then(c=>c.put(r,o.clone()))
+						.catch(c=>p)
+						:o
+					)
+				)?o||n:e)
+			):e
+		)
+	},
 	//get script elements
 	y=D&&D.getElementsByTagName('script'),
 	//get url for current script(last one loaded)
@@ -39,35 +58,18 @@ const C=(U=>{
 	}
 
 	//exec in worker context
-	C.exec=f=>R.worker(w.controller,f)
+	C.exec=f=>S.WORKER(w.controller,f)
 
 	//register self as service worker but allow 10s for settings to be set
 	if(y)setTimeout(o=>{
 		//set self as service worker
 		if(o.worker)w.register(z)
+		else w.controller=S.WORKER(x)
 		//post message if we have a service worker 
 		C.exec(Function("C.opts="+JSON.stringify(o)))
 	},10000,C.opts)
 	//setup worker if we are in workerscope
-	else if(I(W,WebWorkerGlobalScope)){
-		B(W,'install',e=>console.log('install',e))
-		B(W,'activate',e=>console.log('activate',e))
-		B(W,'message',e=>console.log('message',e))
-
-		//bind to fetch
-		B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
-			?e.respondWith(caches.match(r)
-				.then((o,n)=>(n=fetch(r)
-					.then(o=>C.opts.offline?
-						caches.open(S.opts.cache)
-						.then(c=>c.put(r,o.clone()))
-						.catch(c=>p)
-						:o
-					)
-				)?o||n:e)
-			):e
-		)
-	}
+	else if(I(W,WebWorkerGlobalScope))x()
 
 	//return cache control
 	return C

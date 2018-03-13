@@ -73,16 +73,7 @@ S.WORKER=(k,v)=>k&&I(k,Worker)
 ('('+k+')()').replace('"use strict"','')
 ]),{type:'application/javascript;charset=utf-8'}))
 return S})()
-/*CPU*/const C=(U=>{var p=new Response('<h1>Server Unavailable</h1>',{status:503}),w=navigator.serviceWorker,y=D&&D.getElementsByTagName('script'),z=y&&y[y.length-1].src,C=function(c,u,s){if(s==U){s=u;u=c;c=o.store}
-return u!=F?caches.open(c).then(c=>s!=F
-?c.addAll(A(u))
-:(u).map(r=>c.delete(new Request(r)))
-):caches.delete(c)}
-C.opts={store:'v'+DWARFTON,offline:F,worker:!!W.location.href.match(/^https/)}
-C.exec=f=>R.worker(w.controller,f)
-if(y)setTimeout(o=>{if(o.worker)w.register(z)
-C.exec(Function("C.opts="+JSON.stringify(o)))},10000,C.opts)
-else if(I(W,WebWorkerGlobalScope)){B(W,'install',e=>console.log('install',e))
+/*CPU*/const C=(U=>{var p=new Response('<h1>Server Unavailable</h1>',{status:503}),w=navigator.serviceWorker,x=U=>{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',e=>console.log('message',e))
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
@@ -96,7 +87,17 @@ caches.open(S.opts.cache)
 )
 )?o||n:e)
 ):e
-)}
+)},y=D&&D.getElementsByTagName('script'),z=y&&y[y.length-1].src,C=function(c,u,s){if(s==U){s=u;u=c;c=o.store}
+return u!=F?caches.open(c).then(c=>s!=F
+?c.addAll(A(u))
+:(u).map(r=>c.delete(new Request(r)))
+):caches.delete(c)}
+C.opts={store:'v'+DWARFTON,offline:F,worker:!!W.location.href.match(/^https/)}
+C.exec=f=>S.WORKER(w.controller,f)
+if(y)setTimeout(o=>{if(o.worker)w.register(z)
+else w.controller=S.WORKER(x)
+C.exec(Function("C.opts="+JSON.stringify(o)))},10000,C.opts)
+else if(I(W,WebWorkerGlobalScope))x()
 return C})(),P=function(o,a){var p='prototype',o=Object(o)
 return (a)?o[p]=P(a):o[p]||o.constructor[p]},U=W.U
 
