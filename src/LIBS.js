@@ -168,12 +168,6 @@ S=(U=>{
 	S.LOCAL=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 	//session storage function
 	S.SESSION=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-	//web worker function
-	S.WORKER=(k,v)=>k&&I(k,Worker)
-		?k.postMessage(v)
-		:new Worker(URL.createObjectURL(new Blob([
-			('('+k+')()').replace('"use strict"','')
-		]),{type:'application/javascript;charset=utf-8'}))
 
 	//expose the storage function
 	return S

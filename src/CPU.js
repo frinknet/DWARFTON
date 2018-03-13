@@ -5,7 +5,39 @@ const C=(U=>{
 	//create problem response
 	var p=new Response('<h1>Server Unavailable</h1>',{status:503}),
 	//abbreviate serviceWorker
-	w=navigator.serviceWorker,
+	s=navigator.serviceWorker,
+	//controller worker
+	//offline cache function
+	//C('url',T) = add
+	//C('url',F) = remove
+	//C(F) = remove all
+	C=function(c,u,s){
+		//if cache is not a string it is a worker or creating a worker
+		if(!I(c,'',F))return C.worker(c,u)
+
+		//polymorph to allow C(u,s)
+		if(s==U){s=u;u=c;c=o.cache}
+
+		//return cache promise if there are urls
+		return u!=F?caches.open(c).then(c=>s!=F
+			//ad urls if switch isn't false
+			?c.addAll(A(u))
+			//remove responses from cache if false
+			:(u).map(r=>c.delete(new Request(r)))
+		//remove cache completely
+		):caches.delete(c)
+	},
+	//cache options
+	o=C.opts={
+		//cache name
+		cache:'v'+DWARFTON,
+		//allow application to work offline
+		offline:F,
+		//only start service worker if we can
+		worker:!!W.location.href.match(/^https/)
+	},
+	//web worker variable instanciated later
+	w,
 	x=e=>{
 		B(W,'install',e=>console.log('install',e))
 		B(W,'activate',e=>console.log('activate',e))
@@ -28,46 +60,24 @@ const C=(U=>{
 	//get script elements
 	y=D&&D.getElementsByTagName('script'),
 	//get url for current script(last one loaded)
-	z=y&&y[y.length-1].src,
-	//offline cache function
-	//C('url',T) = add
-	//C('url',F) = remove
-	//C(F) = remove all
-	C=function(c,u,s){
-		//polymorph to allow 
-		if(s==U){s=u;u=c;c=o.store}
+	z=y&&y[y.length-1].src
 
-		//return cache promise if there are urls
-		return u!=F?caches.open(c).then(c=>s!=F
-			//ad urls if switch isn't false
-			?c.addAll(A(u))
-			//remove responses from cache if false
-			:(u).map(r=>c.delete(new Request(r)))
-		//remove cache completely
-		):caches.delete(c)
-	}
+	//trigger web worker function
+	C.worker=(k,v)=>k&&I(k,Worker)
+		?k.postMessage(v)
+		:new Worker(URL.createObjectURL(new Blob([
+			('('+k+')()').replace('"use strict"','')
+		]),{type:'application/javascript;charset=utf-8'}))
 
-	//cache options
-	C.opts={
-		//cache name
-		store:'v'+DWARFTON,
-		//allow application to work offline
-		offline:F,
-		//only start service worker if we can
-		worker:!!W.location.href.match(/^https/)
-	}
+	//set service worker or fake it
+	w=(o.worker&&s.register(z))
+			//return a true service worker
+			?s.controller
+			//create a web worker instead
+			:C.worker(x)
 
-	//exec in worker context
-	C.exec=f=>S.WORKER(w.controller,f)
-
-	//register self as service worker but allow 10s for settings to be set
-	if(y)setTimeout(o=>{
-		//set self as service worker
-		if(o.worker)w.register(z)
-		else w.controller=S.WORKER(x)
-		//post message if we have a service worker 
-		C.exec(Function("C.opts="+JSON.stringify(o)))
-	},10000,C.opts)
+	// wait 10 seconds and set C.opts the same as ours
+	if(y)setTimeout(U=>C(Function("C.opts="+JSON.stringify(o))),10000)
 	//setup worker if we are in workerscope
 	else if(I(W,WebWorkerGlobalScope))x()
 

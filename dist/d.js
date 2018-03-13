@@ -73,13 +73,13 @@ S.SCRIPT=(k,v)=>x('script',k,v)
 S.COOKIE=(k,v)=>U//TODO
 S.LOCAL=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 S.SESSION=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-S.WORKER=(k,v)=>k&&I(k,Worker)
-?k.postMessage(v)
-:new Worker(URL.createObjectURL(new Blob([
-('('+k+')()').replace('"use strict"','')
-]),{type:'application/javascript;charset=utf-8'}))
 return S})()
-/*CPU*/const C=(U=>{var p=new Response('<h1>Server Unavailable</h1>',{status:503}),w=navigator.serviceWorker,x=e=>{B(W,'install',e=>console.log('install',e))
+/*CPU*/const C=(U=>{var p=new Response('<h1>Server Unavailable</h1>',{status:503}),s=navigator.serviceWorker,C=function(c,u,s){if(!I(c,'',F))return C.worker(c,u)
+if(s==U){s=u;u=c;c=o.cache}
+return u!=F?caches.open(c).then(c=>s!=F
+?c.addAll(A(u))
+:(u).map(r=>c.delete(new Request(r)))
+):caches.delete(c)},o=C.opts={cache:'v'+DWARFTON,offline:F,worker:!!W.location.href.match(/^https/)},w,x=e=>{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',e=>console.log('message',e))
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
@@ -93,16 +93,16 @@ caches.open(S.opts.cache)
 )
 )?o||n:e)
 ):e
-)},y=D&&D.getElementsByTagName('script'),z=y&&y[y.length-1].src,C=function(c,u,s){if(s==U){s=u;u=c;c=o.store}
-return u!=F?caches.open(c).then(c=>s!=F
-?c.addAll(A(u))
-:(u).map(r=>c.delete(new Request(r)))
-):caches.delete(c)}
-C.opts={store:'v'+DWARFTON,offline:F,worker:!!W.location.href.match(/^https/)}
-C.exec=f=>S.WORKER(w.controller,f)
-if(y)setTimeout(o=>{if(o.worker)w.register(z)
-else w.controller=S.WORKER(x)
-C.exec(Function("C.opts="+JSON.stringify(o)))},10000,C.opts)
+)},y=D&&D.getElementsByTagName('script'),z=y&&y[y.length-1].src
+C.worker=(k,v)=>k&&I(k,Worker)
+?k.postMessage(v)
+:new Worker(URL.createObjectURL(new Blob([
+('('+k+')()').replace('"use strict"','')
+]),{type:'application/javascript;charset=utf-8'}))
+w=(o.worker&&s.register(z))
+?s.controller
+:C.worker(x)
+if(y)setTimeout(U=>C(Function("C.opts="+JSON.stringify(o))),10000)
 else if(I(W,WebWorkerGlobalScope))x()
 return C})(),P=function(o,a){var p='prototype',o=Object(o)
 return (a)?o[p]=P(a):o[p]||o.constructor[p]},U=W.U

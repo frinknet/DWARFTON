@@ -73,10 +73,5 @@ S.SCRIPT=(k,v)=>x('script',k,v)
 S.COOKIE=(k,v)=>U//TODO
 S.LOCAL=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 S.SESSION=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-S.WORKER=(k,v)=>k&&I(k,Worker)
-?k.postMessage(v)
-:new Worker(URL.createObjectURL(new Blob([
-('('+k+')()').replace('"use strict"','')
-]),{type:'application/javascript;charset=utf-8'}))
 return S})()
 
