@@ -211,22 +211,26 @@ const L=function(s,p){
 I=function(o){
 	//shortne arguments variable
 	var a=arguments,
+	c="constructor",
+	n='name',
 	//test for native functions
-	f=O.toString().replace(/^.+\)\s?/,'').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
+	f=O.toString().replace(/^.+\)\s?/,''),
 	//store type function
 	t=(o,t)=>o===N
 		//return null for null which is normally "object
-		?'null'
+		?'Null'
 		//objects return constructor name
-		:(t=typeof o)=='object'?Object(o).constructor.name
+		:(t=typeof o)=='object'
+		?Object(o)[c][n]
 		//functions need to test if they are native
-		:t=='function'?o.toString().match(f)
-			//native functions return their own name
-			?o.name
-			//user defined functions return their type
-			:t
-		//simple types return their type
-		:t,
+		:t=='function'
+		?o.toString().match(f)
+		//native functions return their own name
+		?o[n]
+		//others return return their constructor
+		:o[c][n]
+		//simple types return their type uppercased
+		:t[0].toUpperCase()+t.substring(1),
 	//get argume count
 	i=a.length
 
@@ -357,10 +361,14 @@ const C=(U=>{
 	//offline cache function
 	//C('url',T) = add
 	//C('url',F) = remove
-	//C(F) = remove all
+	//C('url',W) = creates a web worker
+	//C('cache name','url',T) = add to specifit cache
+	//C('cache name','url',F) = remove from a specifit cache
+	//C(fn) = return a web worker
+	//C(F) = remove all caches
 	C=function(c,u,s){
 		//if cache is not a string it is a worker or creating a worker
-		if(!I(c,'',F))return C.worker(c,u)
+		if(!I(c,'',F)||u==W)return w(c,u)
 
 		//polymorph to allow C(u,s)
 		if(s==U){s=u;u=c;c=o.cache}
@@ -372,7 +380,7 @@ const C=(U=>{
 			//remove responses from cache if false
 			:(u).map(r=>c.delete(new Request(r)))
 		//remove cache completely
-		):caches.delete(c)
+		):caches.delete(c)&&w(F)
 	},
 	//cache options
 	o=C.opts={
@@ -384,8 +392,41 @@ const C=(U=>{
 		worker:!!W.location.href.match(/^https/)
 	},
 	//web worker variable instanciated later
-	w,
-	x=e=>{
+	//trigger web worker function
+	//w('url',W) creates a worker from str
+	//w(fn,W) creates a worker from a fn
+	//w(fn) send fn to service worker
+	//w(Worker,fn) send function to worker
+	//w(Worker,F) delete service worker
+	//w(F) delete service worker
+	w=(w,v)=>w&&I(w,Worker)
+		?v==F
+			?w.terminate()
+			:(w.postMessage||w.port.postMessage)(v)
+		:R(y).then(s=>new Worker(I(k,I)
+			//turn function into blob url for workern
+			?URL.createObjectURL(new Blob([
+				[(s+';start();('+Function(k)+')()')
+			]),{type:'application/javascript;charset=utf-8'})
+			//use url as it is
+			:k
+		),
+	//get script elements
+	x=D&&D.getElementsByTagName('script'),
+	//get url for current script(last one loaded)
+	y=x&&x[x.length-1].src,
+	//set service worker or fake it
+	z=(o.worker&&s.register(y))
+			//return a true service worker
+			?s.controller
+			//create a web worker instead
+			:C.worker(y)
+
+
+	// wait 10 seconds and set C.opts the same as ours
+	if(y)setTimeout(U=>C(z,Function("C.opts="+JSON.stringify(o))),10000)
+	//setup worker if we are in workerscope
+	else{
 		B(W,'install',e=>console.log('install',e))
 		B(W,'activate',e=>console.log('activate',e))
 		B(W,'message',e=>console.log('message',e))
@@ -404,29 +445,6 @@ const C=(U=>{
 			):e
 		)
 	},
-	//get script elements
-	y=D&&D.getElementsByTagName('script'),
-	//get url for current script(last one loaded)
-	z=y&&y[y.length-1].src
-
-	//trigger web worker function
-	C.worker=(k,v)=>k&&I(k,Worker)
-		?k.postMessage(v)
-		:new Worker(URL.createObjectURL(new Blob([
-			('('+k+')()').replace('"use strict"','')
-		]),{type:'application/javascript;charset=utf-8'}))
-
-	//set service worker or fake it
-	w=(o.worker&&s.register(z))
-			//return a true service worker
-			?s.controller
-			//create a web worker instead
-			:C.worker(x)
-
-	// wait 10 seconds and set C.opts the same as ours
-	if(y)setTimeout(U=>C(Function("C.opts="+JSON.stringify(o))),10000)
-	//setup worker if we are in workerscope
-	else if(I(W,WebWorkerGlobalScope))x()
 
 	//return cache control
 	return C

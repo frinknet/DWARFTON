@@ -44,13 +44,15 @@ else if(/<\w+[^>]*>/.test(s)){l=D.createElement('p')
 l.innerHTML=s
 l=l.childNodes}else if(p[q])l=p[q](s)
 else l=L(p).map(p=>L(s,p)),l=A.apply(A,l)
-return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,f=O.toString().replace(/^.+\)\s?/,'').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),t=(o,t)=>o===N
-?'null'
-:(t=typeof o)=='object'?Object(o).constructor.name
-:t=='function'?o.toString().match(f)
-?o.name
-:t
-:t,i=a.length
+return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,c="constructor",n='name',f=O.toString().replace(/^.+\)\s?/,''),t=(o,t)=>o===N
+?'Null'
+:(t=typeof o)=='object'
+?Object(o)[c][n]
+:t=='function'
+?o.toString().match(f)
+?o[n]
+:o[c][n]
+:t[0].toUpperCase()+t.substring(1),i=a.length
 if(i==1)return t(o)
 else while(--i)if(t(o)==t(a[i]))return T
 return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
@@ -74,12 +76,25 @@ S.COOKIE=(k,v)=>U//TODO
 S.LOCAL=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 S.SESSION=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
 return S})()
-/*CPU*/const C=(U=>{var p=new Response('<h1>Server Unavailable</h1>',{status:503}),s=navigator.serviceWorker,C=function(c,u,s){if(!I(c,'',F))return C.worker(c,u)
+/*CPU*/const C=(U=>{var p=new Response('<h1>Server Unavailable</h1>',{status:503}),s=navigator.serviceWorker,C=function(c,u,s){if(!I(c,'',F)||u==W)return w(c,u)
 if(s==U){s=u;u=c;c=o.cache}
 return u!=F?caches.open(c).then(c=>s!=F
 ?c.addAll(A(u))
 :(u).map(r=>c.delete(new Request(r)))
-):caches.delete(c)},o=C.opts={cache:'v'+DWARFTON,offline:F,worker:!!W.location.href.match(/^https/)},w,x=e=>{B(W,'install',e=>console.log('install',e))
+):caches.delete(c)&&w(F)},o=C.opts={cache:'v'+DWARFTON,offline:F,worker:!!W.location.href.match(/^https/)},w=(w,v)=>w&&I(w,Worker)
+?v==F
+?w.terminate()
+:(w.postMessage||w.port.postMessage)(v)
+:R(y).then(s=>new Worker(I(k,I)
+?URL.createObjectURL(new Blob([
+[(s+';start();('+Function(k)+')()')
+]),{type:'application/javascript;charset=utf-8'})
+:k
+),x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=(o.worker&&s.register(y))
+?s.controller
+:C.worker(y)
+if(y)setTimeout(U=>C(z,Function("C.opts="+JSON.stringify(o))),10000)
+else{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',e=>console.log('message',e))
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
@@ -93,17 +108,6 @@ caches.open(S.opts.cache)
 )
 )?o||n:e)
 ):e
-)},y=D&&D.getElementsByTagName('script'),z=y&&y[y.length-1].src
-C.worker=(k,v)=>k&&I(k,Worker)
-?k.postMessage(v)
-:new Worker(URL.createObjectURL(new Blob([
-('('+k+')()').replace('"use strict"','')
-]),{type:'application/javascript;charset=utf-8'}))
-w=(o.worker&&s.register(z))
-?s.controller
-:C.worker(x)
-if(y)setTimeout(U=>C(Function("C.opts="+JSON.stringify(o))),10000)
-else if(I(W,WebWorkerGlobalScope))x()
-return C})(),P=function(o,a){var p='prototype',o=Object(o)
+)},return C})(),P=function(o,a){var p='prototype',o=Object(o)
 return (a)?o[p]=P(a):o[p]||o.constructor[p]},U=W.U
 
