@@ -98,7 +98,7 @@ B=function(l,v,s,f,m){
 		//text representation of function
 		y=f&&f.toString(),
 		//setup node extention for event data
-		z=(n._evt=n._evt||{})[v]=n._evt[v]||{},
+		z=(n._evt=n._evt||{})[v]=n._evt[v]||[],
 		//iterator
 		i
 
