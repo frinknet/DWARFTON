@@ -41,7 +41,7 @@ I=function(o){
 	//shortne arguments variable
 	var a=arguments,
 	//store type function
-	t=o,t=>o===N?'null':(t=typeof o)=='object'?Object(o).constructor.name:t,
+	t=(o,t)=>o===N?'null':(t=typeof o)=='object'?Object(o).constructor.name:t,
 	//get argume count
 	i=a.length
 
