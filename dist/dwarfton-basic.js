@@ -1,7 +1,7 @@
 /*©2015 FRINKnet and Friends*/
 "use strict"
 
-const DWARFTON-BASIC=1.07
+const DWARFTON-BASIC=1.27
 /*DWARFTON*/
 //Document
 const D=document,

@@ -26,12 +26,14 @@ const C=(U=>{
 			:(u).map(r=>c.delete(new Request(r)))
 		//remove cache completely
 		):caches.delete(c)
-	},
+	}
+
+	//cache options
 	C.opts={
 		//cache name
 		store:'v'+DWARFTON,
 		//allow application to work offline
-		cache:F,
+		offline:F,
 		//only start service worker if we can
 		worker:!!W.location.href.match(/^https/)
 	}
@@ -56,9 +58,11 @@ const C=(U=>{
 		B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
 			?e.respondWith(caches.match(r)
 				.then((o,n)=>(n=fetch(r)
-					.then(o=>caches.open(S.opts.cache)
+					.then(o=>C.opts.offline?
+						caches.open(S.opts.cache)
 						.then(c=>c.put(r,o.clone()))
 						.catch(c=>p)
+						:o
 					)
 				)?o||n:e)
 			):e

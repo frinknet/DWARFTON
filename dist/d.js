@@ -1,5 +1,5 @@
 /*©2015 FRINKnet and Friends*/"use strict"
-const DWARFTON=1.07
+const DWARFTON=1.27
 /*DWARFTON*/const D=document,W=self,A=function(){var o=[],a=arguments,i,x
 for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
 return o},R=(U=>{var c=s=>{if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
@@ -77,7 +77,8 @@ return S})()
 return u!=F?caches.open(c).then(c=>s!=F
 ?c.addAll(A(u))
 :(u).map(r=>c.delete(new Request(r)))
-):caches.delete(c)},C.opts={store:'v'+DWARFTON,cache:F,worker:!!W.location.href.match(/^https/)}
+):caches.delete(c)}
+C.opts={store:'v'+DWARFTON,offline:F,worker:!!W.location.href.match(/^https/)}
 C.exec=f=>R.worker(w.controller,f)
 if(y)setTimeout(o=>{if(o.worker)w.register(z)
 C.exec(Function("C.opts="+JSON.strigify(o)))},10000,C.opts)
@@ -87,9 +88,11 @@ B(W,'message',e=>console.log('message',e))
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
 ?e.respondWith(caches.match(r)
 .then((o,n)=>(n=fetch(r)
-.then(o=>caches.open(S.opts.cache)
+.then(o=>C.opts.offline?
+caches.open(S.opts.cache)
 .then(c=>c.put(r,o.clone()))
 .catch(c=>p)
+:o
 )
 )?o||n:e)
 ):e
