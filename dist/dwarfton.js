@@ -253,7 +253,7 @@ B=function(l,v,s,f,m){
 		//event remover
 		x=f=>z.forEach((a,i)=>{
 			//check if it's worthy to remove a listener
-			if ((!y&&(s==a.sel||!s))||y==a.fn.toString()==y){
+			if((!y&&(s==a.sel||!s))||y==a.fn.toString()==y){
 				//remove the listener
 				n.removeEventListener(v,a.ltn)
 
@@ -266,8 +266,8 @@ B=function(l,v,s,f,m){
 		}),
 		//text representation of function
 		y=f&&f.toString(),
-		//setup event extention for event name
-		z=(n._evt=n._evt||{})[v]=n._evt[v]||[],
+		//setup node extention for event data
+		z=(n._evt=n._evt||{})[v]=n._evt[v]||{},
 		//iterator
 		i
 
