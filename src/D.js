@@ -1,2 +1,2 @@
 //Document
-D=document,
+const D=self.document,

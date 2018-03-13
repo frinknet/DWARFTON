@@ -3,7 +3,7 @@
 
 const DWARFTON=1.28
 //Document
-D=document,
+const D=self.document,
 //Window or web worker
 W=self,
 //Aggregate

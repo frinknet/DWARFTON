@@ -1,6 +1,6 @@
 /*©2015 FRINKnet and Friends*/"use strict"
 const DWARFTON=1.28
-D=document,W=self,A=function(){var o=[],a=arguments,i,x
+const D=self.document,W=self,A=function(){var o=[],a=arguments,i,x
 for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
 return o},F=false,T=true,O=Object.assign,N=null,L=function(s,p){var l,q='querySelectorAll'
 p=p?p==W?D:p:D
