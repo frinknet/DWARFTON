@@ -73,7 +73,7 @@ S.WORKER=(k,v)=>k&&I(k,Worker)
 ('('+k+')()').replace('"use strict"','')
 ]),{type:'application/javascript;charset=utf-8'}))
 return S})()
-/*CPU*/const C=(U=>{var p=new Response('<h1>Server Unavailable</h1>',{status:503}),w=navigator.serviceWorker,x=U=>{B(W,'install',e=>console.log('install',e))
+/*CPU*/const C=(U=>{var p=new Response('<h1>Server Unavailable</h1>',{status:503}),w=navigator.serviceWorker,x=e=>{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',e=>console.log('message',e))
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'

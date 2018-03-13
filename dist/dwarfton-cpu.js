@@ -177,7 +177,7 @@ const C=(U=>{
 	var p=new Response('<h1>Server Unavailable</h1>',{status:503}),
 	//abbreviate serviceWorker
 	w=navigator.serviceWorker,
-	x=U=>{
+	x=e=>{
 		B(W,'install',e=>console.log('install',e))
 		B(W,'activate',e=>console.log('activate',e))
 		B(W,'message',e=>console.log('message',e))

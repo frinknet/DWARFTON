@@ -34,7 +34,7 @@ O(o,q)}while(++i<a.length)
 return o;}
 R.opts={mode: 'cors',method: 'GET',credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
 return R})(),F=false,T=true,O=Object.assign,N=null
-/*CPU*/const C=(U=>{var p=new Response('<h1>Server Unavailable</h1>',{status:503}),w=navigator.serviceWorker,x=U=>{B(W,'install',e=>console.log('install',e))
+/*CPU*/const C=(U=>{var p=new Response('<h1>Server Unavailable</h1>',{status:503}),w=navigator.serviceWorker,x=e=>{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',e=>console.log('message',e))
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
