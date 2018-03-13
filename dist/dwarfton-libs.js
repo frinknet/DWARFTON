@@ -211,8 +211,22 @@ const L=function(s,p){
 I=function(o){
 	//shortne arguments variable
 	var a=arguments,
+	//test for native functions
+	f=O.toString().replace(/^.+\)\s?/,'').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),
 	//store type function
-	t=(o,t)=>o===N?'null':(t=typeof o)=='object'?Object(o).constructor.name:t,
+	t=(o,t)=>o===N
+		//return null for null which is normally "object
+		?'null'
+		//objects return constructor name
+		:(t=typeof o)=='object'?Object(o).constructor.name
+		//functions need to test if they are native
+		:t=='function'?f.test(o.toString())
+			//native functions return their own name
+			?o.name
+			//user defined functions return their type
+			:t
+		//simple types return their type
+		:t
 	//get argume count
 	i=a.length
 
