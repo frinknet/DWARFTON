@@ -49,7 +49,7 @@ I=function(o){
 		//objects return constructor name
 		:(t=typeof o)=='object'?Object(o).constructor.name
 		//functions need to test if they are native
-		:t=='function'?f.test(o.toString())
+		:t=='function'?o.toString().match(f)
 			//native functions return their own name
 			?o.name
 			//user defined functions return their type

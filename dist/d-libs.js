@@ -47,7 +47,7 @@ else l=L(p).map(p=>L(s,p)),l=A.apply(A,l)
 return O(A(l),{_sel:[s,p],constructor:L})},I=function(o){var a=arguments,f=O.toString().replace(/^.+\)\s?/,'').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),t=(o,t)=>o===N
 ?'null'
 :(t=typeof o)=='object'?Object(o).constructor.name
-:t=='function'?f.test(o.toString())
+:t=='function'?o.toString().match(f)
 ?o.name
 :t
 :t,i=a.length
