@@ -14,7 +14,8 @@ line
 [ -f VERSION ] && line "const $(name $OUT)=$(cat VERSION)"
 
 for x in $@;do
-  line "/*$(name $x)*/"
-  cat "$x" >> $OUT
-  line
+	name=$(name $x)
+	[ "${#name}" -gt 1 ] && line "/*${name}*/"
+	cat "$x" >> $OUT
+	[ "${#name}" -gt 1 ] && line , || line
 done

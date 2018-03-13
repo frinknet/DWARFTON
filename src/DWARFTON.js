@@ -27,15 +27,16 @@ A=function(){
 //b=body
 //s=setings
 R=(U=>{
-	//clean body from calls that can't use it
-	var c=s=>{
-		// remove content type for posts that shouldn't have it
-		if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
-		// otherwise pack body
-		else if(I(s.pack,I)) s.body=s.pack(s.body)
-
-		return s
-	},
+	//create a blob url
+	var u=(s,t)=>URL.createObjectURL(new Blob([s],{type:t})),
+	//abbreviate serviceWorker
+	w=navigator.serviceWorker,
+	//get script elements
+	x=D&&D.getElementsByTagName('script'),
+	//get url for current script(last one loaded)
+	y=x&&x[x.length-1].src,
+	//set service worker or fake it
+	z
 	//Remote function
 	R=function(m,u,b,s){
 		//check if called as object
@@ -45,11 +46,17 @@ R=(U=>{
 		if(u==U){u=m;m=U}
 
 		//compile settings object
-		s=O({},R.opts,s,{body:b,url:u})
+		s=I(s,{})? O({},R.opts,s,{body:b,url:u}) : s
+		//method is always uppercase
 		m=(m||s.method).toUpperCase()
 
+		// remove content type for posts that shouldn't have it
+		if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
+		// otherwise pack body
+		else if(I(s.pack,I)) s.body=s.pack(s.body)
+
 		//return fetch or bail for invalid method
-		return I(R[m],R.GET)? R[m](c(s)) : Error('invalid method')
+		return I(R[m],R.GET)? R[m](s.url,s) : Error('invalid method')
 	}
 
 	//build function for each
@@ -58,7 +65,7 @@ R=(U=>{
 		if(I(u,{})){s=u}
 
 		// run fetch
-		var r=W.fetch(s.url,O(s,{method:v}))
+		var r=W.fetch(s.url,O({},s,{method:v}))
 		.then(d=>d.ok?d:Promise.reject(d)).catch(s.error)
 
 		//streaming will return the formating
@@ -134,10 +141,63 @@ R=(U=>{
 		return o;
 	}
 
+	//generate a blob url
+	R.BLOB=async(u,s)=>URL.createObjectURL(
+		new Blob([u],O({type:'application/javascript;charset:utf-8'},s))
+	)
+
+	//generate a uuid
+	R.UUID=async(u,s)=>(await R.BLOB()).slice(-36)
+
+	//web worker variable instanciated later
+	//trigger web worker function
+	//w('url',W) creates a worker from str
+	//w(fn,W) creates a worker from a fn
+	//w(fn) send fn to service worker
+	//w(Worker,fn) send function to worker
+	//w(Worker,F) delete service worker
+	//w(F) delete service worker
+	R.WORK=async(u,s)=>
+		//if w is really a worker
+		u&&I(u,Worker,SharedWorker,ServiceWorker)
+		//of message is F
+		?s==F
+		//terminate the worker
+		?u.terminate()
+		//otherwise send a message tothe worker
+		:(u.postMessage||u.port.postMessage)(s)
+		//start new worker promise
+		:R(y).then(s=>new Worker(
+			//
+			I(u,I)
+			//turn function into blob url for worker
+			?await R.BLOB(s+';start();('+Function(u)+')()'])
+			//use url as it is
+			:u
+		))
+
+	//offline cache function
+	R.CACHE=(c,u,s)=>{
+		//polymorph to allow C(u,s)
+		if(s==U){s=u;u=c;c=o.cache}
+
+		return u!=F
+			//return cache promise if there are urls
+			?caches.open(c).then(c=>s!=F
+				//add urls if switch isn't false
+				?c.addAll(A(u))
+				//otherwise remove responses from cache
+				:A(u).map(u=>c.delete(new Request(k)))
+			)
+			// otherwise remove cache
+			:caches.delete(c)
+	}
+
 	// default options
 	R.opts={
 		mode: 'cors',
 		method: 'GET',
+		cache: 'v'+DWARFTON,
 		credentials: 'include',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
@@ -148,6 +208,40 @@ R=(U=>{
 		error:console.log
 		//streaming:F
 	}
+
+	//wait for 10 seconds
+	if(y)setTimeout(async(o)=>{
+		//setup service worker
+		z=(o.background&&s.register(y))
+			//if success return the service worker
+			?s.controller
+			//otherwise create a web worker instead
+			:await R.WORK(y)
+		
+		//set opts to same as 
+		z.postMessage(Function("R.opts="+JSON.stringify(o)))
+	,10000, R.opts)
+	//setup worker if we are in workerscope
+	else{
+		B(W,'install',e=>console.log('install',e))
+		B(W,'activate',e=>console.log('activate',e))
+		B(W,'message',e=>console.log('message',e))
+
+		//bind to fetch
+		B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
+			?e.respondWith(caches.match(r)
+				.then((o,n)=>(n=fetch(r)
+					.then(o=>C.opts.offline?
+						caches.open(S.opts.cache)
+						.then(c=>c.put(r,o.clone()))
+						.catch(c=>p)
+						:o
+					)
+				)?o||n:e)
+			):e
+		)
+	}
+
 
 	//return Remoting object
 	return R
