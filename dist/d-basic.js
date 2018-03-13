@@ -2,13 +2,13 @@
 const DWARFTON-BASIC=1.07
 /*DWARFTON*/const D=document,W=self,A=function(){var o=[],a=arguments,i,x
 for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
-return o},R=(U=>{var w=s=>{if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
+return o},R=(U=>{var c=s=>{if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
 else if(I(s.pack,I)) s.body=s.pack(s.body)
 return s},R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
 s=O({},R.opts,s,{body:b,url:u})
-m=m||s.method
-return I(R[m],R.GET)? R[m](w(s)) : Error('invalid method')}
+m=(m||s.method).toUpperCase()
+return I(R[m],R.GET)? R[m](c(s)) : Error('invalid method')}
 'GET POST PUT HEAD DELETE'.split(' ').forEach(v=>R[v]=async(u,s)=>{if(I(u,{})){s=u}
 var r=W.fetch(s.url,O(s,{method:v}))
 .then(d=>d.ok?d:Promise.reject(d)).catch(s.error)

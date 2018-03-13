@@ -129,7 +129,6 @@ S=(U=>{
 	s=W.sessionStorage,
 	//abbreviate JSON
 	j=JSON,
-	w=navigator.serviceWorker,
 	//flip function for script and style
 	x=(t,k,v)=>{
 		//seek if the tag exists in the DOM
@@ -140,67 +139,27 @@ S=(U=>{
 		//if value return node else return innerText
 		return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText
 	},
-	y=D&&D.getElementsByTagName('script'),
-	z=y&&y[y.length-1].src,
 	//parent Storage function
 	S=function(t,k,v){
-		return I(S[t],I)?S[t](k,v):F
+		//call a storage function
+		return I(S[t.toUpperCase()],I)?S[t](k,v):F
 	}
 	//css storage function
-	S.css=(k,v)=>x('style',k,v)
+	S.CSS=(k,v)=>x('style',k,v)
 	//javascript storage function
-	S.script=(k,v)=>x('script',k,v)
+	S.SCRIPT=(k,v)=>x('script',k,v)
 	//cookie storage function
-	S.cookie=(k,v)=>U//TODO
+	S.COOKIE=(k,v)=>U//TODO
 	//local storage function
-	S.local=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
+	S.LOCAL=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 	//session storage function
-	S.session=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-	//offline cache function
-	//S('offline','url',T) = add
-	//S('offline','url',F) = remove
-	//S('offline',fn()) = message
-	S.offline=(k,v)=>v!=U?k!=F?caches.open(S.opts.cache).then(c=>v?c.addAll(A(k)):(k).map(k=>c.delete(new Request(k)))):caches.delete(S.opt.cache):w.controller.postMessage(k.toString())
+	S.SESSION=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
 	//web worker function
-	//S.worker(fn) = create
-	//S.worker(w,m) = message
-	S.worker=(k,v)=>k&&I(k,Worker)?k.postMessage(v):new Worker(URL.createObjectURL(new Blob([('('+k+')()').replace('"use strict"','')]),{type:'application/javascript;charset=utf-8'}))
-
-	//default options
-	S.opts={
-		//cache name
-		cache:'v'+DWARFTON,
-		//allow application to work offline
-		offline:F,
-		//only start service worker if we can
-		background:!!W.location.href.match(/^https/)
-	}	
-
-	//register self as service worker but allow 10s for settings to be set
-	if(y)setTimeout(o=>{
-		//set self as service worker
-		if(S.opts.background)w.register(z)
-		//only post message if we have a service worker 
-		if(w.controller)w.controller.postMessage(e=>S.opts=o)
-	},10000,S.opts)
-	//setup worker if we are in workerscope
-	else if(I(W,WebWorkerGlobalScope)){
-		B(W,'install',e=>console.log('install',e))
-		B(W,'activate',e=>console.log('activate',e))
-		B(W,'message',e=>console.log('message',e))
-
-//bind to fetch
-B(W,'fetch',(e,r)=>(r=e.request).method=='GET'?e.respondWith(
-	caches.match(r).then((o,n)=>(
-		n=fetch(r).then(
-		o=>caches.open(S.opts.cache).then(
-			c=>c.put(r,o.clone())
-		).catch(
-			c=>new Response('<h1>503:Unavailable</h1>',{status:503})
-		))
-	)?o||n:e)
-):e)
-	}
+	S.WORKER=(k,v)=>k&&I(k,Worker)
+		?k.postMessage(v)
+		:new Worker(URL.createObjectURL(new Blob([
+			('('+k+')()').replace('"use strict"','')
+		]),{type:'application/javascript;charset=utf-8'}))
 
 	//expose the storage function
 	return S

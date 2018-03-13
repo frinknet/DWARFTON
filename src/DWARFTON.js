@@ -1,4 +1,3 @@
-
 //Document
 const D=document,
 //Window or web worker
@@ -22,13 +21,14 @@ A=function(){
 	//return output
 	return o
 },
-//Request
+//Remote
 //m=method
 //u=url
 //b=body
 //s=setings
 R=(U=>{
-	var w=s=>{
+	//clean body from calls that can't use it
+	var c=s=>{
 		// remove content type for posts that shouldn't have it
 		if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
 		// otherwise pack body
@@ -36,6 +36,7 @@ R=(U=>{
 
 		return s
 	},
+	//Remote function
 	R=function(m,u,b,s){
 		//check if called as object
 		if(I(m,{})){s=m;m=U}
@@ -45,10 +46,10 @@ R=(U=>{
 
 		//compile settings object
 		s=O({},R.opts,s,{body:b,url:u})
-		m=m||s.method
+		m=(m||s.method).toUpperCase()
 
 		//return fetch or bail for invalid method
-		return I(R[m],R.GET)? R[m](w(s)) : Error('invalid method')
+		return I(R[m],R.GET)? R[m](c(s)) : Error('invalid method')
 	}
 
 	//build function for each
@@ -148,6 +149,7 @@ R=(U=>{
 		//streaming:F
 	}
 
+	//return Remoting object
 	return R
 })(),
 //False
