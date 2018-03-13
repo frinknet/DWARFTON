@@ -13,35 +13,44 @@ R=(U=>{
 	//get url for current script(last one loaded)
 	y=x&&x[x.length-1].src,
 	//set service worker or fake it
-	z
+	z,
 	//Remote function
 	R=function(m,u,b,s){
-		//check if called as object
-		if(I(m,{})){s=m;m=U}
+		//polymorph for R({})
+		I(m,{})){s=m;m=U}
 
-		//allow us to call gets without anything
+		//polymorph for R('url')
 		if(u==U){u=m;m=U}
 
 		//compile settings object
-		s=I(s,{})? O({},R.opts,s,{body:b,url:u}) : s
+		s=I(s,{})
+			//only overload settings if an object
+			?O({},R.opts,s,{body:b,url:u})
+			//otherwise there is a special purpose for settings
+			:s
+
 		//method is always uppercase
 		m=(m||s.method).toUpperCase()
 
-		// remove content type for posts that shouldn't have it
-		if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
-		// otherwise pack body
-		else if(I(s.pack,I)) s.body=s.pack(s.body)
+		//pack body if it exist
+		if(b&&I(s.pack,I))s.body=s.pack(b)
 
-		//return fetch or bail for invalid method
-		return I(R[m],R.GET)? R[m](s.url,s) : Error('invalid method')
+		//run method if it an async function
+		return I(R[m],R.GET)?
+			// ru
+			R[m](s.url,s)
+			:Error('invalid method')
 	}
 
 	//build function for each
 	'GET POST PUT HEAD DELETE'.split(' ').forEach(v=>R[v]=async(u,s)=>{
-		//allow running as R.GET(settings)
+		//polymorph for R.GET(settings)
 		if(I(u,{})){s=u}
 
-		// run fetch
+		// remove content type for posts that shouldn't have it
+		if(/GET|HEAD|DELETE/.test(s.method))s.headers['Content-Type']=U
+
+		// run fetch for urls
 		var r=W.fetch(s.url,O({},s,{method:v}))
 		.then(d=>d.ok?d:Promise.reject(d)).catch(s.error)
 
@@ -154,7 +163,7 @@ R=(U=>{
 		))
 
 	//offline cache function
-	R.CACHE=(c,u,s)=>{
+	R.CACHE=async(c,u,s)=>{
 		//polymorph to allow C(u,s)
 		if(s==U){s=u;u=c;c=o.cache}
 
@@ -206,21 +215,29 @@ R=(U=>{
 
 		//bind to fetch
 		B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
+			//make sure we only serve GET request
 			?e.respondWith(caches.match(r)
+				//once cache is matched do a fetch
 				.then((o,n)=>(n=fetch(r)
-					.then(o=>C.opts.offline?
-						caches.open(S.opts.cache)
+					//check if we want to run offline
+					.then(o=>R.opts.offline
+						//oppne cache
+						?caches.open(S.opts.cache)
+						//put the request in
 						.then(c=>c.put(r,o.clone()))
+						//return a 503 on error
 						.catch(c=>p)
+						//otherwise serve the file
 						:o
 					)
+				//respond with cache or response
 				)?o||n:e)
+			//when method is not GET pass through
 			):e
+		//end binding
 		)
 	}
-
 
 	//return Remoting object
 	return R
 })(),
-
