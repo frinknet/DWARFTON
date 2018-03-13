@@ -46,7 +46,7 @@ const C=(U=>{
 		//set self as service worker
 		if(o.worker)w.register(z)
 		//post message if we have a service worker 
-		C.exec(Function("C.opts="+JSON.strigify(o)))
+		C.exec(Function("C.opts="+JSON.stringify(o)))
 	},10000,C.opts)
 	//setup worker if we are in workerscope
 	else if(I(W,WebWorkerGlobalScope)){

@@ -42,7 +42,7 @@ return u!=F?caches.open(c).then(c=>s!=F
 C.opts={store:'v'+DWARFTON,offline:F,worker:!!W.location.href.match(/^https/)}
 C.exec=f=>R.worker(w.controller,f)
 if(y)setTimeout(o=>{if(o.worker)w.register(z)
-C.exec(Function("C.opts="+JSON.strigify(o)))},10000,C.opts)
+C.exec(Function("C.opts="+JSON.stringify(o)))},10000,C.opts)
 else if(I(W,WebWorkerGlobalScope)){B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',e=>console.log('message',e))
