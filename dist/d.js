@@ -1,82 +1,8 @@
 /*©2015 FRINKnet and Friends*/"use strict"
 const DWARFTON=1.28
-/*DWARFTON*/const D=document,W=self,A=function(){var o=[],a=arguments,i,x
+D=document,W=self,A=function(){var o=[],a=arguments,i,x
 for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
-return o},R=(U=>{var u=(s,t)=>URL.createObjectURL(new Blob([s],{type:t})),w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z
-R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
-if(u==U){u=m;m=U}
-s=I(s,{})? O({},R.opts,s,{body:b,url:u}) : s
-m=(m||s.method).toUpperCase()
-if(/GET|HEAD|DELETE/.test(s.method)) s.headers['Content-Type']=U
-else if(I(s.pack,I)) s.body=s.pack(s.body)
-return I(R[m],R.GET)? R[m](s.url,s) : Error('invalid method')}
-'GET POST PUT HEAD DELETE'.split(' ').forEach(v=>R[v]=async(u,s)=>{if(I(u,{})){s=u}
-var r=W.fetch(s.url,O({},s,{method:v}))
-.then(d=>d.ok?d:Promise.reject(d)).catch(s.error)
-if(!s.streaming) await r.then(
-d=>d&&d.text().then(s.parse)
-.then(d=>r=I(s.format,I)?s.format(d):d)
-)
-else r.then(s.parse)
-return r})
-R.encode=(o,p)=>Object.keys(O(o)).map(i=>{var e=encodeURIComponent,k=e(i),v=o[i];if(v==N)v=''
-if(I(v,I))return ''
-if(p)k=p+'['+k+']'
-return I(o[i],{},[])? R.encode(o[i],k) : k+'='+e(v)}).join('&')
-R.decode=s=>{var d=decodeURIComponent,o={},a=(s[0]=='?'? s.slice(1) : s).split('&'),i=0,p,k,v,j,q,z
-do{p=a[i].split('=')
-z=p[0].replace(/]/g,'').split('[')
-v=p[1]==''?N:d(p[1])
-while(j=z.pop()){k=d(j)
-q=isFinite(j)? [] : {}
-q[k]=v
-v=q}
-O(o,q)}while(++i<a.length)
-return o;}
-R.BLOB=async(u,s)=>URL.createObjectURL(
-new Blob([u],O({type:'application/javascript;charset:utf-8'},s))
-)
-R.UUID=async(u,s)=>(await R.BLOB()).slice(-36)
-R.WORK=async(u,s)=>
-u&&I(u,Worker,SharedWorker,ServiceWorker)
-?s==F
-?u.terminate()
-:(u.postMessage||u.port.postMessage)(s)
-:R(y).then(s=>new Worker(
-I(u,I)
-?await R.BLOB(s+';start();('+Function(u)+')()'])
-:u
-))
-R.CACHE=(c,u,s)=>{if(s==U){s=u;u=c;c=o.cache}
-return u!=F
-?caches.open(c).then(c=>s!=F
-?c.addAll(A(u))
-:A(u).map(u=>c.delete(new Request(k)))
-)
-:caches.delete(c)}
-R.opts={mode: 'cors',method: 'GET',cache: 'v'+DWARFTON,credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
-if(y)setTimeout(async(o)=>{z=(o.background&&s.register(y))
-?s.controller
-:await R.WORK(y)
-z.postMessage(Function("R.opts="+JSON.stringify(o)))
-,10000, R.opts)
-else{B(W,'install',e=>console.log('install',e))
-B(W,'activate',e=>console.log('activate',e))
-B(W,'message',e=>console.log('message',e))
-B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
-?e.respondWith(caches.match(r)
-.then((o,n)=>(n=fetch(r)
-.then(o=>C.opts.offline?
-caches.open(S.opts.cache)
-.then(c=>c.put(r,o.clone()))
-.catch(c=>p)
-:o
-)
-)?o||n:e)
-):e
-)}
-return R})(),F=false,T=true,O=Object.assign,N=null
-,/*LIBS*/const L=function(s,p){var l,q='querySelectorAll'
+return o},F=false,T=true,O=Object.assign,N=null,L=function(s,p){var l,q='querySelectorAll'
 p=p?p==W?D:p:D
 if(I(p,"")&&I(s,''))s=p+' '+s,p=D
 if(s._sel)return s
@@ -118,8 +44,7 @@ S.COOKIE=(k,v)=>U//TODO
 S.LOCAL=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 S.SESSION=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
 return S})()
-,/*CPU*/const C=function(f){var a=A(arguments)
+const C=function(f,a){a=A(arguments)
 a.shift()
 return I(f,I,R.GET)?new Promise(r=>r(f.apply(a)))},P=function(o,a){var o=Object(o)
 return a?o[p]=P(a):o.prototype||o.__proto__},U=W.U
-,

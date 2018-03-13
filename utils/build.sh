@@ -17,5 +17,7 @@ for x in $@;do
 	name=$(name $x)
 	[ "${#name}" -gt 1 ] && line "/*${name}*/"
 	cat "$x" >> $OUT
-	[ "${#name}" -gt 1 ] && line , || line
+	[ "${#name}" -gt 1 ] && line
 done
+
+true

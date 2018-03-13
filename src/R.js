@@ -1,26 +1,3 @@
-//Document
-const D=document,
-//Window or web worker
-W=self,
-//Aggregate
-//a=array
-//o=objects
-A=function(){
-	//instanciate output variabe
-	var o=[],
-	//shorten arguments varible
-	a=arguments,
-	//instance iterator
-	i,
-	//converted variable
-	x
-
-	//loop args and convert to array were possible
-	for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
-
-	//return output
-	return o
-},
 //Remote
 //m=method
 //u=url
@@ -246,13 +223,4 @@ R=(U=>{
 	//return Remoting object
 	return R
 })(),
-//False
-F=false,
-//True
-T=true,
-//Overload
-// o=object
-// a=assignments
-O=Object.assign,
-//Null
-N=null
+
