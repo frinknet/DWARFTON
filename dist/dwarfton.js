@@ -224,47 +224,48 @@ R=(U=>{
 	}
 
 	//wait for 10 seconds
-	if(y)setTimeout(async(o)=>{
-		//setup service worker
-		z=(o.background&&s.register(y))
-			//if success return the service worker
-			?s.controller
-			//otherwise create a web worker instead
-			:await R.WORK(y)
-		
-		//set opts to current opts after 10 seconds 
-		z.postMessage(Function("R.opts="+JSON.stringify(o)))
-	},10000,R.opts)
-	//setup worker if we are in workerscope
-	else{
-		B(W,'install',e=>console.log('install',e))
-		B(W,'activate',e=>console.log('activate',e))
-		B(W,'message',e=>console.log('message',e))
+	setTimeout(async(o)=>{
+		if(y){
+			//setup service worker
+			z=(o.background&&s.register(y))
+				//if success return the service worker
+				?s.controller
+				//otherwise create a web worker instead
+				:await R.WORK(y)
+			
+			//set opts to current opts after 10 seconds 
+			z.postMessage(Function("R.opts="+JSON.stringify(o)))
+		//setup worker if we are in workerscope
+		}else{
+			B(W,'install',e=>console.log('install',e))
+			B(W,'activate',e=>console.log('activate',e))
+			B(W,'message',e=>console.log('message',e))
 
-		//bind to fetch
-		B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
-			//make sure we only serve GET request
-			?e.respondWith(caches.match(r)
-				//once cache is matched do a fetch
-				.then((o,n)=>(n=fetch(r)
-					//check if we want to run offline
-					.then(o=>R.opts.offline
-						//oppne cache
-						?caches.open(S.opts.cache)
-						//put the request in
-						.then(c=>c.put(r,o.clone()))
-						//return a 503 on error
-						.catch(c=>p)
-						//otherwise serve the file
-						:o
-					)
-				//respond with cache or response
-				)?o||n:e)
-			//when method is not GET pass through
-			):e
-		//end binding
-		)
-	}
+			//bind to fetch
+			B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
+				//make sure we only serve GET request
+				?e.respondWith(caches.match(r)
+					//once cache is matched do a fetch
+					.then((o,n)=>(n=fetch(r)
+						//check if we want to run offline
+						.then(o=>R.opts.offline
+							//oppne cache
+							?caches.open(S.opts.cache)
+							//put the request in
+							.then(c=>c.put(r,o.clone()))
+							//return a 503 on error
+							.catch(c=>p)
+							//otherwise serve the file
+							:o
+						)
+					//respond with cache or response
+					)?o||n:e)
+				//when method is not GET pass through
+				):e
+			//end binding
+			)
+		}
+	},y?10000:100,R.opts)
 
 	//return Remoting object
 	return R

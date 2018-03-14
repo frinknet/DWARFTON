@@ -58,11 +58,10 @@ return u!=F
 )
 :caches.delete(c)}
 R.opts={mode: 'cors',method: 'GET',cache: 'v'+DWARFTON,credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
-if(y)setTimeout(async(o)=>{z=(o.background&&s.register(y))
+setTimeout(async(o)=>{if(y){z=(o.background&&s.register(y))
 ?s.controller
 :await R.WORK(y)
-z.postMessage(Function("R.opts="+JSON.stringify(o)))},10000,R.opts)
-else{B(W,'install',e=>console.log('install',e))
+z.postMessage(Function("R.opts="+JSON.stringify(o)))}else{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',e=>console.log('message',e))
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
@@ -76,7 +75,7 @@ B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
 )
 )?o||n:e)
 ):e
-)}
+)}},y?10000:100,R.opts)
 return R})(),F=false,T=true,O=Object.assign,N=null,L=function(s,p){var l,q='querySelectorAll'
 p=p?p==W?D:p:D
 if(I(p,"")&&I(s,''))s=p+' '+s,p=D
