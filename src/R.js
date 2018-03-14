@@ -204,7 +204,7 @@ R=(U=>{
 
 			//setup service worker
 			z=await
-				w.register(y)
+				/^https/.test(W.location)&&w.register(y)
 				//if success return the service worker
 				?w.controller
 				//otherwise create a web worker instead
