@@ -204,9 +204,9 @@ R=(U=>{
 
 			//setup service worker
 			z=await
-				s.register(y)
+				w.register(y)
 				//if success return the service worker
-				?s.controller
+				?w.controller
 				//otherwise create a web worker instead
 				:await R.WORK(y)
 			
