@@ -44,7 +44,7 @@ R=(U=>{
 	//Remote function
 	R=function(m,u,b,s){
 		//polymorph for R({})
-		I(m,{})){s=m;m=U}
+		if(I(m,{})){s=m;m=U}
 
 		//polymorph for R('url')
 		if(u==U){u=m;m=U}
