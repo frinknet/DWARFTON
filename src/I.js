@@ -6,7 +6,7 @@ I=function(o){
 	c="constructor",
 	n='name',
 	//test for native functions
-	f=O.toString().replace(/^.+\)\s?/,''),
+	f=O.toString().replace(/^.+\)\s?/,'').replace(/([{\[\]}])/g,'\\$1'),
 	//store type function
 	t=(o,t)=>o===N
 		//return null for null which is normally "object
