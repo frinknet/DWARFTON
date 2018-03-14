@@ -2,7 +2,83 @@
 const DWARFTON=1.28
 const D=self.document,W=self,A=function(){var o=[],a=arguments,i,x
 for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
-return o},F=false,T=true,O=Object.assign,N=null,L=function(s,p){var l,q='querySelectorAll'
+return o},R=(U=>{var u=(s,t)=>URL.createObjectURL(new Blob([s],{type:t})),w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z,R=function(m,u,b,s){I(m,{})){s=m;m=U}
+if(u==U){u=m;m=U}
+s=I(s,{})
+?O({},R.opts,s,{body:b,url:u})
+:s
+m=(m||s.method).toUpperCase()
+if(b&&I(s.pack,I))s.body=s.pack(b)
+return I(R[m],R.GET)?
+R[m](s.url,s)
+:Error('invalid method')}
+'GET POST PUT HEAD DELETE'.split(' ').forEach(v=>R[v]=async(u,s)=>{if(I(u,{})){s=u}
+if(/GET|HEAD|DELETE/.test(s.method))s.headers['Content-Type']=U
+var r=W.fetch(s.url,O({},s,{method:v}))
+.then(d=>d.ok?d:Promise.reject(d)).catch(s.error)
+if(!s.streaming) await r.then(
+d=>d&&d.text().then(s.parse)
+.then(d=>r=I(s.format,I)?s.format(d):d)
+)
+else r.then(s.parse)
+return r})
+R.encode=(o,p)=>Object.keys(O(o)).map(i=>{var e=encodeURIComponent,k=e(i),v=o[i];if(v==N)v=''
+if(I(v,I))return ''
+if(p)k=p+'['+k+']'
+return I(o[i],{},[])? R.encode(o[i],k) : k+'='+e(v)}).join('&')
+R.decode=s=>{var d=decodeURIComponent,o={},a=(s[0]=='?'? s.slice(1) : s).split('&'),i=0,p,k,v,j,q,z
+do{p=a[i].split('=')
+z=p[0].replace(/]/g,'').split('[')
+v=p[1]==''?N:d(p[1])
+while(j=z.pop()){k=d(j)
+q=isFinite(j)? [] : {}
+q[k]=v
+v=q}
+O(o,q)}while(++i<a.length)
+return o;}
+R.BLOB=async(u,s)=>URL.createObjectURL(
+new Blob([u],O({type:'application/javascript;charset:utf-8'},s))
+)
+R.UUID=async(u,s)=>(await R.BLOB()).slice(-36)
+R.WORK=async(u,s)=>
+u&&I(u,Worker,SharedWorker,ServiceWorker)
+?s==F
+?u.terminate()
+:(u.postMessage||u.port.postMessage)(s)
+:R(y).then(s=>new Worker(
+I(u,I)
+?await R.BLOB(s+';start();('+Function(u)+')()'])
+:u
+))
+R.CACHE=async(c,u,s)=>{if(s==U){s=u;u=c;c=o.cache}
+return u!=F
+?caches.open(c).then(c=>s!=F
+?c.addAll(A(u))
+:A(u).map(u=>c.delete(new Request(k)))
+)
+:caches.delete(c)}
+R.opts={mode: 'cors',method: 'GET',cache: 'v'+DWARFTON,credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
+if(y)setTimeout(async(o)=>{z=(o.background&&s.register(y))
+?s.controller
+:await R.WORK(y)
+z.postMessage(Function("R.opts="+JSON.stringify(o)))
+,10000, R.opts)
+else{B(W,'install',e=>console.log('install',e))
+B(W,'activate',e=>console.log('activate',e))
+B(W,'message',e=>console.log('message',e))
+B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
+?e.respondWith(caches.match(r)
+.then((o,n)=>(n=fetch(r)
+.then(o=>R.opts.offline
+?caches.open(S.opts.cache)
+.then(c=>c.put(r,o.clone()))
+.catch(c=>p)
+:o
+)
+)?o||n:e)
+):e
+)}
+return R})(),F=false,T=true,O=Object.assign,N=null,L=function(s,p){var l,q='querySelectorAll'
 p=p?p==W?D:p:D
 if(I(p,"")&&I(s,''))s=p+' '+s,p=D
 if(s._sel)return s

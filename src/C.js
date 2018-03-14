@@ -9,7 +9,7 @@ const C=function(f,a){
 	a.shift()
 
 	//check if the function is really a function
-	return  f&&f.apply
+	return f&&f.apply
 		?new Promise(r=>r(f.apply(U,a)))
 		:Error('invalid function')
 },

@@ -2,6 +2,7 @@ DWARFTON=\
 	src/D.js \
 	src/W.js \
 	src/A.js \
+	src/R.js \
 	src/F.js \
 	src/T.js \
 	src/O.js \
