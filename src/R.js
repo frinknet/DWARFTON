@@ -185,6 +185,7 @@ R=(U=>{
 		mode: 'cors',
 		method: 'GET',
 		cache: 'v'+DWARFTON,
+		background:T,
 		credentials: 'include',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
@@ -199,8 +200,11 @@ R=(U=>{
 	//wait for 10 seconds
 	setTimeout(async(o)=>{
 		if(y){
+			if(!o,background)return
+
 			//setup service worker
-			z=(o.background&&s.register(y))
+			z=await
+				s.register(y)
 				//if success return the service worker
 				?s.controller
 				//otherwise create a web worker instead

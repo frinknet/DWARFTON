@@ -57,8 +57,10 @@ return u!=F
 :A(u).map(u=>c.delete(new Request(k)))
 )
 :caches.delete(c)}
-R.opts={mode: 'cors',method: 'GET',cache: 'v'+DWARFTON,credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
-setTimeout(async(o)=>{if(y){z=(o.background&&s.register(y))
+R.opts={mode: 'cors',method: 'GET',cache: 'v'+DWARFTON,background:T,credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
+setTimeout(async(o)=>{if(y){if(!o,background)return
+z=await
+s.register(y)
 ?s.controller
 :await R.WORK(y)
 z.postMessage(Function("R.opts="+JSON.stringify(o)))}else{B(W,'install',e=>console.log('install',e))
