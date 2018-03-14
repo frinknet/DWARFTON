@@ -187,7 +187,7 @@ R=(U=>{
 			//use url as is
 			?u
 			//turn function into blob url for worker
-			:await R.BLOB(s+';('+Function(u)+')()'))
+			:await R.BLOB(s+';('+Function(u)+')()')
 		))
 
 	//offline cache function
