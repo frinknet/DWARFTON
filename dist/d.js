@@ -61,8 +61,7 @@ R.opts={mode: 'cors',method: 'GET',cache: 'v'+DWARFTON,credentials: 'include',he
 if(y)setTimeout(async(o)=>{z=(o.background&&s.register(y))
 ?s.controller
 :await R.WORK(y)
-z.postMessage(Function("R.opts="+JSON.stringify(o)))
-,10000, R.opts)
+z.postMessage(Function("R.opts="+JSON.stringify(o)),10000, R.opts)
 else{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',e=>console.log('message',e))

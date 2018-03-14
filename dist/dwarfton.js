@@ -232,9 +232,8 @@ R=(U=>{
 			//otherwise create a web worker instead
 			:await R.WORK(y)
 		
-		//set opts to same as 
-		z.postMessage(Function("R.opts="+JSON.stringify(o)))
-	,10000, R.opts)
+		//set opts to current opts after 10 seconds 
+		z.postMessage(Function("R.opts="+JSON.stringify(o)),10000, R.opts)
 	//setup worker if we are in workerscope
 	else{
 		B(W,'install',e=>console.log('install',e))
