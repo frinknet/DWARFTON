@@ -45,10 +45,10 @@ u&&I(u,Worker,SharedWorker,ServiceWorker)
 ?s==F
 ?u.terminate()
 :(u.postMessage||u.port.postMessage)(s)
-:R(y).then(s=>new Worker(
+:R(y).then(async(s)=>new Worker(
 I(u,'')
 ?u
-:await R.BLOB(s+';('+Function(u)+')()')
+:await R.BLOB(s+';('+Function(u)+')()'))
 ))
 R.CACHE=async(c,u,s)=>{if(s==U){s=u;u=c;c=o.cache}
 return u!=F

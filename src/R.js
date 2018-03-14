@@ -154,13 +154,13 @@ R=(U=>{
 		//otherwise send a message tothe worker
 		:(u.postMessage||u.port.postMessage)(s)
 		//start new worker promise
-		:R(y).then(s=>new Worker(
+		:R(y).then(async(s)=>new Worker(
 			//if u is a string
 			I(u,'')
 			//use url as is
 			?u
 			//turn function into blob url for worker
-			:await R.BLOB(s+';('+Function(u)+')()')
+			:await R.BLOB(s+';('+Function(u)+')()'))
 		))
 
 	//offline cache function
