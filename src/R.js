@@ -200,7 +200,7 @@ R=(U=>{
 	//wait for 10 seconds
 	setTimeout(async(o)=>{
 		if(y){
-			if(!o,background)return
+			if(!o.background)return
 
 			//setup service worker
 			z=await

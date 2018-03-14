@@ -58,7 +58,7 @@ return u!=F
 )
 :caches.delete(c)}
 R.opts={mode: 'cors',method: 'GET',cache: 'v'+DWARFTON,background:1,credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
-setTimeout(async(o)=>{if(y){if(!o,background)return
+setTimeout(async(o)=>{if(y){if(!o.background)return
 z=await
 s.register(y)
 ?s.controller
