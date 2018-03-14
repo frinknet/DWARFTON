@@ -46,5 +46,7 @@ S.SESSION=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
 return S})()
 const C=function(f,a){a=A(arguments)
 a.shift()
-return I(f,I,R.GET)?new Promise(r=>r(f.apply(a)))},P=function(o,a){var o=Object(o)
+return f&&f.apply
+?new Promise(r=>r(f.apply(U,a)))
+:Error('invalid function')},P=function(o,a){var o=Object(o)
 return a?o[p]=P(a):o.prototype||o.__proto__},U=W.U

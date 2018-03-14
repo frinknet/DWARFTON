@@ -224,8 +224,10 @@ const C=function(f,a){
 	//remove first argument
 	a.shift()
 
-	//start a promise chain
-	return I(f,I,R.GET)?new Promise(r=>r(f.apply(a)))
+	//check if the function is really a function
+	return  f&&f.apply
+		?new Promise(r=>r(f.apply(U,a)))
+		:Error('invalid function')
 },
 //Prototype
 //o=object
