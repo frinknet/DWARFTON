@@ -44,7 +44,7 @@ R.WORK=async(u,s)=>
 u&&I(u,Worker,SharedWorker,ServiceWorker)
 ?s==F
 ?u.terminate()
-:(u.postMessage||u.port.postMessage)(s)
+:(u.postMessage||u.port.postMessage)(s.call?s+'':s)
 :R(y).then(async(s)=>new Worker(
 I(u,'')
 ?u
@@ -63,7 +63,7 @@ z=await
 /^https/.test(W.location)&&w.register(y)
 ?w.controller
 :await R.WORK(y)
-z.postMessage(Function("R.opts="+JSON.stringify(o)))}else{B(W,'install',e=>console.log('install',e))
+R.WORK(z,Function("R.opts="+JSON.stringify(o)))}else{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',e=>console.log('message',e))
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'

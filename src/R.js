@@ -152,7 +152,7 @@ R=(U=>{
 		//terminate the worker
 		?u.terminate()
 		//otherwise send a message tothe worker
-		:(u.postMessage||u.port.postMessage)(s)
+		:(u.postMessage||u.port.postMessage)(s.call?s+'':s)
 		//start new worker promise
 		:R(y).then(async(s)=>new Worker(
 			//if u is a string
@@ -211,7 +211,7 @@ R=(U=>{
 				:await R.WORK(y)
 			
 			//set opts to current opts after 10 seconds 
-			z.postMessage(Function("R.opts="+JSON.stringify(o)))
+			R.WORK(z,Function("R.opts="+JSON.stringify(o)))
 		//setup worker if we are in workerscope
 		}else{
 			B(W,'install',e=>console.log('install',e))
