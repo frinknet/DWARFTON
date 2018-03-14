@@ -4,7 +4,7 @@ const D=self.document,W=self,A=function(){var o=[],a=arguments,i,x
 for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
 return o},R=(U=>{var u=(s,t)=>URL.createObjectURL(new Blob([s],{type:t})),w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z,R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
-s=I(s,{})
+s=I(s,{},U)
 ?O({},R.opts,s,{body:b,url:u})
 :s
 m=(m||s.method).toUpperCase()

@@ -23,7 +23,7 @@ R=(U=>{
 		if(u==U){u=m;m=U}
 
 		//compile settings object
-		s=I(s,{})
+		s=I(s,{},U)
 			//only overload settings if an object
 			?O({},R.opts,s,{body:b,url:u})
 			//otherwise there is a special purpose for settings
