@@ -35,10 +35,11 @@ R=(U=>{
 		//pack body if it exist
 		if(b&&I(s.pack,I))s.body=s.pack(b)
 
-		//run method if it an async function
-		return I(R[m],R.GET)?
-			// ru
-			R[m](s.url,s)
+		//check if it an async function
+		return I(R[m],R.GET)
+			//run function
+			?R[m](s.url,s)
+			//return error
 			:Error('invalid method')
 	}
 
@@ -154,12 +155,12 @@ R=(U=>{
 		:(u.postMessage||u.port.postMessage)(s)
 		//start new worker promise
 		:R(y).then(s=>new Worker(
-			//
-			I(u,I)
+			//if u is a string
+			I(u,'')
+			//use url as is
+			?u
 			//turn function into blob url for worker
-			?await R.BLOB(s+';start();('+Function(u)+')()'])
-			//use url as it is
-			:u
+			:await R.BLOB(s+';('+Function(u)+')()')
 		))
 
 	//offline cache function

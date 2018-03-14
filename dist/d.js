@@ -9,8 +9,8 @@ s=I(s,{})
 :s
 m=(m||s.method).toUpperCase()
 if(b&&I(s.pack,I))s.body=s.pack(b)
-return I(R[m],R.GET)?
-R[m](s.url,s)
+return I(R[m],R.GET)
+?R[m](s.url,s)
 :Error('invalid method')}
 'GET POST PUT HEAD DELETE'.split(' ').forEach(v=>R[v]=async(u,s)=>{if(I(u,{})){s=u}
 if(/GET|HEAD|DELETE/.test(s.method))s.headers['Content-Type']=U
@@ -46,9 +46,9 @@ u&&I(u,Worker,SharedWorker,ServiceWorker)
 ?u.terminate()
 :(u.postMessage||u.port.postMessage)(s)
 :R(y).then(s=>new Worker(
-I(u,I)
-?await R.BLOB(s+';start();('+Function(u)+')()'])
-:u
+I(u,'')
+?u
+:await R.BLOB(s+';('+Function(u)+')()')
 ))
 R.CACHE=async(c,u,s)=>{if(s==U){s=u;u=c;c=o.cache}
 return u!=F
