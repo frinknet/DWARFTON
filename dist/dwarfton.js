@@ -212,7 +212,7 @@ R=(U=>{
 		mode: 'cors',
 		method: 'GET',
 		cache: 'v'+DWARFTON,
-		background:T,
+		background:1,
 		credentials: 'include',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
