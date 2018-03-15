@@ -207,7 +207,7 @@ R=(U=>{
 	}
 
 	//wait for 10 seconds
-	setTimeout(async(o,y)=>{
+	setTimeout(async(o)=>{
 		if(D){
 			//don't setup background if it's been turned off
 			if(y=o.background)R.WORKER(
@@ -260,7 +260,7 @@ R=(U=>{
 			//end binding
 			)
 		}
-	},y?999:1,R.opts)
+	},y?999:0,R.opts)
 
 	//return Remoting object
 	return R
