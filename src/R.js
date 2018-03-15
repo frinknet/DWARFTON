@@ -154,7 +154,7 @@ R=(U=>{
 		//otherwise send a message tothe worker
 		:(u.postMessage||u.port.postMessage)(s.call?s+'':s)
 		//start new worker promise
-		:await R(y).then(async(s)=>new Worker(
+		:R(y).then(async(s)=>new Worker(
 			//if u is a string
 			I(u,'')
 			//use url as is
