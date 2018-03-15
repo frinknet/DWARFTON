@@ -2,7 +2,7 @@
 const DWARFTON=1.28
 const D=self.document,W=self,A=function(){var o=[],a=arguments,i,x
 for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
-return o},R=(U=>{var u=(s,t)=>URL.createObjectURL(new Blob([s],{type:t})),w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z,R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
+return o},R=(U=>{var w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z,R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
 s=I(s,{},U)
 ?O({},R.opts,s,{body:b,url:u})
@@ -39,17 +39,19 @@ return o;}
 R.BLOB=async(u,s)=>URL.createObjectURL(
 new Blob([u],O({type:'application/javascript;charset:utf-8'},s))
 )
-R.UUID=async(u,s)=>(await R.BLOB()).slice(-36)
-R.WORK=async(u,s)=>
+R.UUID=async(u,s)=>URL.revokeObjectURL(s=await R.BLOB())?u:s.slice(-36)
+R.WORKER=async(u,s)=>
 u&&I(u,Worker,SharedWorker,ServiceWorker)
 ?s==F
 ?u.terminate()
-:(u.postMessage||u.port.postMessage).call(u,s.call?s+'':s)
-:R(y).then(async(s)=>new Worker(
+:u.postMessage
+?u.postMessage(s.call?s+'':s)
+:u.port.postMessage(s.call?s+'':s)
+:new Worker(
 I(u,'')
 ?u
-:await R.BLOB(s+';('+Function(u)+')()')
-))
+:await R.BLOB('importScripts("'+y+'");('+(I(u,I,R.GET)?u:'close')+')()')
+)
 R.CACHE=async(c,u,s)=>{if(s==U){s=u;u=c;c=o.cache}
 return u!=F
 ?caches.open(c).then(c=>s!=F
@@ -57,15 +59,16 @@ return u!=F
 :A(u).map(u=>c.delete(new Request(k)))
 )
 :caches.delete(c)}
-R.opts={mode: 'cors',method: 'GET',cache: 'v'+DWARFTON,background:1,credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
+R.opts={mode: 'cors',method: 'GET',cache: 'D:'+DWARFTON,background: y,credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
 setTimeout(async(o)=>{if(y){if(!o.background)return
-z=await
+R.WORKER(await
 /^https/.test(W.location)&&w.register(y)
 ?w.controller
-:await R.WORK(y)
-R.WORK(z,Function("R.opts="+JSON.stringify(o)))}else{B(W,'install',e=>console.log('install',e))
+:await R.WORKER(o.background),'e=>R.opts='+JSON.stringify(o))
+)}else{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
-B(W,'message',e=>console.log('message',e))
+B(W,'message',e,d=>{if(/^e=>|^function/.test(d=e.data))
+eval(d)(e)})
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
 ?e.respondWith(caches.match(r)
 .then((o,n)=>(n=fetch(r)
@@ -77,7 +80,7 @@ B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
 )
 )?o||n:e)
 ):e
-)}},y?10000:100,R.opts)
+)}},y?1000:1,R.opts)
 return R})(),F=false,T=true,O=Object.assign,N=null,L=function(s,p){var l,q='querySelectorAll'
 p=p?p==W?D:p:D
 if(I(p,"")&&I(s,''))s=p+' '+s,p=D
@@ -114,8 +117,8 @@ z.push({fn:f,ltn:w,sel:s,rm:x})
 n.addEventListener(v,w,!!s)})
 return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
 return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},S=function(t,k,v){return I(S[t.toUpperCase()],I)?S[t](k,v):F}
-S.CSS=(k,v)=>x('style',k,v)
-S.SCRIPT=(k,v)=>x('script',k,v)
+S.CSS=(k,v)=>D||x('style',k,v)
+S.SCRIPT=(k,v)=>D?x('script',k,v):importScripts(v)
 S.COOKIE=(k,v)=>U//TODO
 S.LOCAL=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
 S.SESSION=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U

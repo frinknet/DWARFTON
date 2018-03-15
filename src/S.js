@@ -25,9 +25,9 @@ S=(U=>{
 		return I(S[t.toUpperCase()],I)?S[t](k,v):F
 	}
 	//css storage function
-	S.CSS=(k,v)=>x('style',k,v)
+	S.CSS=(k,v)=>D||x('style',k,v)
 	//javascript storage function
-	S.SCRIPT=(k,v)=>x('script',k,v)
+	S.SCRIPT=(k,v)=>D?x('script',k,v):importScripts(v)
 	//cookie storage function
 	S.COOKIE=(k,v)=>U//TODO
 	//local storage function

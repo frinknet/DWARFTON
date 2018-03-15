@@ -31,10 +31,8 @@ A=function(){
 //b=body
 //s=setings
 R=(U=>{
-	//create a blob url
-	var u=(s,t)=>URL.createObjectURL(new Blob([s],{type:t})),
 	//abbreviate serviceWorker
-	w=navigator.serviceWorker,
+	var w=navigator.serviceWorker,
 	//get script elements
 	x=D&&D.getElementsByTagName('script'),
 	//get url for current script(last one loaded)
@@ -161,7 +159,7 @@ R=(U=>{
 	)
 
 	//generate a uuid
-	R.UUID=async(u,s)=>(await R.BLOB()).slice(-36)
+	R.UUID=async(u,s)=>URL.revokeObjectURL(s=await R.BLOB())?u:s.slice(-36)
 
 	//web worker variable instanciated later
 	//trigger web worker function
@@ -171,39 +169,46 @@ R=(U=>{
 	//w(Worker,fn) send function to worker
 	//w(Worker,F) delete service worker
 	//w(F) delete service worker
-	R.WORK=async(u,s)=>
+	R.WORKER=async(u,s)=>
 		//if w is really a worker
 		u&&I(u,Worker,SharedWorker,ServiceWorker)
 		//if message is F
 		?s==F
 		//terminate the worker
 		?u.terminate()
-		//else check if regular
-		:(u.postMessage||u.port.postMessage).call(u,s.call?s+'':s)
-		//start new worker promise
-		:R(y).then(async(s)=>new Worker(
+		//check if regular worker
+		:u.postMessage
+		//post message for regular worker
+		?u.postMessage(s.call?s+'':s)
+		//or post message for shared worker
+		:u.port.postMessage(s.call?s+'':s)
+		//create a new worker
+		:new Worker(
 			//if u is a string
 			I(u,'')
 			//use url as is
 			?u
-			//turn function into blob url for worker
-			:await R.BLOB(s+';('+Function(u)+')()')
-		))
+			//otherwise create blob url
+			:await R.BLOB('importScripts("'+y+'");('+(I(u,I,R.GET)?u:'close')+')()')
+		//return worker
+		)
 
 	//offline cache function
 	R.CACHE=async(c,u,s)=>{
 		//polymorph to allow C(u,s)
 		if(s==U){s=u;u=c;c=o.cache}
 
+		//if url is not false
 		return u!=F
-			//return cache promise if there are urls
+			//open the cache and check switch
 			?caches.open(c).then(c=>s!=F
 				//add urls if switch isn't false
 				?c.addAll(A(u))
 				//otherwise remove responses from cache
 				:A(u).map(u=>c.delete(new Request(k)))
+			//return cache promise
 			)
-			// otherwise remove cache
+			//or if url is false remove cache
 			:caches.delete(c)
 	}
 
@@ -211,8 +216,8 @@ R=(U=>{
 	R.opts={
 		mode: 'cors',
 		method: 'GET',
-		cache: 'v'+DWARFTON,
-		background:1,
+		cache: 'D:'+DWARFTON,
+		background: y,
 		credentials: 'include',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
@@ -227,23 +232,29 @@ R=(U=>{
 	//wait for 10 seconds
 	setTimeout(async(o)=>{
 		if(y){
+			//don't setup background if it's been turned off
 			if(!o.background)return
 
-			//setup service worker
-			z=await
+			//set worker opts
+			R.WORKER(await
 				/^https/.test(W.location)&&w.register(y)
-				//if success return the service worker
-				?w.controller
-				//otherwise create a web worker instead
-				:await R.WORK(y)
-			
-			//set opts to current opts after 10 seconds 
-			R.WORK(z,Function("R.opts="+JSON.stringify(o)))
+					//if success return the service worker
+					?w.controller
+					//otherwise create a web worker instead
+					:await R.WORKER(o.background),
+				'e=>R.opts='+JSON.stringify(o))
+			//return worker
+			)
 		//setup worker if we are in workerscope
 		}else{
 			B(W,'install',e=>console.log('install',e))
 			B(W,'activate',e=>console.log('activate',e))
-			B(W,'message',e=>console.log('message',e))
+			B(W,'message',e,d=>{
+				//test if the message is a function
+				if(/^e=>|^function/.test(d=e.data))
+					//eval function
+					eval(d)(e)
+			})
 
 			//bind to fetch
 			B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
@@ -269,7 +280,7 @@ R=(U=>{
 			//end binding
 			)
 		}
-	},y?10000:100,R.opts)
+	},y?1000:1,R.opts)
 
 	//return Remoting object
 	return R
@@ -450,9 +461,9 @@ S=(U=>{
 		return I(S[t.toUpperCase()],I)?S[t](k,v):F
 	}
 	//css storage function
-	S.CSS=(k,v)=>x('style',k,v)
+	S.CSS=(k,v)=>D||x('style',k,v)
 	//javascript storage function
-	S.SCRIPT=(k,v)=>x('script',k,v)
+	S.SCRIPT=(k,v)=>D?x('script',k,v):importScripts(v)
 	//cookie storage function
 	S.COOKIE=(k,v)=>U//TODO
 	//local storage function
