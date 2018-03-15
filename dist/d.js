@@ -81,7 +81,7 @@ B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
 )
 )?o||n:e)
 ):e
-)}},y?1000:1,R.opts)
+)}},y?999:1,R.opts)
 return R})(),F=false,T=true,O=Object.assign,N=null,L=function(s,p){var l,q='querySelectorAll'
 p=p?p==W?D:p:D
 if(I(p,"")&&I(s,''))s=p+' '+s,p=D
