@@ -44,8 +44,10 @@ R.WORK=async(u,s)=>
 u&&I(u,Worker,SharedWorker,ServiceWorker)
 ?s==F
 ?u.terminate()
-:(u.postMessage||u.port.postMessage)(s.call?s+'':s)
-:await R(y).then(async(s)=>new Worker(
+:u.postMessage
+?u.postMessage(s.call?s+'':s)
+:u.port.postMessage(s.call?s+'':s)
+:R(y).then(async(s)=>new Worker(
 I(u,'')
 ?u
 :await R.BLOB(s+';('+Function(u)+')()')

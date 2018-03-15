@@ -174,14 +174,18 @@ R=(U=>{
 	R.WORK=async(u,s)=>
 		//if w is really a worker
 		u&&I(u,Worker,SharedWorker,ServiceWorker)
-		//of message is F
+		//if message is F
 		?s==F
 		//terminate the worker
 		?u.terminate()
-		//otherwise send a message tothe worker
-		:(u.postMessage||u.port.postMessage)(s.call?s+'':s)
+		//else check if regular
+		:u.postMessage
+		//post using normal postMessage
+		?u.postMessage(s.call?s+'':s)
+		//otherwise use port.postMessage
+		:u.port.postMessage(s.call?s+'':s)
 		//start new worker promise
-		:await R(y).then(async(s)=>new Worker(
+		:R(y).then(async(s)=>new Worker(
 			//if u is a string
 			I(u,'')
 			//use url as is
