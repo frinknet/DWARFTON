@@ -37,8 +37,8 @@ R=(U=>{
 	x=D&&D.getElementsByTagName('script'),
 	//get url for current script(last one loaded)
 	y=x&&x[x.length-1].src,
-	//set service worker or fake it
-	z,
+	//test if input is ssl
+	z=s=>/^https/.test(s),
 	//Remote function
 	R=function(m,u,b,s){
 		//polymorph for R({})
@@ -132,7 +132,7 @@ R=(U=>{
 		// loop pairs
 		do{
 			//split pair to key and value
-					p=a[i].split('=')
+			p=a[i].split('=')
 			//split key to it's pieces
 			z=p[0].replace(/]/g,'').split('[')
 			//set value
@@ -170,8 +170,10 @@ R=(U=>{
 	//w(Worker,F) delete service worker
 	//w(F) delete service worker
 	R.WORKER=async(u,s)=>
-		//if w is really a worker
-		u&&I(u,Worker,SharedWorker,ServiceWorker)
+		//if u is defined
+		u
+		//if u is really a worker
+		?I(u,Worker,SharedWorker,ServiceWorker)
 		//if message is F
 		?s==F
 		//terminate the worker
@@ -192,6 +194,8 @@ R=(U=>{
 			:await R.BLOB('importScripts("'+y+'");('+(I(u,I,R.GET)?u:'close')+')()')
 		//return worker
 		)
+		//
+		:Error('invalid worker')
 
 	//offline cache function
 	R.CACHE=async(c,u,s)=>{
@@ -230,30 +234,33 @@ R=(U=>{
 	}
 
 	//wait for 10 seconds
-	setTimeout(async(o)=>{
-		if(y){
+	setTimeout(async(o,y)=>{
+		if(D){
 			//don't setup background if it's been turned off
-			if(!o.background)return
-
-			//set worker opts
-			R.WORKER(await
-				/^https/.test(W.location)&&w.register(y)
-					//if success return the service worker
-					?w.controller
-					//otherwise create a web worker instead
-					:await R.WORKER(o.background),
-				'e=>R.opts='+JSON.stringify(o))
+			if(y=o.background)R.WORKER(
+				//check we can run background ssl
+				z(W.location)&&z(y)
+					//then instance service worker
+					?w.register(y)&&w.controller
+					//otherwise create a web worker
+					:await R.WORKER(y),
+				//then send worker our options
+				'e=>R.opts='+JSON.stringify(o)
 			//return worker
 			)
 		//setup worker if we are in workerscope
 		}else{
 			B(W,'install',e=>console.log('install',e))
 			B(W,'activate',e=>console.log('activate',e))
-			B(W,'message',e,d=>{
+			B(W,'message',(e,d)=>{
 				//test if the message is a function
-				if(/^e=>|^function/.test(d=e.data))
+				if(/^e=>|^function/.test(d=e.data)){
 					//eval function
 					eval(d)(e)
+					//stop propigation
+					e.stopPropigation()
+				}
+			
 			})
 
 			//bind to fetch

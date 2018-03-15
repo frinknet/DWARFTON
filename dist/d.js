@@ -2,7 +2,7 @@
 const DWARFTON=1.28
 const D=self.document,W=self,A=function(){var o=[],a=arguments,i,x
 for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
-return o},R=(U=>{var w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z,R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
+return o},R=(U=>{var w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=s=>/^https/.test(s),R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
 s=I(s,{},U)
 ?O({},R.opts,s,{body:b,url:u})
@@ -41,7 +41,8 @@ new Blob([u],O({type:'application/javascript;charset:utf-8'},s))
 )
 R.UUID=async(u,s)=>URL.revokeObjectURL(s=await R.BLOB())?u:s.slice(-36)
 R.WORKER=async(u,s)=>
-u&&I(u,Worker,SharedWorker,ServiceWorker)
+u
+?I(u,Worker,SharedWorker,ServiceWorker)
 ?s==F
 ?u.terminate()
 :u.postMessage
@@ -52,6 +53,7 @@ I(u,'')
 ?u
 :await R.BLOB('importScripts("'+y+'");('+(I(u,I,R.GET)?u:'close')+')()')
 )
+:Error('invalid worker')
 R.CACHE=async(c,u,s)=>{if(s==U){s=u;u=c;c=o.cache}
 return u!=F
 ?caches.open(c).then(c=>s!=F
@@ -60,15 +62,14 @@ return u!=F
 )
 :caches.delete(c)}
 R.opts={mode: 'cors',method: 'GET',cache: 'D:'+DWARFTON,background: y,credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
-setTimeout(async(o)=>{if(y){if(!o.background)return
-R.WORKER(await
-/^https/.test(W.location)&&w.register(y)
-?w.controller
-:await R.WORKER(o.background),'e=>R.opts='+JSON.stringify(o))
+setTimeout(async(o,y)=>{if(D){if(y=o.background)R.WORKER(
+z(W.location)&&z(y)
+?w.register(y)&&w.controller
+:await R.WORKER(y),'e=>R.opts='+JSON.stringify(o)
 )}else{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
-B(W,'message',e,d=>{if(/^e=>|^function/.test(d=e.data))
-eval(d)(e)})
+B(W,'message',(e,d)=>{if(/^e=>|^function/.test(d=e.data)){eval(d)(e)
+e.stopPropigation()}})
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
 ?e.respondWith(caches.match(r)
 .then((o,n)=>(n=fetch(r)
