@@ -152,11 +152,7 @@ R=(U=>{
 		//terminate the worker
 		?u.terminate()
 		//else check if regular
-		:u.postMessage
-		//post using normal postMessage
-		?u.postMessage(s.call?s+'':s)
-		//otherwise use port.postMessage
-		:u.port.postMessage(s.call?s+'':s)
+		:(u.postMessage||u.port.postMessage).call(u,s.call?s+'':s)
 		//start new worker promise
 		:R(y).then(async(s)=>new Worker(
 			//if u is a string
