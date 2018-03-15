@@ -83,7 +83,7 @@ p=p?p==W?D:p:D
 if(I(p,"")&&I(s,''))s=p+' '+s,p=D
 if(s._sel)return s
 else if(I(s,[]))l=s
-else if(I(s,W,D)||s.nodeName)l=[s]
+else if(s.addEventListener)l=[s]
 else if(/<\w+[^>]*>/.test(s)){l=D.createElement('p')
 l.innerHTML=s
 l=l.childNodes}else if(p[q])l=p[q](s)

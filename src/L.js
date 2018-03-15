@@ -17,7 +17,7 @@ L=function(s,p){
 	//an array selector should pass through 
 	else if(I(s,[]))l=s
 	//if youre passing a window, document or node it should pass through
-	else if(I(s,W,D)||s.nodeName)l=[s]
+	else if(s.addEventListener)l=[s]
 	//if you pass in html it should be turned into a node list
 	else if(/<\w+[^>]*>/.test(s)){
 		// create a placeholder paragraph
