@@ -44,9 +44,7 @@ R.WORK=async(u,s)=>
 u&&I(u,Worker,SharedWorker,ServiceWorker)
 ?s==F
 ?u.terminate()
-:u.postMessage
-?u.postMessage(s.call?s+'':s)
-:u.port.postMessage(s.call?s+'':s)
+:(u.postMessage||u.port.postMessage).call(u,s.call?s+'':s)
 :R(y).then(async(s)=>new Worker(
 I(u,'')
 ?u
