@@ -7,24 +7,10 @@ const D=self.document,
 //Window or web worker
 W=self,
 //Aggregate
-//a=array
-//o=objects
-A=function(){
-	//instanciate output variabe
-	var o=[],
-	//shorten arguments varible
-	a=arguments,
-	//instance iterator
-	i,
-	//converted variable
-	x
-
-	//loop args and convert to array were possible
-	for(i in a)o=o.concat((x=Array.from(a[i])).length?x:a[i])
-
-	//return output
-	return o
-},
+A=function(...a){
+	//convert as many args to array as you can then concatto new array
+	return [].concat(...a.map((o,a)=>(a=Array.from(o)).length?a:o))
+}
 //Remote
 //m=method
 //u=url
@@ -234,7 +220,7 @@ R=(U=>{
 	}
 
 	//wait for 10 seconds
-	setTimeout(async(o,y)=>{
+	setTimeout(async(o)=>{
 		if(D){
 			//don't setup background if it's been turned off
 			if(y=o.background)R.WORKER(
@@ -287,7 +273,7 @@ R=(U=>{
 			//end binding
 			)
 		}
-	},y?999:1,R.opts)
+	},y?999:0,R.opts)
 
 	//return Remoting object
 	return R
