@@ -351,12 +351,13 @@ I=function(o,...a){
 		//simple types return their type uppercased
 		:t[0].toUpperCase()+t.substring(1),
 	//get argume count
-	i=a.length
+	i=a.length,
+	x=t(o)
 
 	//if one arg get object type or constructor name for objects
-	if(i==1)return t(o)
+	if(i==1)return x 
 	//loop through check for equality then check constructors
-	else while(i--)if(t(o)==t(a[i]))return T
+	else while(--i)if(x==t(a[i]))return T
 	//return false if we don't find anything
 	return F
 },

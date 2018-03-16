@@ -98,9 +98,9 @@ return O(A(l),{_sel:[s,p],constructor:L})},I=function(o,...a){var c="constructor
 ?o.toString().match(f)
 ?o[n]
 :o[c][n]
-:t[0].toUpperCase()+t.substring(1),i=a.length
-if(i==1)return t(o)
-else while(i--)if(t(o)==t(a[i]))return T
+:t[0].toUpperCase()+t.substring(1),i=a.length,x=t(o)
+if(i==1)return x
+else while(--i)if(x==t(a[i]))return T
 return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
 var w=v.split(' ')
 l=L(l)
