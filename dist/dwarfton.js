@@ -469,16 +469,10 @@ S=(U=>{
 //Chain
 //f=function
 //a=arguments
-const C=function(f,a){
-	//turn argments into array
-	a=A(arguments)
-
-	//remove first argument
-	a.shift()
-
+const C=function(f,...a){
 	//check if the function is really a function
-	return f&&f.apply
-		?new Promise(r=>r(f.apply(U,a)))
+	return f&&f.call
+		?new Promise(r=>r(f(...a)))
 		:Error('invalid function')
 },
 //Prototype
