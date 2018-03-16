@@ -1,7 +1,6 @@
 /*©2015 FRINKnet and Friends*/"use strict"
 const DWARFTON=1.28
-const D=self.document,W=self,A=function(...a){return [].concat(...a.map((o,a)=>(a=Array.from(o)).length?a:o))}
-R=(U=>{var w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=s=>/^https/.test(s),R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
+const D=self.document,W=self,A=function(...a){return [].concat(...a.map((o,a)=>(a=Array.from(o)).length?a:o))},R=(U=>{var w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=s=>/^https/.test(s),R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
 s=I(s,{},U)
 ?O({},R.opts,s,{body:b,url:u})
