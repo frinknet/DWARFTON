@@ -328,10 +328,9 @@ L=function(s,p){
 },
 //Interogate
 //o..=objects
-I=function(o){
+I=function(o,...a){
 	//shortne arguments variable
-	var a=arguments,
-	c="constructor",
+	var c="constructor",
 	n='name',
 	//test for native functions
 	f=O.toString().replace(/^.+\)\s?/,'').replace(/([{\[\]}])/g,'\\$1'),
@@ -357,7 +356,7 @@ I=function(o){
 	//if one arg get object type or constructor name for objects
 	if(i==1)return t(o)
 	//loop through check for equality then check constructors
-	else while(--i)if(t(o)==t(a[i]))return T
+	else while(i--)if(t(o)==t(a[i]))return T
 	//return false if we don't find anything
 	return F
 },
