@@ -62,13 +62,13 @@ return u!=F
 R.opts={mode: 'cors',method: 'GET',cache: 'D:'+DWARFTON,background: y,credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
 setTimeout(async(o)=>{if(D){if(y=o.background)R.WORKER(
 z(W.location)&&z(y)
-?w.register(y)&&w.controller
+?await w.register(y)&&w.controller
 :await R.WORKER(y),'e=>R.opts='+JSON.stringify(o)
 )}else{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',(e,d)=>{console.log(e)
 if(/^e=>|^function/.test(d=e.data)){eval(d)(e)
-e.stopPropigation()}})
+e.stopPropagation()}})
 B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
 ?e.respondWith(caches.match(r)
 .then((o,n)=>(n=fetch(r)

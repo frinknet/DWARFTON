@@ -214,7 +214,7 @@ R=(U=>{
 				//check we can run background ssl
 				z(W.location)&&z(y)
 					//then instance service worker
-					?w.register(y)&&w.controller
+					?await w.register(y)&&w.controller
 					//otherwise create a web worker
 					:await R.WORKER(y),
 				//then send worker our options
@@ -232,7 +232,7 @@ R=(U=>{
 					//eval function
 					eval(d)(e)
 					//stop propigation
-					e.stopPropigation()
+					e.stopPropagation()
 				}
 			
 			})
