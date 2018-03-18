@@ -90,17 +90,17 @@ else if(/<\w+[^>]*>/.test(s)){l=D.createElement('p')
 l.innerHTML=s
 l=l.childNodes}else if(p[q])l=p[q](s)
 else l=L(p).map(p=>L(s,p)),l=A.apply(A,l)
-return O(A(l),{_sel:[s,p],constructor:L})},I=function(o,...a){var c="constructor",n='name',f=O.toString().replace(/^.+\)\s?/,'').replace(/([{\[\]}])/g,'\\$1'),t=(o,t)=>o===N
+return O(A(l),{_sel:[s,p],constructor:L})},I=function(o,...a){var f=O.toString().replace(/^.+\)\s?/,'').replace(/([{\[\]}])/g,'\\$1'),t=(o,t)=>o===N
 ?'Null'
 :(t=typeof o)=='object'
-?Object(o)[c][n]
+?Object(o).constructor
 :t=='function'
 ?o.toString().match(f)
-?o[n]
-:o[c][n]
+?o.name
+:o.constructor.name
 :t[0].toUpperCase()+t.substring(1),i=a.length,x=t(o)
 if(i==1)return x
-else while(--i)if(x==t(a[i]))return T
+else while(i--)if(x==t(a[i]))return T
 return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
 var w=v.split(' ')
 l=L(l)
