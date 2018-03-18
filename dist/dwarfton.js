@@ -338,7 +338,7 @@ I=function(o,...a){
 		?'Null'
 		//objects return constructor name
 		:(t=typeof o)=='object'
-		?Object(o).constructor
+		?o.constructor.name
 		//functions need to test if they are native
 		:t=='function'
 		?o.toString().match(f)

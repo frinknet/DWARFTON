@@ -94,7 +94,7 @@ else l=L(p).map(p=>L(s,p)),l=A.apply(A,l)
 return O(A(l),{_sel:[s,p],constructor:L})},I=function(o,...a){var f=O.toString().replace(/^.+\)\s?/,'').replace(/([{\[\]}])/g,'\\$1'),t=(o,t)=>o===N
 ?'Null'
 :(t=typeof o)=='object'
-?Object(o).constructor
+?o.constructor.name
 :t=='function'
 ?o.toString().match(f)
 ?o.name
