@@ -352,10 +352,10 @@ I=function(o,...a){
 	//type of object
 	x=t(o)
 
-	//if one arg return computed type
-	if(i==1)return x 
 	//otherwise loop to compare against aruments
-	else while(i--)if(x==t(a[i]))return T
+	if(i)while(i--)if(x==t(a[i]))return T
+	//if one arg return computed type
+	else return x 
 	//fail if we don't find anything
 	return F
 },

@@ -99,8 +99,8 @@ return O(A(l),{_sel:[s,p],constructor:L})},I=function(o,...a){var f=O.toString()
 ?o.name
 :o.constructor.name
 :t[0].toUpperCase()+t.substring(1),i=a.length,x=t(o)
-if(i==1)return x
-else while(i--)if(x==t(a[i]))return T
+if(i)while(i--)if(x==t(a[i]))return T
+else return x
 return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
 var w=v.split(' ')
 l=L(l)
