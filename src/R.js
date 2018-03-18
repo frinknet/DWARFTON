@@ -226,6 +226,7 @@ R=(U=>{
 			B(W,'install',e=>console.log('install',e))
 			B(W,'activate',e=>console.log('activate',e))
 			B(W,'message',(e,d)=>{
+				console.log(e)
 				//test if the message is a function
 				if(/^e=>|^function/.test(d=e.data)){
 					//eval function
