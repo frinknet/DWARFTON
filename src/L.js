@@ -19,7 +19,7 @@ L=function(s,p){
 	//if youre passing a window, document or node it should pass through
 	else if(s.addEventListener)l=[s]
 	//if you pass in html it should be turned into a node list
-	else if(/<\w+[^>]*>/.test(s)){
+	else if(/<\w+[^>]*>/.test(s)&&D){
 		// create a placeholder paragraph
 		l=D.createElement('p')
 		//load in string as html
