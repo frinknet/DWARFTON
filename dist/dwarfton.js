@@ -220,8 +220,11 @@ R=(U=>{
 	}
 
 	//wait for 10 seconds
-	setTimeout(async(o)=>{
+	setTimeout(async(o,s)=>{
 		if(D){
+			//create worker
+			s=await R.WORKER(y);
+
 			//don't setup background if it's been turned off
 			if(y=o.background)R.WORKER(
 				//check we can run background ssl
@@ -229,7 +232,7 @@ R=(U=>{
 					//then instance service worker
 					?await w.register(y)&&w.controller
 					//otherwise create a web worker
-					:await R.WORKER(y),
+					:s,
 				//then send worker our options
 				'e=>R.opts='+JSON.stringify(o)
 			//return worker
@@ -242,10 +245,12 @@ R=(U=>{
 				console.log(e)
 				//test if the message is a function
 				if(/^e=>|^function/.test(d=e.data)){
-					//eval function
-					eval(d)(e)
-					//stop propigation
-					e.stopPropagation()
+					try{
+						//eval function
+						eval(d)(e)
+						//stop propigation
+						e.stopPropagation()
+					}catch(e)console.log(e)
 				}
 			
 			})
