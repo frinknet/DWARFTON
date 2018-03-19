@@ -239,7 +239,7 @@ R=(U=>{
 			)
 
 		//setup worker if we are in workerscope
-		}else{
+		else{
 			B(W,'install',e=>console.log('install',e))
 			B(W,'activate',e=>console.log('activate',e))
 			B(W,'message',(e,d)=>{

@@ -66,7 +66,8 @@ b=>b&&R.WORKER(b,'e=>R.opts='+JSON.stringify(o)),100,(y=o.background)
 ?await w.register(y)&&w.controller
 :await R.WORKER(y)
 :U
-)}else{B(W,'install',e=>console.log('install',e))
+)
+else{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',(e,d)=>{if(/^e=>|^function\s*\(\s*e?\s*\)/.test(d=e.data)){try{console.log(e)
 eval(d)(e)
