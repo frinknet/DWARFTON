@@ -1,7 +1,7 @@
 /*©2015 FRINKnet and Friends*/
 "use strict"
 
-const DWARFTON=1.28
+const DWARFTON=1.30
 //Document
 const D=self.document,
 //Window or web worker
@@ -9,7 +9,7 @@ W=self,
 //Aggregate
 A=function(...a){
 	//convert as many object to array as you can or leave as is and concat to new array
-	return [].concat(...a.map((o,a)=>typeof o=='object'&&(a=Array.from(o).length||o.length>-1)?a:o))
+	return [].concat(...a.map((o,a)=>typeof o=='object'&&((a=Array.from(o)).length||o.length>-1)?a:o))
 },
 //Remote
 //m=method
