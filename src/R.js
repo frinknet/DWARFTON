@@ -262,7 +262,7 @@ R=(U=>{
 							//put the request in
 							.then(c=>c.put(r,o.clone()))
 							//return a 503 on error
-							.catch(c=>p)
+							.catch(c=>Respnse("Service Unavailable", 503))
 							//otherwise serve the file
 							:o
 						)

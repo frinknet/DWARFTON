@@ -1,6 +1,6 @@
 /*©2015 FRINKnet and Friends*/"use strict"
 const DWARFTON=1.28
-const D=self.document,W=self,A=function(...a){return [].concat(...a.map((o,a)=>(a=Array.from(o)).length?a:o))},R=(U=>{var t=setTimeout,w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=s=>/^https/.test(s),R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
+const D=self.document,W=self,A=function(...a){return [].concat(...a.map((o,a)=>typeof o=='object'&&(a=Array.from(o).length||o.length>-1)?a:o))},R=(U=>{var t=setTimeout,w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=s=>/^https/.test(s),R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
 s=I(s,{},U)
 ?O({},R.opts,s,{body:b,url:u})
@@ -78,13 +78,16 @@ B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
 .then(o=>R.opts.offline
 ?caches.open(S.opts.cache)
 .then(c=>c.put(r,o.clone()))
-.catch(c=>p)
+.catch(c=>Respnse("Service Unavailable", 503))
 :o
 )
 )?o||n:e)
 ):e
 )}},y?999:0,R.opts)
-return R})(),F=false,T=true,O=Object.assign,N=null,L=function(s,p){var l,q='querySelectorAll'
+return R})(),F=false,T=true,O=function(...a){var f
+return (f=a.filter(a=>a!=U&&a!=N&&Object(a))).length
+?Object.assign(...f)
+:a[0]},N=null,L=function(s,p){var l,q='querySelectorAll'
 p=p?p==W?D:p:D
 if(I(p,"")&&I(s,''))s=p+' '+s,p=D
 if(s._sel)return s

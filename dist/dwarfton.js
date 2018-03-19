@@ -8,8 +8,8 @@ const D=self.document,
 W=self,
 //Aggregate
 A=function(...a){
-	//convert as many args to array as you can then concatto new array
-	return [].concat(...a.map((o,a)=>(a=Array.from(o)).length?a:o))
+	//convert as many object to array as you can or leave as is and concat to new array
+	return [].concat(...a.map((o,a)=>typeof o=='object'&&(a=Array.from(o).length||o.length>-1)?a:o))
 },
 //Remote
 //m=method
@@ -275,7 +275,7 @@ R=(U=>{
 							//put the request in
 							.then(c=>c.put(r,o.clone()))
 							//return a 503 on error
-							.catch(c=>p)
+							.catch(c=>Respnse("Service Unavailable", 503))
 							//otherwise serve the file
 							:o
 						)
@@ -299,7 +299,17 @@ T=true,
 //Overload
 // o=object
 // a=assignments
-O=Object.assign,
+O=function(...a){
+	// define filtered array
+	var f
+
+	//filter array since we can't add properties 
+	return (f=a.filter(a=>a!=U&&a!=N&&Object(a))).length
+		//assign attributes that are left
+		?Object.assign(...f)
+		//otherwise just return the first attribute
+		:a[0]
+},
 //Null
 N=null,
 //List
