@@ -4,9 +4,7 @@
 //b=body
 //s=setings
 R=(U=>{
-	// variable for background worker
-	var b,
-	t=setTimeout,
+	var t=setTimeout,
 	//abbreviate serviceWorker
 	w=navigator.serviceWorker,
 	//get script elements
@@ -209,20 +207,23 @@ R=(U=>{
 		//streaming:F
 	}
 
-	//wait for 10 seconds
+	//wait for 10 seconds 
 	t(async(o)=>{
-		if(D){
-			//don't setup background if it's been turned off
-			if(y=o.background)
+		//if we are in a DOM context start serviceworker or fake 
+		if(D)t(
+				b=>b&&R.WORKER(b,'e=>R.opts='+JSON.stringify(o)),
+				100,
+				//don't setup background if it's been turned off
+				(y=o.background)
 				//check we can run background ssl
-				b=z(W.location)&&z(y)
+				?z(W.location)&&z(y)
 					//then instance service worker
 					?await w.register(y)&&w.controller
 					//otherwise create a web worker
-					:await R.WORKER(y),
-
-			//then send worker our options
-			t(R.WORKER(b,'e=>R.opts='+JSON.stringify(o)),100)
+					:await R.WORKER(y)
+				//don't start if background not specified
+				:U
+			)
 
 		//setup worker if we are in workerscope
 		}else{
