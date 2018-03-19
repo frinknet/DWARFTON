@@ -93,7 +93,7 @@ if(I(p,"")&&I(s,''))s=p+' '+s,p=D
 if(s._sel)return s
 else if(I(s,[]))l=s
 else if(s.addEventListener)l=[s]
-else if(/<\w+[^>]*>/.test(s)){l=D.createElement('p')
+else if(/<\w+[^>]*>/.test(s)&&D){l=D.createElement('p')
 l.innerHTML=s
 l=l.childNodes}else if(p[q])l=p[q](s)
 else l=L(p).map(p=>L(s,p)),l=A.apply(A,l)
