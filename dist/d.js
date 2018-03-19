@@ -1,6 +1,6 @@
 /*©2015 FRINKnet and Friends*/"use strict"
 const DWARFTON=1.28
-const D=self.document,W=self,A=function(...a){return [].concat(...a.map((o,a)=>(a=Array.from(o)).length?a:o))},R=(U=>{var b,t=setTimeout,w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=s=>/^https/.test(s),R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
+const D=self.document,W=self,A=function(...a){return [].concat(...a.map((o,a)=>(a=Array.from(o)).length?a:o))},R=(U=>{var t=setTimeout,w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=s=>/^https/.test(s),R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
 s=I(s,{},U)
 ?O({},R.opts,s,{body:b,url:u})
@@ -60,10 +60,13 @@ return u!=F
 )
 :caches.delete(c)}
 R.opts={mode: 'cors',method: 'GET',cache: 'D:'+DWARFTON,background: y,credentials: 'include',headers: {'Content-Type': 'application/x-www-form-urlencoded'},pack:R.encode,error:console.log}
-t(async(o)=>{if(D){if(y=o.background)
-b=z(W.location)&&z(y)
+t(async(o)=>{if(D)t(
+b=>b&&R.WORKER(b,'e=>R.opts='+JSON.stringify(o)),100,(y=o.background)
+?z(W.location)&&z(y)
 ?await w.register(y)&&w.controller
-:await R.WORKER(y),t(R.WORKER(b,'e=>R.opts='+JSON.stringify(o)),100)}else{B(W,'install',e=>console.log('install',e))
+:await R.WORKER(y)
+:U
+)}else{B(W,'install',e=>console.log('install',e))
 B(W,'activate',e=>console.log('activate',e))
 B(W,'message',(e,d)=>{if(/^e=>|^function\s*\(\s*e?\s*\)/.test(d=e.data)){try{console.log(e)
 eval(d)(e)
