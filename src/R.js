@@ -4,8 +4,11 @@
 //b=body
 //s=setings
 R=(U=>{
+	// variable for background worker
+	var b,
+	t=setTimeout,
 	//abbreviate serviceWorker
-	var w=navigator.serviceWorker,
+	w=navigator.serviceWorker,
 	//get script elements
 	x=D&&D.getElementsByTagName('script'),
 	//get url for current script(last one loaded)
@@ -207,37 +210,40 @@ R=(U=>{
 	}
 
 	//wait for 10 seconds
-	setTimeout(async(o,s)=>{
+	t(async(o)=>{
 		if(D){
-			//create worker
-			s=await R.WORKER(y);
-
 			//don't setup background if it's been turned off
-			if(y=o.background)R.WORKER(
+			if(y=o.background)
 				//check we can run background ssl
-				z(W.location)&&z(y)
+				b=z(W.location)&&z(y)
 					//then instance service worker
 					?await w.register(y)&&w.controller
 					//otherwise create a web worker
-					:s,
-				//then send worker our options
-				'e=>R.opts='+JSON.stringify(o)
-			//return worker
-			)
+					:await R.WORKER(y),
+
+			//then send worker our options
+			t(R.WORKER(b,'e=>R.opts='+JSON.stringify(o)),100)
+
 		//setup worker if we are in workerscope
 		}else{
 			B(W,'install',e=>console.log('install',e))
 			B(W,'activate',e=>console.log('activate',e))
 			B(W,'message',(e,d)=>{
-				console.log(e)
 				//test if the message is a function
-				if(/^e=>|^function/.test(d=e.data)){
+				if(/^e=>|^function\s*\(\s*e?\s*\)/.test(d=e.data)){
+					//make sure to catch errors
 					try{
+						//log any event that comes in
+						console.log(e)
 						//eval function
 						eval(d)(e)
 						//stop propigation
 						e.stopPropagation()
-					}catch(e)console.log(e)
+					//catch the errors so we can log them
+					}catch(e){
+						//log the error
+						console.log(e)
+					}
 				}
 			
 			})
