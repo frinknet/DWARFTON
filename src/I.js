@@ -1,8 +1,8 @@
 //Interogate
 //o..=objects
-I=function(o,...a){
+I=(o,...a)=>{
 	//test for native functions
-	var f=O.toString().replace(/^.+\)\s?/,'').replace(/([{\[\]}])/g,'\\$1'),
+	let f=O.toString().replace(/^.+\)\s?/,'').replace(/([{\[\]}])/g,'\\$1'),
 	//store type function
 	t=(o,t)=>o===N
 		//return null for null which is normally "object
