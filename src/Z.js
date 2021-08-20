@@ -1,4 +1,21 @@
 //Zoomer Proxy
 //o = object
-//m proxies
-Z=(o,...m)=>m.reduce((o,n)=>new Proxy(o,{get:(o,a,t)=>n[a]||o[a],set:(o,a,t)=>n[a]?(n[a]=t):(o[a]=t)}),o)
+//m mapped proxies
+Z=(o,...m)=>m.reduce(
+  //loop thorough mappings
+  //o = object
+  //n = new object
+  (o,n)=>new Proxy(o,{
+    //getter
+    //o = object
+    //a = attribute
+    get:(o,a)=>n[a]||o[a],
+    //setter
+    //o = object
+    //a = attribute
+    //t = transfered valued
+    set:(o,a,t)=>n[a]?(n[a]=t):(o[a]=t)
+  }),
+  //pass in original object for mapping
+  o
+)
