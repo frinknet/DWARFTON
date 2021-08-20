@@ -6,7 +6,7 @@
 //m=fire once
 B=function(l,v,s,f,m){
 	//polymorph adjust for no selectors
-	if(I(f,T,U))m=f;f=s;s=N
+	if(I(f,T,U)){m=f;f=s;s=N}
 
 	//split event list
 	var w=v.split(' ')
