@@ -1,7 +1,6 @@
-//Objectify
-// o=object
-// a=assignments
-O=(...a)=>Object.assign({},
+//Overload
+//l=list of object
+O=(...l)=>Object.assign({},
 	//filter objects to avoid errors and insure we always return an object
-	...a.filter(o=>o!=U&&o!=N&&Object(o))
+	...l.filter(o=>o!=U&&o!=N&&Object(o))
 )
