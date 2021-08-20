@@ -1,3 +1,18 @@
 //Aggregate
-//convert as many object to array as you can or leave as is and concat to new array
-A=(...a)=>[].concat(...a.map((o,a)=>typeof o=='object'&&((a=Array.from(o)).length||o.length>-1)?a:o)),
+//g = group of objects
+A=(...g)=>[].concat(
+  //loop through objects
+  //o = object
+  //r = returned
+  ...g.map((o,r)=>
+         //check if o is an object
+         I(o,{})&&(
+            //convert to an array
+            (r=Array.from(o)
+          //check if the there is a length
+          ).length||o.length>-1)
+          //if so use the array
+          ?t
+          //otherwise use the object
+          :o
+  )),
