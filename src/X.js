@@ -10,6 +10,14 @@ X=(U=>{
 		return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText
 	}
 
-  //tf you have a * before it
-	return (k,v)=>k[0]=='*'?D||x('style',k.slice(1),v):D?x('script',k,v):importScripts(v)
-})()
+	//if you have a * to start the key it should be a style
+	return (k,v)=>k[0]=='*'
+		//we must remove the stare so that the query selector works correctly
+		?D||x('style',k.slice(1),v)
+		//check if we are in a document context
+		:D
+		//include the script normally
+		?x('script',k,v)
+		//if in a worker we use importScript instead
+		:importScripts(v)
+})(),
