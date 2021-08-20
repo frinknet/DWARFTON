@@ -14,7 +14,7 @@ R=(U=>{
 	//test if input is ssl
 	z=s=>/^https/.test(s),
 	//Remote function
-	R=function(m,u,b,s){
+	R=(m,u,b,s)=>{
 		//polymorph for R({})
 		if(I(m,{})){s=m;m=U}
 
