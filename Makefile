@@ -7,13 +7,16 @@ DWARFTON=\
 	src/T.js \
 	src/O.js \
 	src/N.js \
+	src/C.js \
+	src/P.js \
+	src/U.js \
 	src/L.js \
 	src/I.js \
 	src/B.js \
 	src/S.js \
-	src/C.js \
-	src/P.js \
-	src/U.js
+	src/X.js \
+	src/Y.js \
+	src/Z.js
 
 default: clean submodules dist
 
