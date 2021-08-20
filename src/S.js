@@ -3,8 +3,7 @@
 //v=value
 S=(k,v,s)=>(
 	//choose whether session or local storage
-	s=k[0]=='*'?W.sessionStorage:W.localStorage,
-	D?
+	(s=k[0]=='*'?W.sessionStorage:W.localStorage)?
 	//check if we have a value
 	v==U
 	//if not return the value
