@@ -1,4 +1,4 @@
-//Aggregate
+//Aggregate - A(...g)
 //g = group of objects
 A=(...g)=>[].concat(
   //loop through objects
