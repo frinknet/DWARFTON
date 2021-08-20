@@ -1,9 +1,9 @@
 //Overload
 // o=object
 // a=assignments
-O=function(...a){
+O=(...a)=>{
 	// define filtered array
-	var f
+	let f
 
 	//filter array since we can't add properties 
 	return (f=a.filter(a=>a!=U&&a!=N&&Object(a))).length
