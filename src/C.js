@@ -1,7 +1,10 @@
-//Chain
+//Call - C(f,...a)
 //f=function
 //a=arguments
-//check if the function is really a function
-const C=(f,...a)=>f&&f.call
+const C=(f,...a)=>
+	//check if the function is really a function
+	f&&f.call
+	//
 	?new Promise(r=>r(f(...a)))
+	//throw an error
 	:Error('invalid function'),
