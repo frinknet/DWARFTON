@@ -1,2 +1,2 @@
 //True
-T=true,
+T=!0,
