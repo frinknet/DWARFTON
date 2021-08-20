@@ -4,12 +4,12 @@
 //s=selector for children
 //f=function to trigger
 //m=fire once
-B=function(l,v,s,f,m){
+B=(l,v,s,f,m)=>{
 	//polymorph adjust for no selectors
 	if(I(f,T,U)){m=f;f=s;s=N}
 
 	//split event list
-	var w=v.split(' ')
+	let w=v.split(' ')
 
 	//setup list
 	l=L(l)
@@ -21,9 +21,9 @@ B=function(l,v,s,f,m){
 		//dispatch events when no function is provided
 		if(f==U)return n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T}))
 		//event watcher
-		var w=function(e){
+		let w=function(e){
 			//bubble function: call event, stop one shots and bubble to parents
-			var b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?x(f):n,e):n.parentNode?b(e,n.parentNode,p):U
+			let b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?x(f):n,e):n.parentNode?b(e,n.parentNode,p):U
 			//bubble event from srcElement
 			return b(e,e.srcElement,L(s?s:this,s?this:D))
 		},
