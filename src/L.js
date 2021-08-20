@@ -1,7 +1,7 @@
 //List
 //s=selector
 //p=parent
-L=function(s,p){
+L=(s,p)=>{
 	//iinstance list variable
 	var l,
 	q='querySelectorAll'
