@@ -1,13 +1,16 @@
 /*©2023 FRINKnet and Friends // License: MIT*/"use strict"
 const DWARFTON=1.30
-const D=self.document,W=self,A=(...g)=>[].concat(
-...g.map((o,r)=>
+const D=self.document, //Document Fragment
+W=self,A=(...g)=>[].concat(
+...g.map(
+(o,r)=>
 I(o,{})&&(
 (r=Array.from(o)
 ).length||o.length>-1)
-?t
+?r
 :o
-)),R=(U=>{var t=setTimeout,w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=s=>/^https/.test(s),R=(m,u,b,s)=>{if(I(m,{})){s=m;m=U}
+)
+),R=(U=>{var t=setTimeout,w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=s=>/^https/.test(s),R=(m,u,b,s)=>{if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
 s=I(s,{},U)
 ?O({},R.opts,s,{body:b,url:u})
@@ -91,9 +94,18 @@ B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
 )?o||n:e)
 ):e
 )}},y?999:0,R.opts)
-return R})(),F=!1,T=!0,O=(...l)=>Object.assign({},...l.filter(o=>o!=U&&o!=N&&Object(o))
+return R})(),F=!1,T=!0,O=((v,e,r,l,o,a,d)=>{l=n=>'O:'+n[r](
+/(?:^\w|[A-Z]|\b\w)/g,m=>m.toUpperCase()
+)[r](/[^A-Za-z]+/g,''),o=(c,p)=>(
+a(e,eval(`({'${c}:parent':d(p)})`)),a(e,eval(`({'${c}':class extends e['${c}:parent']{}})`))
+),a=v.assign,d=o=>(
+(o.call&&o)||
+(o.prototype||v.getPrototypeOf(o)).constructor
 )
-N=null,U=W.U,I=(n,...t)=>{let c=W.atob.toString()
+return new Proxy(
+(...l)=>a({},...l.filter(o=>!o.at&&v(o))),{set:(_,n,s)=>{n=l(n)
+o(n,s)},get:(_,n)=>e[l(n)]&&function(...a){return new (e[l(n)])(...a)}}
+)})(Object,{},'replace'),N=null,U=undefined,I=(n,...t)=>{let c='^class||'+self.atob.toString()
 .replace(/^.+\)\s?/,'')
 .replace(/([{\[\]}])/g,'\\$1'),f=(i,x)=>
 i===N
@@ -104,10 +116,27 @@ i===N
 ?i.toString().match(c)
 ?i.name
 :i.constructor.name
-:x[0].toUpperCase()+x.substring(1),i=t.length,x=f(n)
-if(!i)return x
-while(i--)if(x==f(t[i] || ))return T
-return F},P=(o,a)=>(o=O(o),a?o[p]=P(a):o.prototype||o.__proto__),L=(s,p)=>{var l,q='querySelectorAll'
+:x[0].toUpperCase()+x.substring(1),i=t.length,x=f(n);if(!i)return x
+while(i--)if(
+typeof t[i]=='function'
+?n instanceof t[i]
+:x==f(t[i])
+)return T;return F},const C=(h,...n)=>
+h&&h.call
+?new Promise(c=>c(h(...n)))
+:E('invalid function'),K=(e,p,t)=>(
+(t=e[0]=='*'?W.sessionStorage:W.localStorage)
+?p==U
+?t.getItem(e)
+:t.setItem(e,p)
+:U
+),P=(r,o,x,y)=>{if(o&&o.call)[o,x,y]=[U,x,y];return new Proxy(
+r,O(
+{get:x||((o,a,t)=>typeof (t=o[a])=='object'?P(t):t)
+set:y||x((o,a,t)=>o[a]=t),},o
+)
+)}
+L=(s,p)=>{var l,q='querySelectorAll'
 p=p?p==W?D:p:D
 if(I(p,"")&&I(s,''))s=p+' '+s,p=D
 if(s._sel)return s
@@ -119,13 +148,19 @@ l=l.childNodes}else if(p[q])l=p[q](s)
 else l=L(p).map(p=>L(s,p)),l=A.apply(A,l)
 return O(A(l),{_sel:[s,p],constructor:L})},Y=(e,a,s,t)=>(
 typeof a=='function'&&(t=s,s=a,a=e,e=W),Object.defineProperty(e,a,{get:t||s,set:s})
-),S=(k,v,s)=>(
-(s=k[0]=='*'?W.sessionStorage:W.localStorage)?
-v==U
-?s.getItem(k)
-:s.setItem(k,v)
-:U
-),H=((a,s,h)=>{if(!
-a=crypto.subtle,b=(e)=>(new TextEncoder()).encode(e),c={iv=crypto.getRandomValues(new Uint8Array(16)),saltLength=128,sign:'HMAC',hash:'SHA-256',cypher: 'AES-CBC',},d=(r)=>O({name:c[r]},c)
+),B=(l,v,s,f,m)=>{if(I(f,T,U)){m=f;f=s;s=N}
+let w=v.split(' ')
+l=L(l)
+if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
+else l.forEach(n=>{if(f==U)return n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T}))
+let w=function(e){let b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?x(f):n,e):n.parentNode?b(e,n.parentNode,p):U
+return b(e,e.srcElement,L(s?s:this,s?this:D))},x=f=>z.forEach((a,i)=>{if((!y&&(s==a.sel||!s))||y==a.fn.toString()){n.removeEventListener(v,a.ltn)
+delete z[i]}
+return n}),y=f&&f.toString(),z=(n._evt=n._evt||{})[v]=n._evt[v]||[],i
+if(m===F)return x(f)
+for(i in z)if(z[i].fn.toString()==y)return
+z.push({fn:f,ltn:w,sel:s,rm:x})
+n.addEventListener(v,w,!!s)})
+return l},E=Error,S=new Proxy(Symbol,{get:(s,o)=>s[o]||s.for(o)}),H=(U=>{a=crypto.subtle,b=(e)=>(new TextEncoder()).encode(e),c={iv=crypto.getRandomValues(new Uint8Array(16)),saltLength=128,sign:'HMAC',hash:'SHA-256',cypher: 'AES-CBC',},d=(r)=>O({name:c[r]},c)
 H(m)=>a.digest(c.hash,b(m))
-H.config=c;H.sign=(k,v)=>a.sign(d('sign'),b(m));H.verify=(k,v)=>a.verify(d('sign'),b(m));H.encrypt=(k,v)=>a.encrypt(d('cypher'),b(m));H.decrypt=(k,v)=>a.encrypt(d('cypher'),b(m));return Object.freeze(H);})(W.crypto,)
+H.config=c;H.sign=(k,v)=>a.sign(d('sign'),b(m));H.verify=(k,v)=>a.verify(d('sign'),b(m));H.encrypt=(k,v)=>a.encrypt(d('cypher'),b(m));H.decrypt=(k,v)=>a.encrypt(d('cypher'),b(m));return Object.freeze(H);})()

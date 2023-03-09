@@ -18,6 +18,9 @@ DWARFTON=\
 	src/L.js \
 	src/Y.js \
 	\
+	src/B.js \
+	src/G.js \
+	\
 	src/M.js \
 	src/E.js \
 	src/S.js \

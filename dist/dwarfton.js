@@ -3,27 +3,31 @@
 
 const DWARFTON=1.30
 //Document
-const D=self.document,
+const D=self.document, //Document Fragment
 //Window or web worker
 W=self,
 //Aggregate - A(...g)
 //g = group of objects
 A=(...g)=>[].concat(
   //loop through objects
-  //o = object
-  //r = returned
-  ...g.map((o,r)=>
+  ...g.map(
+    //o = object
+    //r = returned
+    (o,r)=>
          //check if o is an object
          I(o,{})&&(
             //convert to an array
             (r=Array.from(o)
           //check if the there is a length
           ).length||o.length>-1)
-          //if so use the array
-          ?t
+          //if so use the new array
+          ?r
           //otherwise use the object
           :o
-  )),
+  //do mapping
+  )
+//do concatination
+),
 //Remote
 //m=method
 //u=url
@@ -309,22 +313,70 @@ F=!1,
 
 //True
 T=!0,
-//Overload
+//Overload - O(...l)
 //l=list of object
-O=(...l)=>Object.assign({},
-	//filter objects to avoid errors and insure we always return an object
-	...l.filter(o=>o!=U&&o!=N&&Object(o))
-)
+O=((v,e,r,l,o,a,d)=>{
+  //label maker
+  l=n=>'O:'+n[r](
+      //replace first letters
+      /(?:^\w|[A-Z]|\b\w)/g,
+      //set to uppercase
+      m=>m.toUpperCase()
+  //replace non-letters with nothing
+  )[r](/[^A-Za-z]+/g,''),
+  //register object
+  o=(c,p)=>(
+    //save parent in extensions table
+    a(e,eval(`({'${c}:parent':d(p)})`)),
+    //save class in extensions table
+    a(e,eval(`({'${c}':class extends e['${c}:parent']{}})`))
+  ),
+  //abbreviate assignments
+  a=v.assign,
+  //describe
+  d=o=>(
+    //if this is a function extend from there
+    (o.call&&o)||
+    //otherwise if it it is a prototype extend there
+    (o.prototype||v.getPrototypeOf(o)).constructor
+    )
+
+  //return a new Proxy
+  return new Proxy(
+    //return the default action
+    (...l)=>a({},...l.filter(o=>!o.at&&v(o))),
+    //now overload with proxy
+    {
+      //set the prototype on new classes
+      set:(_,n,s)=>{
+        //set child lable
+        n=l(n)
+        //make sure we arent doing this twice
+        //if(e[n])throw 'Already Exists'
+        //see if we can set the class
+        o(n,s)
+      },
+      //return a method to create a class
+      get:(_,n)=>e[l(n)]&&function(...a) {
+        //run with arguments
+        return new (e[l(n)])(...a)
+      }
+    //that's all folks
+    }
+  //return the proxy
+  )
+//send in abreviations
+})(Object,{},'replace'),
 //Null
 N=null,
 //Undefined
-U=W.U,
+U=undefined,
 //Interogate
 // needle
 // types
 I=(n,...t)=>{
   //check for native functions
-  let c=W.atob.toString()
+  let c='^class||'+self.atob.toString()
     .replace(/^.+\)\s?/,'')
     .replace(/([{\[\]}])/g,'\\$1'),
 
@@ -352,20 +404,57 @@ I=(n,...t)=>{
   //get argument count
   i=t.length,
   //type of object
-  x=f(n)
+  x=f(n);
 
   //if one arg return computed type
   if(!i)return x
   //otherwise loop to compare aruments
-  while(i--)if(x==f(t[i] || ))return T
+  while(i--)if(
+    typeof t[i]=='function'
+      ?n instanceof t[i]
+      :x==f(t[i])
+    )return T;
   //fail if we don't find anything
   return F
 },
-//Clone or Chain
-//Prototype
-//o=object
-//a=alternative
-P=(o,a)=>(o=O(o),a?o[p]=P(a):o.prototype||o.__proto__),
+//Chain - C(h,...n)
+//h=handler function
+//n= arguments
+const C=(h,...n)=>
+	//check if it's really a function
+	h&&h.call
+	  //create a new promise
+	  ?new Promise(c=>c(h(...n)))
+	  //or else throw an error
+	  :E('invalid function'),
+//Keep - K(e,p,t)
+//e=endpoint
+//p=put data
+K=(e,p,t)=>(
+  //choose whether session or local storage
+  (t=e[0]=='*'?W.sessionStorage:W.localStorage)
+    //check if no value
+    ?p==U
+      //get value
+      ?t.getItem(e)
+      //set value 
+      :t.setItem(e,p)
+    :U
+),
+//Proxy
+P=(r,o,x,y)=>{
+  if(o&&o.call)[o,x,y]=[U,x,y];
+  return new Proxy(
+      r,
+      O(
+        {
+          get:x||((o,a,t)=>typeof (t=o[a])=='object'?P(t):t)
+          set:y||x((o,a,t)=>o[a]=t),
+        },
+        o
+      )
+  )
+}
 //List
 //s=selector
 //p=parent
@@ -415,23 +504,80 @@ Y=(e,a,s,t)=>(
   //define propuerty based on functions
   Object.defineProperty(e,a,{get:t||s,set:s})
 ),
-//Storage
-//k=key
-//v=value
-S=(k,v,s)=>(
-	//choose whether session or local storage
-	(s=k[0]=='*'?W.sessionStorage:W.localStorage)?
-	//check if we have a value
-	v==U
-	//if not return the value
-	?s.getItem(k)
-	// 
-	:s.setItem(k,v)
-	:U
-),
-//Hash
-H=((a,s,h)=>{
-  if(!
+
+
+//Bind
+//l=list of elements
+//v=event names
+//s=selector for children
+//f=function to trigger
+//m=fire once
+B=(l,v,s,f,m)=>{
+	//polymorph adjust for no selectors
+	if(I(f,T,U)){m=f;f=s;s=N}
+
+	//split event list
+	let w=v.split(' ')
+
+	//setup list
+	l=L(l)
+
+	//work for event list as multiple
+	if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
+	//loop through list
+	else l.forEach(n=>{
+		//dispatch events when no function is provided
+		if(f==U)return n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T}))
+		//event watcher
+		let w=function(e){
+			//bubble function: call event, stop one shots and bubble to parents
+			let b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?x(f):n,e):n.parentNode?b(e,n.parentNode,p):U
+			//bubble event from srcElement
+			return b(e,e.srcElement,L(s?s:this,s?this:D))
+		},
+		//event remover
+		x=f=>z.forEach((a,i)=>{
+			//check if it's worthy to remove a listener
+			if((!y&&(s==a.sel||!s))||y==a.fn.toString()){
+				//remove the listener
+				n.removeEventListener(v,a.ltn)
+
+				//remove the record
+				delete z[i]
+			}
+
+			//return the node for chaining
+			return n
+		}),
+		//text representation of function
+		y=f&&f.toString(),
+		//setup node extention for event data
+		z=(n._evt=n._evt||{})[v]=n._evt[v]||[],
+		//iterator
+		i
+
+		// remove event listener
+		if(m===F)return x(f)
+
+		//don't list the same listener twice
+		for(i in z)if(z[i].fn.toString()==y)return
+
+		//add function and listener
+		z.push({fn:f,ltn:w,sel:s,rm:x})
+
+		//add the event listener and bubble if no selector
+		n.addEventListener(v,w,!!s)
+	})
+
+	//return the list selected
+	return l
+},
+//Error
+E=Error,
+//Symbol - S[name]
+S=new Proxy(Symbol,{get:(s,o)=>s[o]||s.for(o)}),
+//Hash - 
+H=(U=>{
   a=crypto.subtle,
   b=(e)=>(new TextEncoder()).encode(e),
   c={
@@ -454,4 +600,4 @@ H=((a,s,h)=>{
 
   //freeze object to avoid overloading
   return Object.freeze(H);
-})(W.crypto,)
+})()
