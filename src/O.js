@@ -2,7 +2,7 @@
 //l=list of object
 O=((v,e,r,l,o,a,d)=>{
   //label maker
-  l=n=>'O:'+n[r](
+  l=n=>'D:'+n[r](
       //replace first letters
       /(?:^\w|[A-Z]|\b\w)/g,
       //set to uppercase
