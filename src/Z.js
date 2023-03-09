@@ -1,4 +1,4 @@
-//Zoomer Proxy
+//Zoom Proxy
 //o = object
 //m mapped proxies
 Z=(o,...m)=>m.reduce(

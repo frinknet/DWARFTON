@@ -1,11 +1,10 @@
-//Call - C(a,...l)
-//a=action function
-//l=list of arguments
-const C=(a,...l)=>
-	//check if the function is really a function
-	l&&l.call
-	//create a new promise
-	//c=completion function
-	?new Promise(c=>c(a(...l)))
-	//or else throw an error
-	:Error('invalid function'),
+//Chain - C(h,...n)
+//h=handler function
+//n= arguments
+const C=(h,...n)=>
+	//check if it's really a function
+	h&&h.call
+	  //create a new promise
+	  ?new Promise(c=>c(h(...n)))
+	  //or else throw an error
+	  :E('invalid function'),
