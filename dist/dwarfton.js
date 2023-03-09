@@ -1,4 +1,4 @@
-/*©2015 FRINKnet and Friends*/
+/*©2023 FRINKnet and Friends // License: MIT*/
 "use strict"
 
 const DWARFTON=1.30
@@ -6,11 +6,24 @@ const DWARFTON=1.30
 const D=self.document,
 //Window or web worker
 W=self,
-//Aggregate
-A=function(...a){
-	//convert as many object to array as you can or leave as is and concat to new array
-	return [].concat(...a.map((o,a)=>typeof o=='object'&&((a=Array.from(o)).length||o.length>-1)?a:o))
-},
+//Aggregate - A(...g)
+//g = group of objects
+A=(...g)=>[].concat(
+  //loop through objects
+  //o = object
+  //r = returned
+  ...g.map((o,r)=>
+         //check if o is an object
+         I(o,{})&&(
+            //convert to an array
+            (r=Array.from(o)
+          //check if the there is a length
+          ).length||o.length>-1)
+          //if so use the array
+          ?t
+          //otherwise use the object
+          :o
+  )),
 //Remote
 //m=method
 //u=url
@@ -27,7 +40,7 @@ R=(U=>{
 	//test if input is ssl
 	z=s=>/^https/.test(s),
 	//Remote function
-	R=function(m,u,b,s){
+	R=(m,u,b,s)=>{
 		//polymorph for R({})
 		if(I(m,{})){s=m;m=U}
 
@@ -292,30 +305,71 @@ R=(U=>{
 	return R
 })(),
 //False
-F=false,
+F=!1,
 
 //True
-T=true,
+T=!0,
 //Overload
-// o=object
-// a=assignments
-O=function(...a){
-	// define filtered array
-	var f
-
-	//filter array since we can't add properties 
-	return (f=a.filter(a=>a!=U&&a!=N&&Object(a))).length
-		//assign attributes that are left
-		?Object.assign(...f)
-		//otherwise just return the first attribute
-		:a[0]
-},
+//l=list of object
+O=(...l)=>Object.assign({},
+	//filter objects to avoid errors and insure we always return an object
+	...l.filter(o=>o!=U&&o!=N&&Object(o))
+)
 //Null
 N=null,
+//Undefined
+U=W.U,
+//Interogate
+// needle
+// types
+I=(n,...t)=>{
+  //check for native functions
+  let c=W.atob.toString()
+    .replace(/^.+\)\s?/,'')
+    .replace(/([{\[\]}])/g,'\\$1'),
+
+  //fix broken typeof
+  f=(i,x)=>
+    //is it null?
+    i===N
+      //return null
+      ?'Null'
+      //otherwise is it an object?
+      :(x=typeof i)=='object'
+        //return the contructor
+        ?i.constructor.name
+        //otherwise is a function?
+        :x=='function'
+          //is it native?
+          ?i.toString().match(c)
+            //native functions return their own name
+            ?i.name
+            //others return return their constructor
+            :i.constructor.name
+        //simple types return their type capitalized
+      :x[0].toUpperCase()+x.substring(1),
+
+  //get argument count
+  i=t.length,
+  //type of object
+  x=f(n)
+
+  //if one arg return computed type
+  if(!i)return x
+  //otherwise loop to compare aruments
+  while(i--)if(x==f(t[i] || ))return T
+  //fail if we don't find anything
+  return F
+},
+//Clone or Chain
+//Prototype
+//o=object
+//a=alternative
+P=(o,a)=>(o=O(o),a?o[p]=P(a):o.prototype||o.__proto__),
 //List
 //s=selector
 //p=parent
-L=function(s,p){
+L=(s,p)=>{
 	//iinstance list variable
 	var l,
 	q='querySelectorAll'
@@ -349,161 +403,55 @@ L=function(s,p){
 	// turn list into list object
 	return O(A(l),{_sel:[s,p],constructor:L})
 },
-//Interogate
-//o..=objects
-I=function(o,...a){
-	//test for native functions
-	var f=O.toString().replace(/^.+\)\s?/,'').replace(/([{\[\]}])/g,'\\$1'),
-	//store type function
-	t=(o,t)=>o===N
-		//return null for null which is normally "object
-		?'Null'
-		//objects return constructor name
-		:(t=typeof o)=='object'
-		?o.constructor.name
-		//functions need to test if they are native
-		:t=='function'
-		?o.toString().match(f)
-		//native functions return their own name
-		?o.name
-		//others return return their constructor
-		:o.constructor.name
-		//simple types return their type uppercased
-		:t[0].toUpperCase()+t.substring(1),
-	//get argument count
-	i=a.length,
-	//type of object
-	x=t(o)
+// Yeast
+Y=(e,a,s,t)=>(
+  //e=extends object
+  //a=attribute
+  //s=set function
+  //t=tell function
 
-	//if one arg return computed type
-	if(!i)return x 
-	//otherwise loop to compare against aruments
-	while(i--)if(x==t(a[i]))return T
-	//fail if we don't find anything
-	return F
-},
-//Bind
-//l=list of elements
-//v=event names
-//s=selector for children
-//f=function to trigger
-//m=fire once
-B=function(l,v,s,f,m){
-	//polymorph adjust for no selectors
-	if(I(f,T,U))m=f;f=s;s=N
-
-	//split event list
-	var w=v.split(' ')
-
-	//setup list
-	l=L(l)
-
-	//work for event list as multiple
-	if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
-	//loop through list
-	else l.forEach(n=>{
-		//dispatch events when no function is provided
-		if(f==U)return n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T}))
-		//event watcher
-		var w=function(e){
-			//bubble function: call event, stop one shots and bubble to parents
-			var b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?x(f):n,e):n.parentNode?b(e,n.parentNode,p):U
-			//bubble event from srcElement
-			return b(e,e.srcElement,L(s?s:this,s?this:D))
-		},
-		//event remover
-		x=f=>z.forEach((a,i)=>{
-			//check if it's worthy to remove a listener
-			if((!y&&(s==a.sel||!s))||y==a.fn.toString()){
-				//remove the listener
-				n.removeEventListener(v,a.ltn)
-
-				//remove the record
-				delete z[i]
-			}
-
-			//return the node for chaining
-			return n
-		}),
-		//text representation of function
-		y=f&&f.toString(),
-		//setup node extention for event data
-		z=(n._evt=n._evt||{})[v]=n._evt[v]||[],
-		//iterator
-		i
-
-		// remove event listener
-		if(m===F)return x(f)
-
-		//don't list the same listener twice
-		for(i in z)if(z[i].fn.toString()==y)return
-
-		//add function and listener
-		z.push({fn:f,ltn:w,sel:s,rm:x})
-
-		//add the event listener and bubble if no selector
-		n.addEventListener(v,w,!!s)
-	})
-
-	//return the list selected
-	return l
-},
+  //if a is a function reorder
+  typeof a=='function'&&(t=s,s=a,a=e,e=W),
+  //define propuerty based on functions
+  Object.defineProperty(e,a,{get:t||s,set:s})
+),
 //Storage
-//t=type
 //k=key
 //v=value
-S=(U=>{
-	//abbreviate local storage
-	var l=W.localStorage,
-	//abbreviate session storage
-	s=W.sessionStorage,
-	//abbreviate JSON
-	j=JSON,
-	//flip function for script and style
-	x=(t,k,v)=>{
-		//seek if the tag exists in the DOM
-		var l=L(t+'#'+k)[0],
-		//setup node for insert if needed
-		n=v&&O(D.createElement(t),{id:k,innerText:v})
+S=(k,v,s)=>(
+	//choose whether session or local storage
+	(s=k[0]=='*'?W.sessionStorage:W.localStorage)?
+	//check if we have a value
+	v==U
+	//if not return the value
+	?s.getItem(k)
+	// 
+	:s.setItem(k,v)
+	:U
+),
+//Hash
+H=((a,s,h)=>{
+  if(!
+  a=crypto.subtle,
+  b=(e)=>(new TextEncoder()).encode(e),
+  c={
+    iv=crypto.getRandomValues(new Uint8Array(16)),
+    saltLength=128,
+    sign:'HMAC',
+    hash:'SHA-256',
+    cypher: 'AES-CBC',
+  },
+  d=(r)=>O({name:c[r]},c)
 
-		//if value return node else return innerText
-		return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText
-	},
-	//parent Storage function
-	S=function(t,k,v){
-		//call a storage function
-		return I(S[t.toUpperCase()],I)?S[t](k,v):F
-	}
-	//css storage function
-	S.CSS=(k,v)=>D||x('style',k,v)
-	//javascript storage function
-	S.SCRIPT=(k,v)=>D?x('script',k,v):importScripts(v)
-	//cookie storage function
-	S.COOKIE=(k,v)=>U//TODO
-	//local storage function
-	S.LOCAL=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
-	//session storage function
-	S.SESSION=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
+  H(m)=>a.digest(c.hash,b(m))
 
-	//expose the storage function
-	return S
-})()
-//Chain
-//f=function
-//a=arguments
-const C=function(f,...a){
-	//check if the function is really a function
-	return f&&f.call
-		?new Promise(r=>r(f(...a)))
-		:Error('invalid function')
-},
-//Prototype
-//o=object
-//a=alternative
-P=function(o,a){
-	var o=Object(o)
-	
-	return a?o[p]=P(a):o.prototype||o.__proto__
-},
-//Undefined
-U=W.U
+  //add child methods and property
+  H.config=c;
+  H.sign=(k,v)=>a.sign(d('sign'),b(m));
+  H.verify=(k,v)=>a.verify(d('sign'),b(m));
+  H.encrypt=(k,v)=>a.encrypt(d('cypher'),b(m));
+  H.decrypt=(k,v)=>a.encrypt(d('cypher'),b(m));
+
+  //freeze object to avoid overloading
+  return Object.freeze(H);
+})(W.crypto,)

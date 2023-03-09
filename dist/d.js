@@ -1,6 +1,13 @@
-/*©2015 FRINKnet and Friends*/"use strict"
+/*©2023 FRINKnet and Friends // License: MIT*/"use strict"
 const DWARFTON=1.30
-const D=self.document,W=self,A=function(...a){return [].concat(...a.map((o,a)=>typeof o=='object'&&((a=Array.from(o)).length||o.length>-1)?a:o))},R=(U=>{var t=setTimeout,w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=s=>/^https/.test(s),R=function(m,u,b,s){if(I(m,{})){s=m;m=U}
+const D=self.document,W=self,A=(...g)=>[].concat(
+...g.map((o,r)=>
+I(o,{})&&(
+(r=Array.from(o)
+).length||o.length>-1)
+?t
+:o
+)),R=(U=>{var t=setTimeout,w=navigator.serviceWorker,x=D&&D.getElementsByTagName('script'),y=x&&x[x.length-1].src,z=s=>/^https/.test(s),R=(m,u,b,s)=>{if(I(m,{})){s=m;m=U}
 if(u==U){u=m;m=U}
 s=I(s,{},U)
 ?O({},R.opts,s,{body:b,url:u})
@@ -84,10 +91,23 @@ B(W,'fetch',(e,r)=>(r=e.request).method=='GET'
 )?o||n:e)
 ):e
 )}},y?999:0,R.opts)
-return R})(),F=false,T=true,O=function(...a){var f
-return (f=a.filter(a=>a!=U&&a!=N&&Object(a))).length
-?Object.assign(...f)
-:a[0]},N=null,L=function(s,p){var l,q='querySelectorAll'
+return R})(),F=!1,T=!0,O=(...l)=>Object.assign({},...l.filter(o=>o!=U&&o!=N&&Object(o))
+)
+N=null,U=W.U,I=(n,...t)=>{let c=W.atob.toString()
+.replace(/^.+\)\s?/,'')
+.replace(/([{\[\]}])/g,'\\$1'),f=(i,x)=>
+i===N
+?'Null'
+:(x=typeof i)=='object'
+?i.constructor.name
+:x=='function'
+?i.toString().match(c)
+?i.name
+:i.constructor.name
+:x[0].toUpperCase()+x.substring(1),i=t.length,x=f(n)
+if(!i)return x
+while(i--)if(x==f(t[i] || ))return T
+return F},P=(o,a)=>(o=O(o),a?o[p]=P(a):o.prototype||o.__proto__),L=(s,p)=>{var l,q='querySelectorAll'
 p=p?p==W?D:p:D
 if(I(p,"")&&I(s,''))s=p+' '+s,p=D
 if(s._sel)return s
@@ -97,39 +117,15 @@ else if(/<\w+[^>]*>/.test(s)&&D){l=D.createElement('p')
 l.innerHTML=s
 l=l.childNodes}else if(p[q])l=p[q](s)
 else l=L(p).map(p=>L(s,p)),l=A.apply(A,l)
-return O(A(l),{_sel:[s,p],constructor:L})},I=function(o,...a){var f=O.toString().replace(/^.+\)\s?/,'').replace(/([{\[\]}])/g,'\\$1'),t=(o,t)=>o===N
-?'Null'
-:(t=typeof o)=='object'
-?o.constructor.name
-:t=='function'
-?o.toString().match(f)
-?o.name
-:o.constructor.name
-:t[0].toUpperCase()+t.substring(1),i=a.length,x=t(o)
-if(!i)return x
-while(i--)if(x==t(a[i]))return T
-return F},B=function(l,v,s,f,m){if(I(f,T,U))m=f;f=s;s=N
-var w=v.split(' ')
-l=L(l)
-if(w.length>1)w.forEach(v=>B(l,v,s,f,m))
-else l.forEach(n=>{if(f==U)return n.dispatchEvent(new Event(v,{'bubbles':T,'cancelable':T}))
-var w=function(e){var b=(e,n,p)=>p.indexOf(n)>-1?f.call(m?x(f):n,e):n.parentNode?b(e,n.parentNode,p):U
-return b(e,e.srcElement,L(s?s:this,s?this:D))},x=f=>z.forEach((a,i)=>{if((!y&&(s==a.sel||!s))||y==a.fn.toString()){n.removeEventListener(v,a.ltn)
-delete z[i]}
-return n}),y=f&&f.toString(),z=(n._evt=n._evt||{})[v]=n._evt[v]||[],i
-if(m===F)return x(f)
-for(i in z)if(z[i].fn.toString()==y)return
-z.push({fn:f,ltn:w,sel:s,rm:x})
-n.addEventListener(v,w,!!s)})
-return l},S=(U=>{var l=W.localStorage,s=W.sessionStorage,j=JSON,x=(t,k,v)=>{var l=L(t+'#'+k)[0],n=v&&O(D.createElement(t),{id:k,innerText:v})
-return v?l?l.replaceWith(n):D.head.appendChild(n):l&&l.innerText},S=function(t,k,v){return I(S[t.toUpperCase()],I)?S[t](k,v):F}
-S.CSS=(k,v)=>D||x('style',k,v)
-S.SCRIPT=(k,v)=>D?x('script',k,v):importScripts(v)
-S.COOKIE=(k,v)=>U//TODO
-S.LOCAL=(k,v)=>r=l?v==U?l.getItem(k):l.setItem(k,v):U
-S.SESSION=(k,v)=>r=s?v==U?s.getItem(k):s.setItem(k,v):U
-return S})()
-const C=function(f,...a){return f&&f.call
-?new Promise(r=>r(f(...a)))
-:Error('invalid function')},P=function(o,a){var o=Object(o)
-return a?o[p]=P(a):o.prototype||o.__proto__},U=W.U
+return O(A(l),{_sel:[s,p],constructor:L})},Y=(e,a,s,t)=>(
+typeof a=='function'&&(t=s,s=a,a=e,e=W),Object.defineProperty(e,a,{get:t||s,set:s})
+),S=(k,v,s)=>(
+(s=k[0]=='*'?W.sessionStorage:W.localStorage)?
+v==U
+?s.getItem(k)
+:s.setItem(k,v)
+:U
+),H=((a,s,h)=>{if(!
+a=crypto.subtle,b=(e)=>(new TextEncoder()).encode(e),c={iv=crypto.getRandomValues(new Uint8Array(16)),saltLength=128,sign:'HMAC',hash:'SHA-256',cypher: 'AES-CBC',},d=(r)=>O({name:c[r]},c)
+H(m)=>a.digest(c.hash,b(m))
+H.config=c;H.sign=(k,v)=>a.sign(d('sign'),b(m));H.verify=(k,v)=>a.verify(d('sign'),b(m));H.encrypt=(k,v)=>a.encrypt(d('cypher'),b(m));H.decrypt=(k,v)=>a.encrypt(d('cypher'),b(m));return Object.freeze(H);})(W.crypto,)

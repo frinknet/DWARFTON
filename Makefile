@@ -7,21 +7,36 @@ DWARFTON=\
 	src/T.js \
 	src/O.js \
 	src/N.js \
-	src/C.js \
-	src/P.js \
+	\
+	src/Q.js \
 	src/U.js \
-	src/L.js \
 	src/I.js \
-	src/B.js \
-	src/S.js \
-	src/X.js \
+	src/C.js \
+	src/K.js \
+	\
+	src/P.js \
+	src/L.js \
 	src/Y.js \
-	src/Z.js
+	\
+	src/M.js \
+	src/E.js \
+	src/S.js \
+	src/H.js
 
-default: clean submodules dist
+.PHONY: all
+all: clean submodules dist
 
+.PHONY: dist
 dist: d.js
 	@mv -f *.js dist/
+
+.PHONY: submodules
+submodules:
+	@git submodule update --init --recursive
+
+.PHONY: clean
+clean:
+	@rm -f *.js dist/*
 
 dwarfton.js: $(DWARFTON) 
 	@utils/build.sh $@ $+
@@ -29,8 +44,5 @@ dwarfton.js: $(DWARFTON)
 d.js: dwarfton.js
 	@utils/sed-minify/minifyjs $+ > $@
 	
-submodules:
-	@git submodule update --init --recursive
-
-clean:
-	@rm -f *.js dist/*
+src/%:
+	@touch $@
