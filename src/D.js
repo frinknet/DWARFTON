@@ -1,2 +1,2 @@
 //Document
-const D=self.document,
+const D=self.document, //Document Fragment

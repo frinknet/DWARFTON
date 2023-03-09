@@ -3,7 +3,7 @@
 // types
 I=(n,...t)=>{
   //check for native functions
-  let c='^class||'+W.atob.toString()
+  let c='^class||'+self.atob.toString()
     .replace(/^.+\)\s?/,'')
     .replace(/([{\[\]}])/g,'\\$1'),
 
