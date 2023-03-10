@@ -29,7 +29,7 @@ O=((v,e,r,l,o,a,d)=>{
   //return a new Proxy
   return new Proxy(
     //return the default action
-    (...l)=>a({},...l.filter(o=>!o.at&&v(o))),
+    (...l)=>a({},...l.filter(o=>o&&!o.trim&&v(o))),
     //now overload with proxy
     {
       //set the prototype on new classes
