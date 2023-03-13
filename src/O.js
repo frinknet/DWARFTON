@@ -1,4 +1,4 @@
-//Overload - O(...l)
+//Overloader - O(...l)
 //l=list of object
 O=((v,e,r,l,o,a,d)=>{
   //label maker
@@ -34,10 +34,10 @@ O=((v,e,r,l,o,a,d)=>{
     {
       //set the prototype on new classes
       set:(_,n,s)=>{
-        //set child lable
+        //set child label
         n=l(n)
         //make sure we arent doing this twice
-        //if(e[n])throw 'Already Exists'
+        if(e[n])throw 'Class already exists'
         //see if we can set the class
         o(n,s)
       },
