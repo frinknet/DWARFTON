@@ -1,10 +1,20 @@
 //Chain - C(h,...n)
 //h=handler function
 //n= arguments
-const C=(h,...n)=>
-	//check if it's really a function
-	h&&h.call
-	  //create a new promise
-	  ?new Promise(c=>c(h(...n)))
-	  //or else throw an error
-	  :E('invalid function'),
+C=(h,...n)=>
+  //is it a function
+  h&&h.call
+    //create a chain
+    ?(async c=>h(...n))()
+    //is it an array
+    :h&&h.join&&h[0].call
+      //collect promises
+      ?Promise.all(
+        //finler for functions
+        h.filter(f=>f.call)
+        //map to calls
+        .map(async c=>c(...n))
+      //return when done
+      )
+      //otherwise throw an error
+      :(()=>{throw 'Chain: Invalid Function'})()

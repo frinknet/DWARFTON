@@ -51,4 +51,4 @@ O=((v,e,r,l,o,a,d)=>{
   //return the proxy
   )
 //send in abreviations
-})(Object,{},'replace'),
+})(Object,new Map,'replace'),

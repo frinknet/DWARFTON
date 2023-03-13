@@ -2,12 +2,8 @@
 // needle
 // types
 I=(n,...t)=>{
-  //check for native functions
-  let c='^class||'+self.atob.toString()
-    .replace(/^.+\)\s?/,'')
-    .replace(/([{\[\]}])/g,'\\$1'),
-
   //fix broken typeof
+  const
   f=(i,x)=>
     //is it null?
     i===N
@@ -19,8 +15,8 @@ I=(n,...t)=>{
         ?i.constructor.name
         //otherwise is a function?
         :x=='function'
-          //is it native?
-          ?i.toString().match(c)
+          //is it native or class
+          ?i.toString().match(/^class||\[ native code \]/)
             //native functions return their own name
             ?i.name
             //others return return their constructor
