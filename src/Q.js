@@ -2,29 +2,29 @@
 //s=selector
 //p=parent
 Q=((u,e,r,y,s,c,a,n)=>(
-  //u=upper propto
+  //u=unistanciated propto
   //e=extenteds
   //r=requestor
-  //y=request
+  //y=your proto
   //s=string map
   //setup wery response Object
   O.Query=class extends Array{},
+  //unistanciated proto
   u={
     get fn(){return y},
     set fn(o){e(y,o)},
     extend(...o){e(u,...o)},
-    on(){},
-    off(){},
-    one(){},
-    each(){}
+    each:(a,c)=>Object.entries(a).map(([i,v])=>c(a.map?parseInt(i):v),a)
   },
   e=Object.assign,
   r='querySelectorAll',
   y=e(O.Query.prototype,{
-
+    on(){},
+    off(){},
+    one(){},
+    each:(a,c)=>u.each(a,c)
   }),
   s=(t,r)=>t.split(' ').map(r),
-  s('on off one each',s=>e(y,{[s]:function(...a){u[s](this,...a),this}})),
   e((s,p)=>{
     //make sure we have a parent node or list
     p=p?p==W?D:p:D
