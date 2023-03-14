@@ -1,32 +1,44 @@
 //Proxy Parade
-//r = real object
-//o = other objects
-P=(r,...o)=>o.reduce(
-  //loop thorough mappings
-  //o = object
-  //a = another object
-  (o,a)=>new Proxy(o,{
-    //getter
+P=(r=>(x,...y)=>
+  //loop through all
+  y.reduce(
+    //loop thorough mappings
     //o = object
-    //n = name
-    get:(o,n)=>a.get
-      ?a.get(o,n)
-      :a[n]||o[n],
-    //setter
-    //o = object
-    //n = name
-    //e =element value
-    set:(o,n,e)=>a.set
-      ?a.set(o,n,e)
-      :a[n]
-        ?(a[n]=e)
-        :(o[n]=e)
-    deleteProperty:(o,n)=>a.deletedProperty
-      ?a.deletedProperty(o,n)
-      :a[n]
-        ?(delete a[n])
-        :(delete o[n])
-  }),
-  //pass in original object for mapping
-  r
-)
+    //a = attached
+    (o,a)=>new Proxy(o,{
+      //getter
+      get:(o,n)=>a.get
+        //use getter if we have it
+        ?a.get(o,n)
+        //otherwise check property
+        :a[n]==U
+          //if you have it return it
+          ?a[n]
+          //otherwise pass down the line
+          :o[n],
+      //setter
+      set:(o,n,e)=>a.set
+        //use setter if we have it
+        ?a.set(o,n,e)
+        //if not down the line
+        :o[n]==U
+          //set in attached
+          :(a[n]=e)
+          //otherwise send downline
+          ?(o[n]=e)
+      //deleter (long name passed in)
+      [r]:(o,n)=>a[r]
+        //use deleter if we have it
+        ?a[r](o,n)
+        //otherwise check downline
+        :o[n]==U
+          //if not there delete attached
+          ?(delete a[n])
+          //otherwise delete downline
+          :(delete o[n])
+    }),
+    //pass in original object for mapping
+    x
+  )
+//pass in delete to save space
+)('deleteProperty')
