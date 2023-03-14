@@ -13,8 +13,8 @@ C=(h,...n)=>
         //finler for functions
         h.filter(f=>f.call)
         //map to calls
-        .map(c=>C(c,...n)))
+        .map(c=>C(c,...n))
       //return when done
       )
       //otherwise throw an error
-      :(()=>{throw 'Chain: Invalid Function'})()
+      :(()=>{throw 'Chain: Invalid Function'})(),
