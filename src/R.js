@@ -1,21 +1,16 @@
 //Reactive
 R=((e,a,c,t,o,r)=>(
   //event runner
-  e=async(o,n,l,y)=>{
-      y.forEach((a,c)=>c(n,o,l,...a))
-  },
+  e=async(o,n,l,y)=>y.forEach((a,c)=>c(n,o,l,...a)),
   //action prep
-  a=(o,n,l,y)=>{
-    let
+  a=(o,n,l,y)=>(
     //split the path to reduce it to dispatch order 
-    d=l.split('.')
-    d=d.reduce((p,a,t,h)=>p.push(c(p[t],a))&&p,[''])
+    l.split('.').reduce((p,a,t,h)=>p.push(c(p[t],a))&&p,[''])
     //still needs some finess to come out clean
-    d=d.reverse()
-    d=d.map((a,i)=>i?(a+'.*').slice(1):a)
+    .reverse().map((a,i)=>i?(a+'.*').slice(1):a)
     //finally dispatch asyncronous but linear
-    d=d.map(d=>e(o,n,l,(y.get(d)||[])))
-  },
+    .map(d=>e(o,n,l,(y.get(d)||[])))
+  ),
   //concatenate labels
   c=(l,n)=>l?l+'.'+n:n,
   //text to object
@@ -69,7 +64,7 @@ R=((e,a,c,t,o,r)=>(
       })
   ),
   //return function
-  (R=>R(R))(function Reactor(_){
+  (R=>R(R))(_=>{
     const
     //your map
     y=new Map,
@@ -119,4 +114,4 @@ R=((e,a,c,t,o,r)=>(
     //double proxy to add dispatchers
     return new Proxy(p,{get:(o,n)=>d[n]||o[n]})
   })
-))()
+))(),
