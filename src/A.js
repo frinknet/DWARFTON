@@ -7,7 +7,7 @@ A=(...g)=>[].concat(
     //r = returned
     (o,r)=>
          //check if o is an object
-         I(o,{})&&(
+         typeof o=='object'&&o&&(
             //convert to an array
             (r=Array.from(o)
           //check if the there is a length
