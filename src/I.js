@@ -1,29 +1,40 @@
-//Interogate
+//Interogate - I(n,...t)
 // needle
 // types
 I=(n,...t)=>{
+  let
+  //get contructor name
+  c=c=>c.constructor.name,
+  //abbreviate object
+  o=Object,
+  //check if derived from
+  d=(x,y)=>y.call
+    ?e(x,y)
+    :[y,s(y)].includes(s(x)),
+  //check if extends
+  e=(i,n)=>i instanceof n,
+  //solve prototype
+  s=o=>o.prototype||o.__proto__,
   //fix broken typeof
-  const
   f=(i,x)=>
-    //is it null?
+    //if null
     i===N
       //return null
       ?'Null'
-      //otherwise is it an object?
-      :(x=typeof i)=='object'
-        //return the contructor
-        ?i.constructor.name
-        //otherwise is a function?
-        :x=='function'
-          //is it native or class
-          ?i.toString().match(/^class||\[ native code \]/)
-            //native functions return their own name
+      //otherwise if object
+      :'object'==(x=typeof i)
+        //return the contructor name
+        ?c(i)
+        //oor if function
+        :'function'==x
+          //is it native code or a class
+          ?/^class|{\s*\[native code\]\s*\}$/i.test(i)
+            //return their own name
             ?i.name
-            //others return return their constructor
-            :i.constructor.name
-        //simple types return their type capitalized
+            //otherwise return constructor name
+            :c(i)
+        //last resort capitalized type
       :x[0].toUpperCase()+x.substring(1),
-
   //get argument count
   i=t.length,
   //type of object
@@ -31,10 +42,13 @@ I=(n,...t)=>{
 
   //if one arg return computed type
   if(!i)return x
-  //otherwise loop to compare aruments
+  //otherwise loop to compare
   while(i--)if(
-    typeof t[i]=='function'
-      ?n instanceof t[i]
+      //if complex type
+      e(t[i],o)
+      //check if derived
+      ?d(n,t[i])
+      //otherwise compare types
       :x==f(t[i])
     )return T;
   //fail if we don't find anything
