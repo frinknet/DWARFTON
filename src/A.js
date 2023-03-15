@@ -19,4 +19,4 @@ A=(...g)=>[].concat(
       //do mapping
       )
 //do concatination
-),
+)

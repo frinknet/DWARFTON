@@ -1,2 +1,2 @@
-//Window or web worker
-W=self,
+//Web Worker
+W=self

@@ -1,2 +1,2 @@
 //Document
-const D=self.document, //Document Fragment
+D=self.document //TODO: document fragment

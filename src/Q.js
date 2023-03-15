@@ -11,18 +11,28 @@ Q=((u,e,r,y,s,c,a,n)=>(
   O.Query=class extends Array{},
   //unistanciated proto
   u={
-    get fn(){return y},
-    set fn(o){e(y,o)},
-    extend(...o){e(u,...o)},
-    each:(a,c)=>Object.entries(a).map(([i,v])=>c(a.map?parseInt(i):v),a)
+    //check if node contains
+    contains:D.contains.call,
   },
   e=Object.assign,
+  //abbreviate retrieval function
   r='querySelectorAll',
   y=e(O.Query.prototype,{
-    on(){},
-    off(){},
-    one(){},
-    each:(a,c)=>u.each(a,c)
+    each(c){
+        this.entries().map(([...a])=>c(...a));
+        
+        return this
+    },
+      
+    text(){return this?[0].innerText},
+    html(){return this?[0].innerHTML},
+
+    before(o){},
+    after(o){},
+    trigger(e){},
+    on(e,c,d){},
+    off(e,c,d){},
+    one(e,c,d){},
   }),
   s=(t,r)=>t.split(' ').map(r),
   e((s,p)=>{
@@ -55,4 +65,4 @@ Q=((u,e,r,y,s,c,a,n)=>(
     // turn list into list object
     return e(O.Query(...l),{_sel:[s,p]})
   },u)
-))(),
+))()

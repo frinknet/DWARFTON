@@ -114,4 +114,4 @@ R=((e,a,c,t,o,r)=>(
     //double proxy to add dispatchers
     return new Proxy(p,{get:(o,n)=>d[n]||o[n]})
   })
-))(),
+))()
