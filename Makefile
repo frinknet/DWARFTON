@@ -12,14 +12,14 @@ QUICK=\
 	src/U.js \
 	src/I.js \
 	src/C.js \
-	src/K.js \
+	src/K.js
 PLY=\
 	src/P.js \
 	src/L.js \
-	src/Y.js \
+	src/Y.js
 BG=\
 	src/B.js \
-	src/G.js \
+	src/G.js
 MESH=\
 	src/M.js \
 	src/E.js \
@@ -41,11 +41,10 @@ submodules:
 clean:
 	@rm -f *.js dist/*
 
-dwarfton.js: $(DWARFTON) 
+dwarfton.js: $(DWARFTON) $(QUICK)
 	@utils/build.sh $@ $+
 
 d.js: dwarfton.js
 	@utils/sed-minify/minifyjs $+ > $@
-	
 src/%:
 	@touch $@
