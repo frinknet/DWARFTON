@@ -1,6 +1,14 @@
 //Overloader - O(...l)
 //l=list of object
 O=((v,e,r,l,o,a,d)=>(
+  //v=verify as object
+  //e=extensions object
+  //r='replace'
+  //l='prototype'
+  //o='constructor'
+  //a=assign object
+  ///d=dynamic name
+
   //assign
   a=v.assign,
   //dynamic name
@@ -13,42 +21,46 @@ O=((v,e,r,l,o,a,d)=>(
   )[r](/[^A-Za-z]+/g,''),
   //prefix can be changed later
   d.pre='D',
+
   //return a new Proxy
   new Proxy(
-    //return the default action
+    //return the default overload action
     (...l)=>a({},...l.filter(s=>s&&!s.trim&&v(s))),
     //now overload with proxy
     {
       //set the prototype on new classes
-      set:(_,n,s)=>x(
-        //if prefix
+      set:(_,n,s)=>
+        //if name is pre
         n=='pre'
-          //set prefix (hides current extensions)
+          //set new prefix (hides current extensions)
           ?d.pre=s
-          //otherwise loock for extensions
+          //otherwise get extension
           :(
-            //check if an extension is defined
+            //if an extension defined return it
             e[n=d(n)]||(
-              //if this is a function extend from there
+              //otherwise create extension if function
               e[n+':def']=(s.call&&s)||
-              //otherwise extend the prototype
+              //or find prototype to extend constructor
               (s[l]||v.getPrototypeOf(s))[o],
-              //save class in extensions table
+              //save the extending class in extensions table
               a(e,eval(`({'${n}':class extends e['${n}:def']{}})`))
-            //done with instanciation
+            //done with extension setup
             ),
-            //now overload the 
+            //now overload extension 
             a(e[n][l],s[l]||s)
           ),
       //return a method to create a class
       get:(_,n)=>
+        //if name is pre
         n=='pre'
+        //return prefix
         ?d.pre
+        //otherwise return function
         :e[n=d(n)]&&a(function(...a){
-        //run with arguments
-        return new (e[n])(...a)
-      //return function with prototype and constructor
-      },{[o]:e[n],[l]:e[n][l]})
+          //run with arguments
+          return new (e[n])(...a)
+        //override prototype and constructor
+        },{[o]:e[n],[l]:e[n][l]})
     //that's all folks
     }
   //return the proxy
