@@ -2,7 +2,7 @@
 H=(U=>{
   const
   //main object referenced
-  a=crypto.subtile,
+  a=crypto.subtle,
   //all methods want encoded text
   b=e=>(new TextEncoder()).encode(e),
   //config object
