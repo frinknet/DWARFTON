@@ -23,9 +23,11 @@ H=((a,s,h,i,n=g=>a({name:h[g]},h))=>Object.freeze(
       //decrypt something
       decrypt:(k,v)=>s.encrypt(n('cypher'),k,h(v)),
       //random dice generator
-      dice=n=>Math.ceil(n*parseInt('0x'+H.uuid())/0xffffffff),
+      dice:n=>Math.ceil(n*parseInt('0x'+H.uuid())/0xffffffff),
       //get a UUID
-      uuid:U=>crypto.randomUUID()
+      uuid:U=>crypto.randomUUID(),
+      //generate keys
+      keys:k=>s.generateKey(n(h),1,["sign","verify","encrypt","decrypt"])
       
     }
   )
@@ -40,6 +42,8 @@ H=((a,s,h,i,n=g=>a({name:h[g]},h))=>Object.freeze(
   //i=initial config
   {
     saltLength:128,
+    modulusLength: 4096,
+    namedCurve: "P-384",
     sign:'HMAC',
     hash:'SHA-256',
     cypher:'AES-CBC'
