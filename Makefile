@@ -45,6 +45,6 @@ dwarfton.js: $(DWARFTON) $(QUICK)
 	@utils/build.sh $@ $+
 
 d.js: dwarfton.js
-	@utils/sed-minify/minifyjs $+ > $@
+	@utils/smurfity/smurfity $+ > $@
 src/%:
 	@touch $@
