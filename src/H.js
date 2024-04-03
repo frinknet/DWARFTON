@@ -1,5 +1,5 @@
 //Hash - 
-H=((a,s,h,i,n=g=>a({name:h[g]},h))=>Object.freeze(
+H=((a,s,h,i,n=g=>a({name:i[g]},i))=>Object.freeze(
   //a=assign object
   //s=subtle crypto object
   //h=handle text encryption
@@ -26,8 +26,10 @@ H=((a,s,h,i,n=g=>a({name:h[g]},h))=>Object.freeze(
       dice:n=>Math.ceil(n*parseInt('0x'+H.uuid())/0xffffffff),
       //get a UUID
       uuid:U=>crypto.randomUUID(),
-      //generate keys
-      keys:k=>s.generateKey(n(h),1,["sign","verify","encrypt","decrypt"])
+      //generate keys for encrypting
+      keys:U=>s.generateKey(n('cypher'),1),
+      //generate keys for signing
+      identity:U=>s.generateKey(n('sign'),1)
       
     }
   )
