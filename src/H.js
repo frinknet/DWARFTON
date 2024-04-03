@@ -1,38 +1,47 @@
 //Hash - 
-H=(U=>{
-  const
-  //main object referenced
-  a=crypto.subtle,
-  //all methods want encoded text
-  b=e=>(new TextEncoder()).encode(e),
-  //config object
-  c={
-    iv:crypto.getRandomValues(new Uint8Array(16)),
+H=((a,s,h,i,n=g=>a({name:h[g]},h))=>Object.freeze(
+  //a=assign object
+  //s=subtle crypto object
+  //h=handle text encryption
+  //i=initial config defaults
+  //n=naturalize config
+  
+  //hash object definition
+  a(
+    //hashing function for default action
+    v=>s.digest(i.hash,h(v)),
+    //extend with
+    {
+      //user can change values
+      config:i,
+      //cryptographically signing something
+      sign:(k,v)=>s.sign(n('sign'),k,h(v)),
+      //verify signature
+      verify:(k,n,v)=>s.verify(n('sign'),k,n,h(v)),
+      //encrypt something
+      encrypt:(k,v)=>s.encrypt(n('cypher'),k,h(v)),
+      //decrypt something
+      decrypt:(k,v)=>s.encrypt(n('cypher'),k,h(v)),
+      //random dice generator
+      dice=n=>Math.ceil(n*parseInt('0x'+H.uuid())/0xffffffff),
+      //get a UUID
+      uuid:U=>crypto.randomUUID()
+      
+    }
+  )
+//abbreviate a,s,h,e
+})(
+  //a=assign objects
+  Object.assign,
+  //s=subtle crypto
+  crypto.subtle,
+  //h=handle text encoding
+  h=>(new TextEncoder()).encode(h),
+  //i=initial config
+  {
     saltLength:128,
     sign:'HMAC',
     hash:'SHA-256',
-    cypher: 'AES-CBC',
-  },
-  //dynamic config
-  d=r=>e({name:c[r]},c),
-  //extend abreviation
-  e=Object.assign,
-  //hash object definition
-  H=e(m=>a.digest(c.hash,b(m)),{
-    //user can change values
-    config:c,
-    //cryptographically signing something
-    sign:(k,v)=>a.sign(d('sign'),b(m)),
-    //verify signature
-    verify:(k,v)=>a.verify(d('sign'),b(m)),
-    //encrypt something
-    encrypt:(k,v)=>a.encrypt(d('cypher'),b(m)),
-    //decrypt something
-    decrypt:(k,v)=>a.encrypt(d('cypher'),b(m)),
-    //added random IDs
-    uuid:U=>crypto.randomUUID()
-  })
-
-  //freeze object to avoid overloading
-  return Object.freeze(H);
-})()
+    cypher:'AES-CBC'
+  }
+)
