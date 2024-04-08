@@ -45,6 +45,6 @@ dwarfton.js: $(DWARFTON) $(QUICK)
 	@utils/build.sh $@ $+
 
 d.js: dwarfton.js
-	@utils/smurfity/smurfity $+ > $@
+	@utils/smurft/smurft $+ > $@
 src/%:
 	@touch $@
